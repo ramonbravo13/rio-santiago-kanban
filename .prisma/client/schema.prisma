@@ -1,0 +1,217 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x"]
+  output        = "../.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id                 String          @id @default(cuid())
+  name               String?
+  email              String          @unique
+  emailVerified      DateTime?
+  image              String?
+  password           String?
+  role               UserRole        @default(COLABORADOR)
+  isActive           Boolean         @default(true)
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  accounts           Account[]
+  sessions           Session[]
+  auditLogs          AuditLog[]
+  comments           Comment[]
+  uploadedFiles      File[]
+  assignedTasks      TaskAssignee[]
+  createdTasks       Task[]          @relation("TaskCreator")
+  programAssignments UserProgram[]
+  transcriptions     Transcription[]
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Program {
+  id               String        @id @default(cuid())
+  name             String
+  description      String?
+  generalObjective String
+  startDate        DateTime
+  endDate          DateTime
+  status           ProgramStatus @default(ACTIVO)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  tasks            Task[]
+  userAssignments  UserProgram[]
+
+  @@map("programs")
+}
+
+model UserProgram {
+  id        String  @id @default(cuid())
+  userId    String
+  programId String
+  program   Program @relation(fields: [programId], references: [id], onDelete: Cascade)
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, programId])
+  @@map("user_programs")
+}
+
+model Task {
+  id                   String         @id @default(cuid())
+  name                 String
+  description          String?
+  creatorId            String
+  programId            String
+  dueDate              DateTime?
+  status               TaskStatus     @default(TODO)
+  expectedDeliverables String?
+  links                String?
+  progressPercentage   Int            @default(0)
+  createdAt            DateTime       @default(now())
+  updatedAt            DateTime       @updatedAt
+  comments             Comment[]
+  files                File[]
+  assignees            TaskAssignee[]
+  creator              User           @relation("TaskCreator", fields: [creatorId], references: [id])
+  program              Program        @relation(fields: [programId], references: [id], onDelete: Cascade)
+
+  @@map("tasks")
+}
+
+model TaskAssignee {
+  id        String   @id @default(cuid())
+  taskId    String
+  userId    String
+  createdAt DateTime @default(now())
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([taskId, userId])
+  @@map("task_assignees")
+}
+
+model Comment {
+  id        String   @id @default(cuid())
+  content   String
+  taskId    String
+  authorId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  task      Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+
+  @@map("comments")
+}
+
+model File {
+  id           String   @id @default(cuid())
+  filename     String
+  originalName String
+  mimeType     String
+  size         Int
+  url          String
+  taskId       String
+  uploadedById String
+  createdAt    DateTime @default(now())
+  task         Task     @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  uploadedBy   User     @relation(fields: [uploadedById], references: [id], onDelete: Cascade)
+
+  @@map("files")
+}
+
+model AuditLog {
+  id        String   @id @default(cuid())
+  action    String
+  entity    String
+  entityId  String
+  oldValues Json?
+  newValues Json?
+  userId    String?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime @default(now())
+  user      User?    @relation(fields: [userId], references: [id])
+
+  @@map("audit_logs")
+}
+
+model Transcription {
+  id             String              @id @default(cuid())
+  userId         String
+  filename       String
+  originalName   String
+  fileSize       Int
+  mimeType       String
+  status         TranscriptionStatus @default(UPLOADED)
+  transcriptText String?
+  summary        String?
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+  user           User                @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("transcriptions")
+}
+
+enum TranscriptionStatus {
+  UPLOADED
+  TRANSCRIBING
+  TRANSCRIBED
+  SUMMARIZING
+  COMPLETED
+  ERROR
+}
+
+enum UserRole {
+  ADMIN
+  COLABORADOR
+}
+
+enum ProgramStatus {
+  ACTIVO
+  CERRADO
+  CANCELADO
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  DONE
+}
