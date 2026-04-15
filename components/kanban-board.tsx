@@ -10,7 +10,7 @@ import { EditTaskModal } from './edit-task-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Filter } from 'lucide-react';
+import { Plus, Search, Filter, User } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const COLUMN_CONFIG = {
@@ -37,7 +37,9 @@ export function KanbanBoard() {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterProgram, setFilterProgram] = useState('all');
+  const [filterAssignee, setFilterAssignee] = useState('all');
   const [programs, setPrograms] = useState<any[]>([]);
+  const [users, setUsers] = useState<any[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
@@ -46,6 +48,24 @@ export function KanbanBoard() {
     fetchTasks();
     fetchPrograms();
   }, []);
+
+  useEffect(() => {
+    if (session?.user?.role === 'ADMIN') {
+      fetchUsers();
+    }
+  }, [session?.user?.role]);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('/api/users');
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data.filter((user: any) => user.isActive));
+      }
+    } catch (error) {
+      console.error('Error fetching users:', error);
+    }
+  };
 
   const fetchTasks = async () => {
     try {
@@ -129,7 +149,9 @@ export function KanbanBoard() {
     
     const matchesProgram = filterProgram === 'all' || task.programId === filterProgram;
     
-    return matchesSearch && matchesProgram;
+    const matchesAssignee = filterAssignee === 'all' || task.assignees?.some(a => a.userId === filterAssignee);
+    
+    return matchesSearch && matchesProgram && matchesAssignee;
   });
 
   const tasksByStatus: Record<TaskStatus, Task[]> = {
@@ -174,6 +196,23 @@ export function KanbanBoard() {
             ))}
           </SelectContent>
         </Select>
+
+        {session?.user?.role === 'ADMIN' && (
+          <Select value={filterAssignee} onValueChange={setFilterAssignee}>
+            <SelectTrigger className="w-full sm:w-64">
+              <User className="h-4 w-4 mr-2" />
+              <SelectValue placeholder="Filtrar por responsable" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos los responsables</SelectItem>
+              {users.map(user => (
+                <SelectItem key={user.id} value={user.id}>
+                  {user.name || user.email}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
 
         {session?.user?.role === 'ADMIN' && (
           <Button 
