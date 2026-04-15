@@ -248,7 +248,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCar
 
       {/* Descripción */}
       {task.description && (
-        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+        <p className="text-sm text-gray-600 mb-3 whitespace-pre-wrap">
           {task.description}
         </p>
       )}
