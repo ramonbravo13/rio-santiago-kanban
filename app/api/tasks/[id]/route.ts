@@ -68,17 +68,20 @@ export async function PUT(
       );
     }
 
+    // Extraer assigneeIds para manejarlo por separado
+    const { assigneeIds, ...taskData } = updates;
+
     // Admin puede editar todo, colaboradores pueden editar todo excepto assignees y programId
-    let allowedUpdates = updates;
+    let allowedUpdates = taskData;
     if (!isAdmin) {
-      // Los colaboradores pueden editar todos los campos excepto assignees y programId
-      const { assigneeIds, programId, ...collaboratorUpdates } = updates;
+      // Los colaboradores pueden editar todos los campos excepto programId
+      const { programId, ...collaboratorUpdates } = taskData;
       allowedUpdates = collaboratorUpdates;
     }
 
     // Manejar actualización de assignees para admins
     let updatedTask;
-    if (isAdmin && updates.assigneeIds !== undefined) {
+    if (isAdmin && assigneeIds !== undefined) {
       // Usar transacción para actualizar tarea y assignees
       updatedTask = await prisma.$transaction(async (tx: any) => {
         // Primero actualizar la tarea
@@ -96,9 +99,9 @@ export async function PUT(
         });
 
         // Crear nuevos assignees si hay alguno
-        if (updates.assigneeIds && updates.assigneeIds.length > 0) {
+        if (assigneeIds && assigneeIds.length > 0) {
           await tx.taskAssignee.createMany({
-            data: updates.assigneeIds.map((userId: string) => ({
+            data: assigneeIds.map((userId: string) => ({
               taskId: taskId,
               userId: userId,
             })),
