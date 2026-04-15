@@ -236,6 +236,7 @@ export function KanbanBoard() {
             onTaskStatusChange={handleTaskStatusChange}
             onTaskDelete={handleTaskDelete}
             onTaskEdit={handleTaskEdit}
+            onTaskUpdated={fetchTasks}
             className={`${config.color} ${config.bgColor}`}
           />
         ))}

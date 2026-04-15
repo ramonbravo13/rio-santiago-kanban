@@ -8,6 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
@@ -26,6 +28,9 @@ import {
   Lock,
   ExternalLink,
   CalendarPlus,
+  Loader2,
+  Plus,
+  Send,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -35,6 +40,7 @@ interface KanbanCardProps {
   onStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   onDelete?: (taskId: string) => void;
   onEdit?: (task: Task) => void;
+  onTaskUpdated?: () => void;
 }
 
 const STATUS_COLORS = {
@@ -55,10 +61,17 @@ const PREV_STATUS: Record<TaskStatus, TaskStatus | null> = {
   [TaskStatus.DONE]: TaskStatus.IN_PROGRESS,
 };
 
-export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCardProps) {
+export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdated }: KanbanCardProps) {
   const { data: session } = useSession();
   const [isExpanded, setIsExpanded] = useState(false);
   const [addingToCalendar, setAddingToCalendar] = useState(false);
+
+  // Estados para nuevos comentarios y links
+  const [newComment, setNewComment] = useState('');
+  const [isSubmittingComment, setIsSubmittingComment] = useState(false);
+  const [newLinkUrl, setNewLinkUrl] = useState('');
+  const [newLinkTitle, setNewLinkTitle] = useState('');
+  const [isSubmittingLink, setIsSubmittingLink] = useState(false);
 
   const canEdit = 
     session?.user?.role === 'ADMIN' || 
@@ -144,6 +157,63 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCar
       toast.error('Error de conexión');
     } finally {
       setAddingToCalendar(false);
+    }
+  };
+
+  const handleAddComment = async () => {
+    if (!newComment.trim()) return;
+    setIsSubmittingComment(true);
+    try {
+      const response = await fetch(`/api/tasks/${task.id}/comments`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: newComment.trim() }),
+      });
+
+      if (response.ok) {
+        setNewComment('');
+        toast.success('Comentario agregado');
+        onTaskUpdated?.();
+      } else {
+        toast.error('Error al agregar comentario');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error de conexión');
+    } finally {
+      setIsSubmittingComment(false);
+    }
+  };
+
+  const handleAddLink = async () => {
+    if (!newLinkUrl.trim()) {
+      toast.error('La URL es requerida');
+      return;
+    }
+    setIsSubmittingLink(true);
+    try {
+      const currentLinks = task.links || [];
+      const updatedLinks = [...currentLinks, { url: newLinkUrl.trim(), title: newLinkTitle.trim() || undefined }];
+      
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ links: updatedLinks }),
+      });
+
+      if (response.ok) {
+        setNewLinkUrl('');
+        setNewLinkTitle('');
+        toast.success('Enlace agregado exitosamente');
+        onTaskUpdated?.();
+      } else {
+        toast.error('Error al actualizar los enlaces');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error de conexión');
+    } finally {
+      setIsSubmittingLink(false);
     }
   };
 
@@ -376,46 +446,109 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCar
             </div>
           )}
 
-          <div className="text-xs text-gray-500">
-            Creado: {format(new Date(task.createdAt), 'dd/MM/yyyy')}
-          </div>
-
-          {/* Enlaces completos en vista expandida */}
-          {task.links && task.links.length > 0 && (
-            <div>
-              <div className="text-xs font-medium text-gray-700 mb-2">
-                Enlaces de Referencia:
-              </div>
-              <div className="space-y-1">
-                {task.links.map((link, index) => (
-                  <div key={index} className="flex items-center space-x-2">
+          {/* Gestión de Enlaces */}
+          <div className="space-y-2">
+            <div className="text-xs font-medium text-gray-700">Enlaces de Referencia / Drive:</div>
+            {(task.links || []).length > 0 && (
+              <div className="space-y-1 mb-2">
+                {task.links?.map((link, index) => (
+                  <div key={index} className="flex items-center space-x-2 bg-blue-50/50 p-1.5 rounded border border-blue-100">
                     <a
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800 hover:underline"
+                      className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800 hover:underline truncate"
                     >
                       <ExternalLink className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">
-                        {link.title || link.url}
-                      </span>
+                      <span className="truncate">{link.title || link.url}</span>
                     </a>
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            )}
+            
+            {canEdit && (
+              <div className="bg-gray-50 p-2 rounded border border-gray-200 space-y-2">
+                <Input
+                  placeholder="Pegar link de Google Drive..."
+                  value={newLinkUrl}
+                  onChange={(e) => setNewLinkUrl(e.target.value)}
+                  className="h-7 text-xs"
+                />
+                <div className="flex gap-2">
+                  <Input
+                    placeholder="Nombre del enlace (opcional)"
+                    value={newLinkTitle}
+                    onChange={(e) => setNewLinkTitle(e.target.value)}
+                    className="h-7 text-xs flex-1"
+                  />
+                  <Button 
+                    size="sm" 
+                    className="h-7 px-2 text-xs" 
+                    onClick={handleAddLink}
+                    disabled={isSubmittingLink || !newLinkUrl}
+                  >
+                    {isSubmittingLink ? <Loader2 className="h-3 w-3 animate-spin" /> : <Plus className="h-3 w-3 mr-1" />}
+                    Agregar
+                  </Button>
+                </div>
+              </div>
+            )}
+          </div>
 
-          {task.comments && task.comments.length > 0 && (
-            <div>
-              <div className="text-xs font-medium text-gray-700 mb-1">
-                Último comentario:
-              </div>
-              <div className="text-xs text-gray-600 line-clamp-2">
-                {task.comments[0]?.content}
-              </div>
+          <Separator className="my-2" />
+
+          {/* Comentarios */}
+          <div className="space-y-3">
+            <div className="text-xs font-medium text-gray-700 mb-1">Actividad / Comentarios:</div>
+            
+            <div className="max-h-40 overflow-y-auto space-y-2 pr-1 custom-scrollbar">
+              {(task.comments || []).length === 0 ? (
+                <p className="text-[11px] text-gray-400 italic">No hay actividad reciente.</p>
+              ) : (
+                task.comments?.map((comment, index) => (
+                  <div key={comment.id} className="bg-white p-2 border rounded text-xs">
+                    <div className="flex justify-between items-start mb-1">
+                      <span className="font-semibold text-gray-700 text-[10px]">
+                        {comment.author?.name || comment.author?.email}
+                      </span>
+                      <span className="text-[9px] text-gray-400">
+                        {format(new Date(comment.createdAt), 'dd/MM/yy HH:mm')}
+                      </span>
+                    </div>
+                    <div className="text-gray-600 leading-tight whitespace-pre-wrap">{comment.content}</div>
+                  </div>
+                ))
+              )}
             </div>
-          )}
+
+            {canEdit && (
+              <div className="flex gap-2 items-start mt-2">
+                <Textarea
+                  placeholder="Escribe un comentario o actualización..."
+                  value={newComment}
+                  onChange={(e) => setNewComment(e.target.value)}
+                  className="text-xs min-h-[60px] resize-none"
+                />
+                <Button 
+                  size="sm" 
+                  className="h-8 px-2" 
+                  onClick={handleAddComment}
+                  disabled={isSubmittingComment || !newComment.trim()}
+                >
+                  {isSubmittingComment ? (
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                  ) : (
+                    <Send className="h-4 w-4" />
+                  )}
+                </Button>
+              </div>
+            )}
+          </div>
+
+          <div className="text-xs text-gray-500 pt-2 border-t border-gray-50">
+            ID de tarea: {task.id.substring(0, 8)}... | Creado: {format(new Date(task.createdAt), 'dd/MM/yyyy')}
+          </div>
         </div>
       )}
     </div>

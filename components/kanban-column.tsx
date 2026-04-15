@@ -12,6 +12,7 @@ interface KanbanColumnProps {
   onTaskStatusChange: (taskId: string, newStatus: TaskStatus) => void;
   onTaskDelete?: (taskId: string) => void;
   onTaskEdit?: (task: Task) => void;
+  onTaskUpdated?: () => void;
   className?: string;
 }
 
@@ -22,6 +23,7 @@ export function KanbanColumn({
   onTaskStatusChange, 
   onTaskDelete,
   onTaskEdit,
+  onTaskUpdated,
   className 
 }: KanbanColumnProps) {
   return (
@@ -46,6 +48,7 @@ export function KanbanColumn({
               onStatusChange={onTaskStatusChange}
               onDelete={onTaskDelete}
               onEdit={onTaskEdit}
+              onTaskUpdated={onTaskUpdated}
             />
           ))
         )}
