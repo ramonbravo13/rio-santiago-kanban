@@ -73,6 +73,14 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
   const [newLinkTitle, setNewLinkTitle] = useState('');
   const [isSubmittingLink, setIsSubmittingLink] = useState(false);
 
+  // Estados para edición de links
+  const [editingLinkIndex, setEditingLinkIndex] = useState(-1);
+  const [editingLinkValues, setEditingLinkValues] = useState({ url: '', title: '' });
+
+  // Estados para edición de comentarios
+  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
+  const [editingCommentContent, setEditingCommentContent] = useState('');
+
   const canEdit = 
     session?.user?.role === 'ADMIN' || 
     task.assignees?.some(assignee => assignee.user?.id === session?.user?.id);
@@ -214,6 +222,104 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       toast.error('Error de conexión');
     } finally {
       setIsSubmittingLink(false);
+    }
+  };
+
+  const handleDeleteLink = async (index: number) => {
+    if (!confirm('¿Estás seguro de eliminar este enlace?')) return;
+    try {
+      const currentLinks = task.links || [];
+      const updatedLinks = currentLinks.filter((_, i) => i !== index);
+      
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ links: updatedLinks.length > 0 ? updatedLinks : [] }),
+      });
+
+      if (response.ok) {
+        toast.success('Enlace eliminado');
+        onTaskUpdated?.();
+      } else {
+        toast.error('Error al eliminar el enlace');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error de conexión');
+    }
+  };
+
+  const handleSaveEditedLink = async () => {
+    if (editingLinkIndex === -1) return;
+    if (!editingLinkValues.url.trim()) {
+      toast.error('La URL es requerida');
+      return;
+    }
+
+    try {
+      const updatedLinks = [...(task.links || [])];
+      updatedLinks[editingLinkIndex] = { 
+        url: editingLinkValues.url.trim(), 
+        title: editingLinkValues.title.trim() || undefined 
+      };
+
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ links: updatedLinks }),
+      });
+
+      if (response.ok) {
+        setEditingLinkIndex(-1);
+        toast.success('Enlace actualizado');
+        onTaskUpdated?.();
+      } else {
+        toast.error('Error al actualizar el enlace');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error de conexión');
+    }
+  };
+
+  const handleDeleteComment = async (commentId: string) => {
+    if (!confirm('¿Estás seguro de eliminar este comentario?')) return;
+    try {
+      const response = await fetch(`/api/comments/${commentId}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        toast.success('Comentario eliminado');
+        onTaskUpdated?.();
+      } else {
+        toast.error('Error al eliminar comentario');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error de conexión');
+    }
+  };
+
+  const handleSaveEditedComment = async (commentId: string) => {
+    if (!editingCommentContent.trim()) return;
+    try {
+      const response = await fetch(`/api/comments/${commentId}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ content: editingCommentContent.trim() }),
+      });
+
+      if (response.ok) {
+        setEditingCommentId(null);
+        toast.success('Comentario actualizado');
+        onTaskUpdated?.();
+      } else {
+        toast.error('Error al actualizar comentario');
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error de conexión');
     }
   };
 
@@ -452,16 +558,66 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
             {(task.links || []).length > 0 && (
               <div className="space-y-1 mb-2">
                 {task.links?.map((link, index) => (
-                  <div key={index} className="flex items-center space-x-2 bg-blue-50/50 p-1.5 rounded border border-blue-100">
-                    <a
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800 hover:underline truncate"
-                    >
-                      <ExternalLink className="h-3 w-3 flex-shrink-0" />
-                      <span className="truncate">{link.title || link.url}</span>
-                    </a>
+                  <div key={index} className="flex flex-col bg-blue-50/50 p-1.5 rounded border border-blue-100">
+                    {editingLinkIndex === index ? (
+                      <div className="space-y-1">
+                        <Input
+                          placeholder="Link..."
+                          value={editingLinkValues.url}
+                          onChange={(e) => setEditingLinkValues({ ...editingLinkValues, url: e.target.value })}
+                          className="h-7 text-[11px]"
+                        />
+                        <div className="flex gap-1">
+                          <Input
+                            placeholder="Nombre..."
+                            value={editingLinkValues.title}
+                            onChange={(e) => setEditingLinkValues({ ...editingLinkValues, title: e.target.value })}
+                            className="h-7 text-[11px] flex-1"
+                          />
+                          <Button size="sm" className="h-7 px-2 text-[10px]" onClick={handleSaveEditedLink}>
+                            Guardar
+                          </Button>
+                          <Button size="sm" variant="ghost" className="h-7 px-2 text-[10px]" onClick={() => setEditingLinkIndex(-1)}>
+                            X
+                          </Button>
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-between">
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center space-x-1 text-xs text-blue-600 hover:text-blue-800 hover:underline truncate flex-1"
+                        >
+                          <ExternalLink className="h-3 w-3 flex-shrink-0" />
+                          <span className="truncate">{link.title || link.url}</span>
+                        </a>
+                        {canEdit && (
+                          <div className="flex items-center ml-2">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 text-gray-400 hover:text-blue-600"
+                              onClick={() => {
+                                setEditingLinkIndex(index);
+                                setEditingLinkValues({ url: link.url, title: link.title || '' });
+                              }}
+                            >
+                              <Edit3 className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 text-gray-400 hover:text-red-600"
+                              onClick={() => handleDeleteLink(index)}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
@@ -506,19 +662,69 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
               {(task.comments || []).length === 0 ? (
                 <p className="text-[11px] text-gray-400 italic">No hay actividad reciente.</p>
               ) : (
-                task.comments?.map((comment, index) => (
-                  <div key={comment.id} className="bg-white p-2 border rounded text-xs">
-                    <div className="flex justify-between items-start mb-1">
-                      <span className="font-semibold text-gray-700 text-[10px]">
-                        {comment.author?.name || comment.author?.email}
-                      </span>
-                      <span className="text-[9px] text-gray-400">
-                        {format(new Date(comment.createdAt), 'dd/MM/yy HH:mm')}
-                      </span>
+                task.comments?.map((comment, index) => {
+                  const isCommentAuthor = comment.authorId === session?.user?.id;
+                  const canManageComment = session?.user?.role === 'ADMIN' || isCommentAuthor;
+                  const isEditing = editingCommentId === comment.id;
+
+                  return (
+                    <div key={comment.id} className="bg-white p-2 border rounded text-xs">
+                      <div className="flex justify-between items-start mb-1">
+                        <div className="flex flex-col">
+                          <span className="font-semibold text-gray-700 text-[10px]">
+                            {comment.author?.name || comment.author?.email}
+                          </span>
+                          <span className="text-[9px] text-gray-400">
+                            {format(new Date(comment.createdAt), 'dd/MM/yy HH:mm')}
+                          </span>
+                        </div>
+                        {canManageComment && !isEditing && (
+                          <div className="flex items-center">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 text-gray-400 hover:text-blue-600"
+                              onClick={() => {
+                                setEditingCommentId(comment.id);
+                                setEditingCommentContent(comment.content);
+                              }}
+                            >
+                              <Edit3 className="h-3 w-3" />
+                            </Button>
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              className="h-5 w-5 p-0 text-gray-400 hover:text-red-600"
+                              onClick={() => handleDeleteComment(comment.id)}
+                            >
+                              <Trash2 className="h-3 w-3" />
+                            </Button>
+                          </div>
+                        )}
+                      </div>
+                      
+                      {isEditing ? (
+                        <div className="space-y-2 mt-1">
+                          <Textarea
+                            value={editingCommentContent}
+                            onChange={(e) => setEditingCommentContent(e.target.value)}
+                            className="text-xs min-h-[50px] p-1.5"
+                          />
+                          <div className="flex justify-end gap-1">
+                            <Button size="sm" variant="ghost" className="h-6 px-2 text-[10px]" onClick={() => setEditingCommentId(null)}>
+                              Cancelar
+                            </Button>
+                            <Button size="sm" className="h-6 px-2 text-[10px]" onClick={() => handleSaveEditedComment(comment.id)}>
+                              Guardar
+                            </Button>
+                          </div>
+                        </div>
+                      ) : (
+                        <div className="text-gray-600 leading-tight whitespace-pre-wrap">{comment.content}</div>
+                      )}
                     </div>
-                    <div className="text-gray-600 leading-tight whitespace-pre-wrap">{comment.content}</div>
-                  </div>
-                ))
+                  );
+                })
               )}
             </div>
 
