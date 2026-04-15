@@ -54,7 +54,6 @@ model User {
   assignedTasks      TaskAssignee[]
   createdTasks       Task[]         @relation("TaskCreator")
   programAssignments UserProgram[]
-  transcriptions     Transcription[]
 
   @@map("users")
 }
@@ -171,32 +170,6 @@ model AuditLog {
   user      User?    @relation(fields: [userId], references: [id])
 
   @@map("audit_logs")
-}
-
-model Transcription {
-  id            String                @id @default(cuid())
-  userId        String
-  filename      String
-  originalName  String
-  fileSize      Int
-  mimeType      String
-  status        TranscriptionStatus   @default(UPLOADED)
-  transcriptText String?
-  summary       String?
-  createdAt     DateTime              @default(now())
-  updatedAt     DateTime              @updatedAt
-  user          User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@map("transcriptions")
-}
-
-enum TranscriptionStatus {
-  UPLOADED
-  TRANSCRIBING
-  TRANSCRIBED
-  SUMMARIZING
-  COMPLETED
-  ERROR
 }
 
 enum UserRole {

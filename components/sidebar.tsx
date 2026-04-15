@@ -17,7 +17,6 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  Mic
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -64,12 +63,7 @@ const navigationItems = [
     icon: Search,
     roles: ['ADMIN', 'COLABORADOR']
   },
-  {
-    name: 'Transcribir',
-    href: '/transcribir',
-    icon: Mic,
-    roles: ['ADMIN', 'COLABORADOR']
-  },
+
   {
     name: 'Mi Perfil',
     href: '/profile',
