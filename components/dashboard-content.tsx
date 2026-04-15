@@ -155,7 +155,7 @@ export function DashboardContent() {
             <Link href="/kanban">
               <Button variant="outline" className="w-full justify-start">
                 <FolderOpen className="h-4 w-4 mr-2" />
-                Ver Tablero Kanban
+                Ver Tablero de Actividades
               </Button>
             </Link>
             <Link href="/search">

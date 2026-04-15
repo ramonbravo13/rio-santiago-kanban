@@ -67,7 +67,7 @@ export function Header({ onMenuClick }: HeaderProps) {
             
             <Link href="/kanban">
               <Button variant="ghost" size="sm">
-                Tablero Kanban
+                Tablero de Actividades
               </Button>
             </Link>
 

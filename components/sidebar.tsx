@@ -35,7 +35,7 @@ const navigationItems = [
     roles: ['ADMIN', 'COLABORADOR']
   },
   {
-    name: 'Tablero Kanban',
+    name: 'Tablero de Actividades',
     href: '/kanban',
     icon: Kanban,
     roles: ['ADMIN', 'COLABORADOR']
