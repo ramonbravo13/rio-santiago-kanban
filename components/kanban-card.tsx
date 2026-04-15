@@ -15,7 +15,6 @@ import {
   Calendar,
   User,
   MessageCircle,
-  Paperclip,
   AlertTriangle,
   ChevronRight,
   ChevronLeft,
@@ -311,6 +310,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCar
           </div>
         )}
 
+        <div className="flex items-center text-xs text-gray-500">
           <div className="flex items-center">
             <MessageCircle className="h-3 w-3 mr-1" />
             <span>{task.comments?.length || 0}</span>
