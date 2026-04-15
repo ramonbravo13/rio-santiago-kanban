@@ -129,7 +129,12 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    return NextResponse.json(tasks);
+    const formattedTasks = tasks.map(task => ({
+      ...task,
+      links: task.links ? JSON.parse(task.links as string) : []
+    }));
+
+    return NextResponse.json(formattedTasks);
   } catch (error) {
     console.error('Error obteniendo tareas:', error);
     return NextResponse.json(
@@ -176,7 +181,7 @@ export async function POST(request: NextRequest) {
         programId,
         dueDate: dueDate ? new Date(dueDate) : null,
         expectedDeliverables,
-        links: links.length > 0 ? links : null,
+        links: Array.isArray(links) && links.length > 0 ? JSON.stringify(links) : null,
         status: status as any,
       },
       include: {
@@ -264,7 +269,12 @@ export async function POST(request: NextRequest) {
       userAgent: request.headers.get('user-agent') || undefined,
     });
 
-    return NextResponse.json(taskWithAssignees, { status: 201 });
+    const formattedTask = {
+      ...taskWithAssignees,
+      links: taskWithAssignees?.links ? JSON.parse(taskWithAssignees.links) : []
+    };
+
+    return NextResponse.json(formattedTask, { status: 201 });
   } catch (error) {
     console.error('Error creando tarea:', error);
     return NextResponse.json(

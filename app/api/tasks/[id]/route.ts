@@ -68,8 +68,12 @@ export async function PUT(
       );
     }
 
-    // Extraer assigneeIds para manejarlo por separado
-    const { assigneeIds, ...taskData } = updates;
+    // Extraer assigneeIds y links para manejarlos por separado
+    const { assigneeIds, links, ...taskData } = updates;
+
+    if (links !== undefined) {
+      taskData.links = Array.isArray(links) && links.length > 0 ? JSON.stringify(links) : null;
+    }
 
     // Admin puede editar todo, colaboradores pueden editar todo excepto assignees y programId
     let allowedUpdates = taskData;
@@ -189,7 +193,12 @@ export async function PUT(
       userAgent: request.headers.get('user-agent') || undefined,
     });
 
-    return NextResponse.json(updatedTask);
+    const formattedTask = {
+      ...updatedTask,
+      links: updatedTask.links ? JSON.parse(updatedTask.links) : []
+    };
+
+    return NextResponse.json(formattedTask);
   } catch (error) {
     console.error('Error actualizando tarea:', error);
     return NextResponse.json(
