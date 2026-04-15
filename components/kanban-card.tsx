@@ -9,7 +9,6 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-import { FileUploadComponent } from './file-upload-component';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
 import {
@@ -21,7 +20,6 @@ import {
   ChevronRight,
   ChevronLeft,
   CheckCircle,
-  FileText,
   Trash2,
   MoreVertical,
   Eye,
@@ -61,7 +59,6 @@ const PREV_STATUS: Record<TaskStatus, TaskStatus | null> = {
 export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCardProps) {
   const { data: session } = useSession();
   const [isExpanded, setIsExpanded] = useState(false);
-  const [showFiles, setShowFiles] = useState(false);
   const [addingToCalendar, setAddingToCalendar] = useState(false);
 
   const canEdit = 
@@ -314,14 +311,9 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCar
           </div>
         )}
 
-        <div className="flex items-center justify-between text-xs text-gray-500">
           <div className="flex items-center">
             <MessageCircle className="h-3 w-3 mr-1" />
             <span>{task.comments?.length || 0}</span>
-          </div>
-          <div className="flex items-center">
-            <Paperclip className="h-3 w-3 mr-1" />
-            <span>{task.files?.length || 0}</span>
           </div>
         </div>
       </div>
@@ -422,37 +414,6 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit }: KanbanCar
               <div className="text-xs text-gray-600 line-clamp-2">
                 {task.comments[0]?.content}
               </div>
-            </div>
-          )}
-
-          {/* Botón para mostrar archivos */}
-          <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setShowFiles(!showFiles)}
-              className="h-7 px-3 text-xs"
-            >
-              <FileText className="h-3 w-3 mr-1" />
-              {showFiles ? 'Ocultar Archivos' : 'Ver Archivos'}
-              {task.files && task.files.length > 0 && (
-                <span className="ml-1 bg-primary/10 text-primary px-1.5 py-0.5 rounded-full text-xs">
-                  {task.files.length}
-                </span>
-              )}
-            </Button>
-          </div>
-
-          {/* Componente de archivos */}
-          {showFiles && (
-            <div>
-              <Separator className="my-3" />
-              <FileUploadComponent
-                taskId={task.id}
-                taskName={task.name}
-                showTitle={false}
-                className="space-y-3"
-              />
             </div>
           )}
         </div>
