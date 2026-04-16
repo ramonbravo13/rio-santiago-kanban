@@ -149,11 +149,18 @@ export function Sidebar({ isOpen = true, onClose, isCollapsed = false, onToggleC
               const isActive = pathname === item.href;
               const Icon = item.icon;
 
+              const handleItemClick = () => {
+                if (onClose) onClose();
+                if (!isCollapsed && onToggleCollapse) {
+                  onToggleCollapse();
+                }
+              };
+
               return (
                 <Link
                   key={item.name}
                   href={item.href}
-                  onClick={onClose}
+                  onClick={handleItemClick}
                   className={cn(
                     'flex items-center rounded-md text-sm font-medium transition-colors group',
                     isCollapsed ? 'px-2 py-3 justify-center' : 'px-3 py-2',
