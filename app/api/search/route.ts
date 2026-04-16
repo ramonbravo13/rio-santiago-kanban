@@ -73,6 +73,7 @@ export async function GET(request: NextRequest) {
 
     // Búsqueda en tareas
     let taskWhereClause: any = {
+      archived: false,
       OR: [
         { name: { contains: searchTerm, mode: 'insensitive' } },
         { description: { contains: searchTerm, mode: 'insensitive' } },
@@ -91,6 +92,9 @@ export async function GET(request: NextRequest) {
               { description: { contains: searchTerm, mode: 'insensitive' } },
               { expectedDeliverables: { contains: searchTerm, mode: 'insensitive' } }
             ]
+          },
+          {
+            archived: false
           },
           {
             assigneeId: session.user.id

@@ -191,7 +191,8 @@ exports.Prisma.TaskScalarFieldEnum = {
   links: 'links',
   progressPercentage: 'progressPercentage',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  archived: 'archived'
 };
 
 exports.Prisma.TaskAssigneeScalarFieldEnum = {

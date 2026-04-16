@@ -9146,6 +9146,7 @@ export namespace Prisma {
     progressPercentage: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    archived: boolean | null
   }
 
   export type TaskMaxAggregateOutputType = {
@@ -9161,6 +9162,7 @@ export namespace Prisma {
     progressPercentage: number | null
     createdAt: Date | null
     updatedAt: Date | null
+    archived: boolean | null
   }
 
   export type TaskCountAggregateOutputType = {
@@ -9176,6 +9178,7 @@ export namespace Prisma {
     progressPercentage: number
     createdAt: number
     updatedAt: number
+    archived: number
     _all: number
   }
 
@@ -9201,6 +9204,7 @@ export namespace Prisma {
     progressPercentage?: true
     createdAt?: true
     updatedAt?: true
+    archived?: true
   }
 
   export type TaskMaxAggregateInputType = {
@@ -9216,6 +9220,7 @@ export namespace Prisma {
     progressPercentage?: true
     createdAt?: true
     updatedAt?: true
+    archived?: true
   }
 
   export type TaskCountAggregateInputType = {
@@ -9231,6 +9236,7 @@ export namespace Prisma {
     progressPercentage?: true
     createdAt?: true
     updatedAt?: true
+    archived?: true
     _all?: true
   }
 
@@ -9333,6 +9339,7 @@ export namespace Prisma {
     progressPercentage: number
     createdAt: Date
     updatedAt: Date
+    archived: boolean
     _count: TaskCountAggregateOutputType | null
     _avg: TaskAvgAggregateOutputType | null
     _sum: TaskSumAggregateOutputType | null
@@ -9367,6 +9374,7 @@ export namespace Prisma {
     progressPercentage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    archived?: boolean
     comments?: boolean | Task$commentsArgs<ExtArgs>
     files?: boolean | Task$filesArgs<ExtArgs>
     assignees?: boolean | Task$assigneesArgs<ExtArgs>
@@ -9388,6 +9396,7 @@ export namespace Prisma {
     progressPercentage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    archived?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
     program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
@@ -9405,6 +9414,7 @@ export namespace Prisma {
     progressPercentage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    archived?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
     program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
@@ -9422,9 +9432,10 @@ export namespace Prisma {
     progressPercentage?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    archived?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "creatorId" | "programId" | "dueDate" | "status" | "expectedDeliverables" | "links" | "progressPercentage" | "createdAt" | "updatedAt", ExtArgs["result"]["task"]>
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "creatorId" | "programId" | "dueDate" | "status" | "expectedDeliverables" | "links" | "progressPercentage" | "createdAt" | "updatedAt" | "archived", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | Task$commentsArgs<ExtArgs>
     files?: boolean | Task$filesArgs<ExtArgs>
@@ -9464,6 +9475,7 @@ export namespace Prisma {
       progressPercentage: number
       createdAt: Date
       updatedAt: Date
+      archived: boolean
     }, ExtArgs["result"]["task"]>
     composites: {}
   }
@@ -9904,6 +9916,7 @@ export namespace Prisma {
     readonly progressPercentage: FieldRef<"Task", 'Int'>
     readonly createdAt: FieldRef<"Task", 'DateTime'>
     readonly updatedAt: FieldRef<"Task", 'DateTime'>
+    readonly archived: FieldRef<"Task", 'Boolean'>
   }
     
 
@@ -18278,7 +18291,8 @@ export namespace Prisma {
     links: 'links',
     progressPercentage: 'progressPercentage',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    archived: 'archived'
   };
 
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
@@ -18999,6 +19013,7 @@ export namespace Prisma {
     progressPercentage?: IntFilter<"Task"> | number
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
+    archived?: BoolFilter<"Task"> | boolean
     comments?: CommentListRelationFilter
     files?: FileListRelationFilter
     assignees?: TaskAssigneeListRelationFilter
@@ -19019,6 +19034,7 @@ export namespace Prisma {
     progressPercentage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    archived?: SortOrder
     comments?: CommentOrderByRelationAggregateInput
     files?: FileOrderByRelationAggregateInput
     assignees?: TaskAssigneeOrderByRelationAggregateInput
@@ -19042,6 +19058,7 @@ export namespace Prisma {
     progressPercentage?: IntFilter<"Task"> | number
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
+    archived?: BoolFilter<"Task"> | boolean
     comments?: CommentListRelationFilter
     files?: FileListRelationFilter
     assignees?: TaskAssigneeListRelationFilter
@@ -19062,6 +19079,7 @@ export namespace Prisma {
     progressPercentage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    archived?: SortOrder
     _count?: TaskCountOrderByAggregateInput
     _avg?: TaskAvgOrderByAggregateInput
     _max?: TaskMaxOrderByAggregateInput
@@ -19085,6 +19103,7 @@ export namespace Prisma {
     progressPercentage?: IntWithAggregatesFilter<"Task"> | number
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
+    archived?: BoolWithAggregatesFilter<"Task"> | boolean
   }
 
   export type TaskAssigneeWhereInput = {
@@ -20057,6 +20076,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
@@ -20077,6 +20097,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
@@ -20093,6 +20114,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
@@ -20113,6 +20135,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
@@ -20131,6 +20154,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
   }
 
   export type TaskUpdateManyMutationInput = {
@@ -20144,6 +20168,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type TaskUncheckedUpdateManyInput = {
@@ -20159,6 +20184,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type TaskAssigneeCreateInput = {
@@ -21223,6 +21249,7 @@ export namespace Prisma {
     progressPercentage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    archived?: SortOrder
   }
 
   export type TaskAvgOrderByAggregateInput = {
@@ -21242,6 +21269,7 @@ export namespace Prisma {
     progressPercentage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    archived?: SortOrder
   }
 
   export type TaskMinOrderByAggregateInput = {
@@ -21257,6 +21285,7 @@ export namespace Prisma {
     progressPercentage?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    archived?: SortOrder
   }
 
   export type TaskSumOrderByAggregateInput = {
@@ -23248,6 +23277,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
@@ -23266,6 +23296,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
@@ -23580,6 +23611,7 @@ export namespace Prisma {
     progressPercentage?: IntFilter<"Task"> | number
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
+    archived?: BoolFilter<"Task"> | boolean
   }
 
   export type UserProgramUpsertWithWhereUniqueWithoutUserInput = {
@@ -23683,6 +23715,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
@@ -23701,6 +23734,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
@@ -24251,6 +24285,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     creator: UserCreateNestedOneWithoutCreatedTasksInput
@@ -24270,6 +24305,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
   }
@@ -24350,6 +24386,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
@@ -24369,6 +24406,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
   }
@@ -24488,6 +24526,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
     creator: UserCreateNestedOneWithoutCreatedTasksInput
@@ -24507,6 +24546,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
   }
@@ -24593,6 +24633,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
@@ -24612,6 +24653,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
   }
@@ -24627,6 +24669,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
     creator: UserCreateNestedOneWithoutCreatedTasksInput
@@ -24646,6 +24689,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
   }
@@ -24726,6 +24770,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
@@ -24745,6 +24790,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
   }
@@ -25291,6 +25337,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
   }
 
   export type UserProgramCreateManyUserInput = {
@@ -25505,6 +25552,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
@@ -25523,6 +25571,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
@@ -25540,6 +25589,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserProgramUpdateWithoutUserInput = {
@@ -25644,6 +25694,7 @@ export namespace Prisma {
     progressPercentage?: number
     createdAt?: Date | string
     updatedAt?: Date | string
+    archived?: boolean
   }
 
   export type UserProgramCreateManyProgramInput = {
@@ -25662,6 +25713,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
@@ -25680,6 +25732,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
@@ -25697,6 +25750,7 @@ export namespace Prisma {
     progressPercentage?: IntFieldUpdateOperationsInput | number
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    archived?: BoolFieldUpdateOperationsInput | boolean
   }
 
   export type UserProgramUpdateWithoutProgramInput = {

@@ -31,6 +31,7 @@ import {
   Loader2,
   Plus,
   Send,
+  Archive,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -125,6 +126,35 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       } else {
         const error = await response.json();
         toast.error(error.error || 'Error al eliminar la tarea');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Error de conexión');
+    }
+  };
+
+  const handleArchive = async () => {
+    if (session?.user?.role !== 'ADMIN') return;
+
+    const confirmed = confirm(
+      `¿Estás seguro de que quieres archivar la tarea "${task.name}"?\n\nDesaparecerá del tablero pero podrás restaurarla desde la sección de Tareas Archivadas.`
+    );
+
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ archived: true })
+      });
+
+      if (response.ok) {
+        toast.success('Tarea archivada exitosamente');
+        onDelete?.(task.id); // Remove visually from the current board
+      } else {
+        const error = await response.json();
+        toast.error(error.error || 'Error al archivar la tarea');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -373,6 +403,15 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
                   >
                     <CalendarPlus className="h-4 w-4 mr-2" />
                     {addingToCalendar ? 'Agregando...' : 'Agregar al Calendario'}
+                  </DropdownMenuItem>
+                )}
+                {session?.user?.role === 'ADMIN' && (
+                  <DropdownMenuItem
+                    onClick={handleArchive}
+                    className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 focus:text-amber-700 focus:bg-amber-50"
+                  >
+                    <Archive className="h-4 w-4 mr-2" />
+                    Archivar tarea
                   </DropdownMenuItem>
                 )}
                 {canDelete && (

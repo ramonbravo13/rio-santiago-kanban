@@ -81,6 +81,7 @@ export async function PUT(
       // Los colaboradores pueden editar todos los campos excepto programId
       const { programId, ...collaboratorUpdates } = taskData;
       allowedUpdates = collaboratorUpdates;
+      delete allowedUpdates.archived;
     }
 
     // Manejar actualización de assignees para admins

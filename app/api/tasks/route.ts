@@ -22,8 +22,11 @@ export async function GET(request: NextRequest) {
     const programId = searchParams.get('programId');
     const status = searchParams.get('status');
     const assigneeId = searchParams.get('assigneeId');
+    const isArchived = searchParams.get('isArchived');
 
-    let whereClause: any = {};
+    let whereClause: any = {
+      archived: isArchived === 'true' ? true : false,
+    };
 
     // Filtros según el rol
     if (session.user.role === 'COLABORADOR') {

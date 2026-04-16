@@ -18,7 +18,8 @@ import {
   ChevronLeft,
   ChevronRight,
   BookText,
-  Calendar
+  Calendar,
+  Archive
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -58,6 +59,12 @@ const navigationItems = [
     href: '/spaces',
     icon: Calendar,
     roles: ['ADMIN', 'COLABORADOR']
+  },
+  {
+    name: 'Tareas Archivadas',
+    href: '/archived',
+    icon: Archive,
+    roles: ['ADMIN']
   },
   {
     name: 'KPIs y Reportes',
