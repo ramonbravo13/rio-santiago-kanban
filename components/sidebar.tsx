@@ -17,6 +17,7 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  BookText
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -61,6 +62,12 @@ const navigationItems = [
     name: 'Búsqueda',
     href: '/search',
     icon: Search,
+    roles: ['ADMIN', 'COLABORADOR']
+  },
+  {
+    name: 'Notas Personales',
+    href: '/notes',
+    icon: BookText,
     roles: ['ADMIN', 'COLABORADOR']
   },
 
