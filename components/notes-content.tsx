@@ -6,9 +6,12 @@ import { es } from 'date-fns/locale';
 import { Plus, Trash2, Save, FileText, CheckCircle2, Circle, X, BookText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import toast from 'react-hot-toast';
 import { cn } from '@/lib/utils';
+import dynamic from 'next/dynamic';
+import 'react-quill/dist/quill.snow.css';
+
+const ReactQuill = dynamic(() => import('react-quill'), { ssr: false });
 
 interface Todo {
   id: string;
@@ -220,7 +223,9 @@ export function NotesContent() {
                 >
                   <h4 className="font-semibold text-gray-800 text-sm mb-1 truncate pr-6">{note.title}</h4>
                   <p className="text-xs text-gray-500 line-clamp-2">
-                    {note.content || (note.todos && note.todos.length > 0 ? `${note.todos.length} tareas pendientes` : "Sin contenido adicional")}
+                    {note.content 
+                      ? note.content.replace(/<[^>]*>?/gm, '') 
+                      : (note.todos && note.todos.length > 0 ? `${note.todos.length} tareas pendientes` : "Sin contenido adicional")}
                   </p>
                   <span className="text-[10px] text-gray-400 mt-2 block">
                     {format(new Date(note.updatedAt), 'dd MMM yyyy', { locale: es })}
@@ -268,12 +273,23 @@ export function NotesContent() {
             {/* Area Principal Editor */}
             <div className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
               
-              <div className="mb-8">
-                <Textarea 
+              <div className="mb-12 h-[400px]">
+                {/* @ts-ignore */}
+                <ReactQuill 
+                  theme="snow"
                   value={editContent}
-                  onChange={(e) => setEditContent(e.target.value)}
+                  onChange={setEditContent}
                   placeholder="Escribe tus notas, actas, apuntes generales aquí..."
-                  className="min-h-[250px] border-none text-gray-700 leading-relaxed resize-y focus-visible:ring-0 shadow-none bg-gray-50/50 p-4 font-sans text-[15px]"
+                  className="h-full [&_.ql-container]:text-[15px] [&_.ql-container]:font-sans [&_.ql-container]:border-gray-200 [&_.ql-toolbar]:border-gray-200 [&_.ql-container]:rounded-b-lg [&_.ql-toolbar]:rounded-t-lg [&_.ql-editor]:min-h-[350px]"
+                  modules={{
+                    toolbar: [
+                      [{ 'header': [1, 2, 3, false] }],
+                      ['bold', 'italic', 'underline', 'strike'],
+                      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                      [{ 'indent': '-1'}, { 'indent': '+1' }],
+                      ['clean']
+                    ]
+                  }}
                 />
               </div>
 
