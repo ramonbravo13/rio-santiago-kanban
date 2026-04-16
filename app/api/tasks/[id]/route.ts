@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { createAuditLog } from '@/lib/audit';
+import { sendTaskAssignedEmail } from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -85,7 +86,7 @@ export async function PUT(
     }
 
     // Manejar actualización de assignees para admins
-    let updatedTask;
+    let updatedTask: any;
     if (isAdmin && assigneeIds !== undefined) {
       // Usar transacción para actualizar tarea y assignees
       updatedTask = await prisma.$transaction(async (tx: any) => {
@@ -204,6 +205,28 @@ export async function PUT(
         formattedTask.links = JSON.parse(updatedTask.links);
       } catch (e) {
         console.error(`Error parsing links for task ${taskId}:`, e);
+      }
+    }
+
+    // --- Notificaciones por correo para NUEVOS asignados ---
+    if (isAdmin && assigneeIds !== undefined && updatedTask?.assignees) {
+      const oldAssigneeIds = new Set(existingTask.assignees.map((a: any) => a.userId));
+      
+      const newlyAssignedUsers = updatedTask.assignees
+        .filter((a: any) => !oldAssigneeIds.has(a.userId) && a.user?.email)
+        .map((a: any) => a.user);
+        
+      if (newlyAssignedUsers.length > 0) {
+        Promise.allSettled(
+          newlyAssignedUsers.map((user: any) => 
+            sendTaskAssignedEmail(user.email, {
+              id: updatedTask.id,
+              name: updatedTask.name,
+              description: updatedTask.description || '',
+              dueDate: updatedTask.dueDate
+            })
+          )
+        ).catch(console.error);
       }
     }
 

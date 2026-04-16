@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/db';
 import { createAuditLog } from '@/lib/audit';
+import { sendTaskAssignedEmail } from '@/lib/email';
 
 export const dynamic = 'force-dynamic';
 
@@ -295,6 +296,24 @@ export async function POST(request: NextRequest) {
         console.error(`Error parsing links for new task ${task.id}:`, e);
       }
     }
+
+      // --- Envío de notificación por correo en segundo plano ---
+      if (taskWithAssignees?.assignees && taskWithAssignees.assignees.length > 0) {
+        // Aprovechar Promise.allSettled para que no se bloquee ni aborte si falla un solo email
+        Promise.allSettled(
+          taskWithAssignees.assignees.map(a => {
+            if (a.user.email) {
+              return sendTaskAssignedEmail(a.user.email, {
+                id: taskWithAssignees.id,
+                name: taskWithAssignees.name,
+                description: taskWithAssignees.description || '',
+                dueDate: taskWithAssignees.dueDate
+              });
+            }
+            return Promise.resolve();
+          })
+        ).catch(console.error);
+      }
 
     return NextResponse.json(formattedTask, { status: 201 });
   } catch (error) {
