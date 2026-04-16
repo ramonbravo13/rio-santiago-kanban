@@ -40,3 +40,31 @@ export async function GET(request: NextRequest) {
     return NextResponse.json({ error: 'Error interno del servidor' }, { status: 500 });
   }
 }
+
+export async function POST(request: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user || session.user.role !== 'ADMIN') {
+      return NextResponse.json({ error: 'No autorizado' }, { status: 403 });
+    }
+
+    const { name, color, isActive } = await request.json();
+
+    if (!name) {
+      return NextResponse.json({ error: 'El nombre es obligatorio' }, { status: 400 });
+    }
+
+    const space = await prisma.space.create({
+      data: {
+        name,
+        color: color || '#808080',
+        isActive: isActive !== undefined ? isActive : true
+      }
+    });
+
+    return NextResponse.json(space, { status: 201 });
+  } catch (error) {
+    console.error('Error creando espacio:', error);
+    return NextResponse.json({ error: 'Error interno o de validación' }, { status: 500 });
+  }
+}

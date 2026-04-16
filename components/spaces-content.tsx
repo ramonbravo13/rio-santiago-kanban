@@ -5,7 +5,7 @@ import { useSession } from 'next-auth/react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, isSameMonth, addMonths, subMonths, isSameDay, parseISO } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, CalendarDays, CheckCircle2, XCircle } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Plus, MapPin, Clock, CalendarDays, CheckCircle2, XCircle, Settings, Edit, Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -48,6 +48,10 @@ export function SpacesContent() {
   // Form states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [isSpaceModalOpen, setIsSpaceModalOpen] = useState(false);
+  const [editingSpace, setEditingSpace] = useState<Space | null>(null);
+  const [spaceFormData, setSpaceFormData] = useState({ name: '', color: '#3b82f6', isActive: true });
+  
   const [formData, setFormData] = useState({
     eventName: '',
     date: format(new Date(), 'yyyy-MM-dd'),
@@ -156,6 +160,48 @@ export function SpacesContent() {
     }
   };
 
+  const handleSaveSpace = async () => {
+    if (!spaceFormData.name) {
+      toast.error('El nombre del espacio es obligatorio');
+      return;
+    }
+
+    try {
+      const url = editingSpace ? `/api/spaces/${editingSpace.id}` : '/api/spaces';
+      const method = editingSpace ? 'PUT' : 'POST';
+
+      const res = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(spaceFormData)
+      });
+
+      if (res.ok) {
+        toast.success(editingSpace ? 'Espacio actualizado' : 'Espacio creado');
+        setIsSpaceModalOpen(false);
+        fetchData();
+      } else {
+        const error = await res.json();
+        toast.error(error.error || 'Error guardando el espacio');
+      }
+    } catch {
+      toast.error('Error de conexión');
+    }
+  };
+
+  const handleDeleteSpace = async (id: string) => {
+    if (!confirm('¿Seguro que deseas ocultar este espacio? No aparecerá para nuevas reservas.')) return;
+    try {
+      const res = await fetch(`/api/spaces/${id}`, { method: 'DELETE' });
+      if (res.ok) {
+         toast.success('Espacio ocultado');
+         fetchData();
+      }
+    } catch {
+      toast.error('Error de conexión');
+    }
+  };
+
   const formatTime = (isoString: string) => format(parseISO(isoString), 'HH:mm');
 
   // Filter approved events for month view
@@ -169,6 +215,7 @@ export function SpacesContent() {
             <TabsTrigger value="calendar">Calendario Visual</TabsTrigger>
             <TabsTrigger value="requests">Mis Solicitudes</TabsTrigger>
             {isAdmin && <TabsTrigger value="admin">Administración (Admin)</TabsTrigger>}
+            {isAdmin && <TabsTrigger value="config">Configurar Espacios</TabsTrigger>}
           </TabsList>
         </div>
 
@@ -371,6 +418,46 @@ export function SpacesContent() {
             </div>
           </TabsContent>
         )}
+        {isAdmin && (
+          <TabsContent value="config" className="flex-1 overflow-auto p-8 m-0">
+            <div className="max-w-5xl">
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-xl font-bold">Configuración de Espacios</h2>
+                <Button onClick={() => {
+                  setEditingSpace(null);
+                  setSpaceFormData({ name: '', color: '#3b82f6', isActive: true });
+                  setIsSpaceModalOpen(true);
+                }} className="ceti-button-primary">
+                  <Plus className="mr-2 h-4 w-4" /> Nuevo Espacio
+                </Button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {spaces.map(space => (
+                  <div key={space.id} className="bg-white border rounded-lg p-5 shadow-sm space-y-4">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-6 h-6 rounded-md shadow-sm" style={{ backgroundColor: space.color }}></div>
+                      <h3 className="font-semibold text-lg flex-1 truncate">{space.name}</h3>
+                    </div>
+                    
+                    <div className="flex space-x-2 pt-2 border-t">
+                      <Button size="sm" variant="outline" className="flex-1" onClick={() => {
+                         setEditingSpace(space);
+                         setSpaceFormData({ name: space.name, color: space.color, isActive: true });
+                         setIsSpaceModalOpen(true);
+                      }}>
+                        <Edit className="h-4 w-4 mr-2" /> Editar
+                      </Button>
+                      <Button size="sm" variant="outline" className="text-red-500 hover:text-red-600 flex-1" onClick={() => handleDeleteSpace(space.id)}>
+                        <Trash2 className="h-4 w-4 mr-2" /> Ocultar
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </TabsContent>
+        )}
       </Tabs>
 
       {/* Modal Nueva Reserva */}
@@ -446,6 +533,49 @@ export function SpacesContent() {
           <div className="flex justify-end mt-4 pt-4 border-t space-x-2">
              <Button variant="outline" onClick={() => setIsModalOpen(false)}>Cancelar</Button>
              <Button className="ceti-button-primary" onClick={handleCreateReservation}>Enviar Solicitud</Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Modal Configurar Espacio */}
+      <Dialog open={isSpaceModalOpen} onOpenChange={setIsSpaceModalOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle>{editingSpace ? 'Editar Espacio' : 'Nuevo Espacio'}</DialogTitle>
+          </DialogHeader>
+          
+          <div className="space-y-4 mt-4">
+            <div className="space-y-2">
+              <Label>Nombre del Espacio</Label>
+              <Input 
+                value={spaceFormData.name} 
+                onChange={e => setSpaceFormData({ ...spaceFormData, name: e.target.value })} 
+                placeholder="Ej. Sala de juntas B"
+              />
+            </div>
+            
+            <div className="space-y-2">
+              <Label>Color Identificador (Hex)</Label>
+              <div className="flex space-x-3">
+                <Input 
+                  type="color" 
+                  value={spaceFormData.color} 
+                  onChange={e => setSpaceFormData({ ...spaceFormData, color: e.target.value })} 
+                  className="w-16 h-10 p-1"
+                />
+                <Input 
+                  value={spaceFormData.color} 
+                  onChange={e => setSpaceFormData({ ...spaceFormData, color: e.target.value })} 
+                  placeholder="#3b82f6"
+                  className="flex-1"
+                />
+              </div>
+            </div>
+          </div>
+          
+          <div className="flex justify-end mt-6 pt-4 border-t space-x-2">
+             <Button variant="outline" onClick={() => setIsSpaceModalOpen(false)}>Cancelar</Button>
+             <Button className="ceti-button-primary" onClick={handleSaveSpace}>Guardar Espacio</Button>
           </div>
         </DialogContent>
       </Dialog>
