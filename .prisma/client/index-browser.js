@@ -235,16 +235,12 @@ exports.Prisma.AuditLogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
-exports.Prisma.TranscriptionScalarFieldEnum = {
+exports.Prisma.NoteScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
-  filename: 'filename',
-  originalName: 'originalName',
-  fileSize: 'fileSize',
-  mimeType: 'mimeType',
-  status: 'status',
-  transcriptText: 'transcriptText',
-  summary: 'summary',
+  title: 'title',
+  content: 'content',
+  todos: 'todos',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -291,15 +287,6 @@ exports.TaskStatus = exports.$Enums.TaskStatus = {
   DONE: 'DONE'
 };
 
-exports.TranscriptionStatus = exports.$Enums.TranscriptionStatus = {
-  UPLOADED: 'UPLOADED',
-  TRANSCRIBING: 'TRANSCRIBING',
-  TRANSCRIBED: 'TRANSCRIBED',
-  SUMMARIZING: 'SUMMARIZING',
-  COMPLETED: 'COMPLETED',
-  ERROR: 'ERROR'
-};
-
 exports.Prisma.ModelName = {
   Account: 'Account',
   Session: 'Session',
@@ -312,7 +299,7 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   File: 'File',
   AuditLog: 'AuditLog',
-  Transcription: 'Transcription'
+  Note: 'Note'
 };
 
 /**

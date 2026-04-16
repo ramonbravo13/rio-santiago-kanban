@@ -67,7 +67,37 @@ export function NotesContent() {
     }
   };
 
+  const saveCurrentChanges = async () => {
+    if (!activeNote || !isDirty) return null;
+    setIsSaving(true);
+    try {
+      const payload = { title: editTitle, content: editContent, todos: editTodos };
+      const res = await fetch(`/api/notes/${activeNote.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.ok) {
+        const updatedNote = await res.json();
+        setNotes(prevNotes => prevNotes.map(n => n.id === activeNote.id ? updatedNote : n));
+        return updatedNote;
+      }
+      return null;
+    } catch (error) {
+      console.error(error);
+      toast.error('Error al guardar');
+      return null;
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const handleCreateNote = async () => {
+    if (isDirty) {
+      await saveCurrentChanges();
+    }
+
     try {
       const res = await fetch('/api/notes', {
         method: 'POST',
@@ -81,12 +111,20 @@ export function NotesContent() {
 
       if (res.ok) {
         const newNote = await res.json();
-        setNotes([newNote, ...notes]);
+        setNotes(prevNotes => [newNote, ...prevNotes]);
         setActiveNote(newNote);
       }
     } catch (error) {
       toast.error('Error al crear nota');
     }
+  };
+
+  const handleSelectNote = async (note: Note) => {
+    if (activeNote?.id === note.id) return;
+    if (isDirty) {
+      await saveCurrentChanges();
+    }
+    setActiveNote(note);
   };
 
   const handleDeleteNote = async (id: string, e: React.MouseEvent) => {
@@ -110,34 +148,10 @@ export function NotesContent() {
   };
 
   const handleSaveNote = async () => {
-    if (!activeNote) return;
-    setIsSaving(true);
-    
-    try {
-      const payload = {
-        title: editTitle,
-        content: editContent,
-        todos: editTodos
-      };
-
-      const res = await fetch(`/api/notes/${activeNote.id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (res.ok) {
-        const updatedNote = await res.json();
-        toast.success('Guardado completo');
-        
-        // Update local list
-        setNotes(notes.map(n => n.id === activeNote.id ? updatedNote : n));
-        setActiveNote(updatedNote); // Refreshes the local active note
-      }
-    } catch (error) {
-      toast.error('Error al guardar');
-    } finally {
-      setIsSaving(false);
+    const updatedNote = await saveCurrentChanges();
+    if (updatedNote) {
+      toast.success('Guardado completo');
+      setActiveNote(updatedNote); 
     }
   };
 
@@ -163,7 +177,7 @@ export function NotesContent() {
   };
 
   // Verificadores rápidos para el botón de "guardado pendiente"
-  const isDirty = activeNote && (
+  const isDirty = activeNote !== null && (
     editTitle !== activeNote.title || 
     editContent !== activeNote.content || 
     JSON.stringify(editTodos) !== JSON.stringify(activeNote.todos)
@@ -196,7 +210,7 @@ export function NotesContent() {
               {notes.map(note => (
                 <div 
                   key={note.id}
-                  onClick={() => setActiveNote(note)}
+                  onClick={() => handleSelectNote(note)}
                   className={cn(
                     "relative p-4 cursor-pointer hover:bg-gray-100 transition-colors border-l-4",
                     activeNote?.id === note.id 
