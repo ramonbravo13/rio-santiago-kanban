@@ -217,7 +217,7 @@ export async function PUT(
         .map((a: any) => a.user);
         
       if (newlyAssignedUsers.length > 0) {
-        Promise.allSettled(
+        await Promise.allSettled(
           newlyAssignedUsers.map((user: any) => 
             sendTaskAssignedEmail(user.email, {
               id: updatedTask.id,

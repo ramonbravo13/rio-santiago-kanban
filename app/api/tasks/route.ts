@@ -300,7 +300,7 @@ export async function POST(request: NextRequest) {
       // --- Envío de notificación por correo en segundo plano ---
       if (taskWithAssignees?.assignees && taskWithAssignees.assignees.length > 0) {
         // Aprovechar Promise.allSettled para que no se bloquee ni aborte si falla un solo email
-        Promise.allSettled(
+        await Promise.allSettled(
           taskWithAssignees.assignees.map(a => {
             if (a.user.email) {
               return sendTaskAssignedEmail(a.user.email, {
