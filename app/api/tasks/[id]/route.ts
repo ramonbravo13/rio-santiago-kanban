@@ -195,8 +195,16 @@ export async function PUT(
 
     const formattedTask = {
       ...updatedTask,
-      links: updatedTask.links ? JSON.parse(updatedTask.links) : []
+      links: [] as any[]
     };
+
+    if (updatedTask.links) {
+      try {
+        formattedTask.links = JSON.parse(updatedTask.links);
+      } catch (e) {
+        console.error(`Error parsing links for task ${taskId}:`, e);
+      }
+    }
 
     return NextResponse.json(formattedTask);
   } catch (error) {

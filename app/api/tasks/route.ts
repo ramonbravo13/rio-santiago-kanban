@@ -129,10 +129,21 @@ export async function GET(request: NextRequest) {
       }
     });
 
-    const formattedTasks = tasks.map(task => ({
-      ...task,
-      links: task.links ? JSON.parse(task.links as string) : []
-    }));
+    const formattedTasks = tasks.map(task => {
+      let parsedLinks = [];
+      if (task.links) {
+        try {
+          parsedLinks = JSON.parse(task.links as string);
+        } catch (e) {
+          console.error(`Error parsing links for task ${task.id}:`, e);
+          parsedLinks = [];
+        }
+      }
+      return {
+        ...task,
+        links: parsedLinks
+      };
+    });
 
     return NextResponse.json(formattedTasks);
   } catch (error) {
@@ -271,8 +282,16 @@ export async function POST(request: NextRequest) {
 
     const formattedTask = {
       ...taskWithAssignees,
-      links: taskWithAssignees?.links ? JSON.parse(taskWithAssignees.links) : []
+      links: []
     };
+    
+    if (taskWithAssignees?.links) {
+      try {
+        formattedTask.links = JSON.parse(taskWithAssignees.links);
+      } catch (e) {
+        console.error(`Error parsing links for new task ${task.id}:`, e);
+      }
+    }
 
     return NextResponse.json(formattedTask, { status: 201 });
   } catch (error) {

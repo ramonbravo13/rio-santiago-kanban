@@ -62,8 +62,11 @@ export async function GET(request: NextRequest) {
     return NextResponse.json(programs);
   } catch (error) {
     console.error('Error obteniendo programas:', error);
+    if (error instanceof Error) {
+      console.error('Stack trace:', error.stack);
+    }
     return NextResponse.json(
-      { error: 'Error interno del servidor' },
+      { error: 'Error interno del servidor', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
