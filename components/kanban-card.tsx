@@ -32,6 +32,7 @@ import {
   Plus,
   Send,
   Archive,
+  RotateCcw,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -158,6 +159,29 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       }
     } catch (error) {
       console.error('Error:', error);
+      toast.error('Error de conexión');
+    }
+  };
+
+  const handleRestore = async () => {
+    if (session?.user?.role !== 'ADMIN') return;
+
+    if (!confirm(`¿Restaurar la tarea "${task.name}" al tablero?`)) return;
+
+    try {
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ archived: false })
+      });
+
+      if (response.ok) {
+        toast.success('Tarea restaurada exitosamente');
+        onDelete?.(task.id); // Visually remove from archived view
+      } else {
+        toast.error('Error al restaurar la tarea');
+      }
+    } catch (error) {
       toast.error('Error de conexión');
     }
   };
@@ -366,6 +390,13 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       title={isReadOnly ? 'Esta tarea solo es visible. Solo puedes editar las tareas asignadas a ti.' : undefined}
     >
       {/* Header */}
+      {task.archived && (
+        <div className="mb-2">
+           <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-300 shadow-sm w-full justify-center">
+             <Archive className="w-3 h-3 mr-1" /> Tarea Archivada
+           </Badge>
+        </div>
+      )}
       <div className="flex items-start justify-between mb-3">
         <h4 className="font-medium text-gray-900 text-sm line-clamp-2 flex-1 mr-2">
           {task.name}
@@ -386,7 +417,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-52">
-                {canEdit && onEdit && (
+                {!task.archived && canEdit && onEdit && (
                   <DropdownMenuItem
                     onClick={() => onEdit(task)}
                     className="text-blue-600 hover:text-blue-700 hover:bg-blue-50 focus:text-blue-700 focus:bg-blue-50"
@@ -395,7 +426,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
                     Editar
                   </DropdownMenuItem>
                 )}
-                {canEdit && task.dueDate && (
+                {!task.archived && canEdit && task.dueDate && (
                   <DropdownMenuItem
                     onClick={handleAddToCalendar}
                     disabled={addingToCalendar}
@@ -405,13 +436,22 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
                     {addingToCalendar ? 'Agregando...' : 'Agregar al Calendario'}
                   </DropdownMenuItem>
                 )}
-                {session?.user?.role === 'ADMIN' && (
+                {!task.archived && session?.user?.role === 'ADMIN' && (
                   <DropdownMenuItem
                     onClick={handleArchive}
                     className="text-amber-600 hover:text-amber-700 hover:bg-amber-50 focus:text-amber-700 focus:bg-amber-50"
                   >
                     <Archive className="h-4 w-4 mr-2" />
                     Archivar tarea
+                  </DropdownMenuItem>
+                )}
+                {task.archived && session?.user?.role === 'ADMIN' && (
+                  <DropdownMenuItem
+                    onClick={handleRestore}
+                    className="text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50 focus:text-indigo-700 focus:bg-indigo-50"
+                  >
+                    <RotateCcw className="h-4 w-4 mr-2" />
+                    Restaurar tarea
                   </DropdownMenuItem>
                 )}
                 {canDelete && (
@@ -534,47 +574,51 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       </div>
 
       {/* Acciones */}
-      <div className="flex items-center justify-between pt-2 border-t border-gray-100">
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleMovePrev}
-          disabled={!canEdit || !PREV_STATUS[task.status]}
-          className={cn(
-            "h-6 px-2",
-            !canEdit && "opacity-50 cursor-not-allowed"
-          )}
-          title={!canEdit ? "No puedes editar esta tarea" : undefined}
-        >
-          <ChevronLeft className="h-3 w-3" />
-        </Button>
+      <div className={cn("flex items-center pt-2 border-t border-gray-100", task.archived ? "justify-center" : "justify-between")}>
+        {!task.archived && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleMovePrev}
+            disabled={!canEdit || !PREV_STATUS[task.status]}
+            className={cn(
+              "h-6 px-2",
+              !canEdit && "opacity-50 cursor-not-allowed"
+            )}
+            title={!canEdit ? "No puedes editar esta tarea" : undefined}
+          >
+            <ChevronLeft className="h-3 w-3" />
+          </Button>
+        )}
 
         <Button
           variant="ghost"
           size="sm"
           onClick={() => setIsExpanded(!isExpanded)}
-          className="h-6 px-2 text-xs"
+          className="h-6 px-2 text-xs w-full max-w-[120px]"
         >
-          Detalles
+          {isExpanded ? 'Ocultar Detalles' : 'Ver Detalles completos'}
         </Button>
 
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={handleMoveNext}
-          disabled={!canEdit || !NEXT_STATUS[task.status]}
-          className={cn(
-            "h-6 px-2",
-            !canEdit && "opacity-50 cursor-not-allowed"
-          )}
-          title={!canEdit ? "No puedes editar esta tarea" : undefined}
-        >
-          {task.status === 'IN_PROGRESS' ? (
-            <CheckCircle className="h-3 w-3" />
-          ) : (
-            <ChevronRight className="h-3 w-3" />
-          )}
-        </Button>
+        {!task.archived && (
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleMoveNext}
+            disabled={!canEdit || !NEXT_STATUS[task.status]}
+            className={cn(
+              "h-6 px-2",
+              !canEdit && "opacity-50 cursor-not-allowed"
+            )}
+            title={!canEdit ? "No puedes editar esta tarea" : undefined}
+          >
+            {task.status === 'IN_PROGRESS' ? (
+              <CheckCircle className="h-3 w-3" />
+            ) : (
+              <ChevronRight className="h-3 w-3" />
+            )}
+          </Button>
+        )}
       </div>
 
       {/* Información expandida */}

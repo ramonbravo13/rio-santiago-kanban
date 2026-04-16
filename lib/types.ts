@@ -65,6 +65,7 @@ export interface Task {
   links?: TaskLink[] | null;
   createdAt: Date;
   updatedAt: Date;
+  archived?: boolean;
   assignees?: TaskAssignee[];
   creator?: User;
   program?: Program;
