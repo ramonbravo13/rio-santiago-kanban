@@ -52,18 +52,27 @@ export function ProgramManagement() {
     fetchPrograms();
   }, []);
 
+  const fetchWithRetry = async (url: string, retries = 2, delay = 1000) => {
+    for (let i = 0; i < retries; i++) {
+      try {
+        const response = await fetch(url);
+        if (response.ok) return await response.json();
+        if (i === retries - 1) throw new Error(`HTTP error! status: ${response.status}`);
+      } catch (error) {
+        if (i === retries - 1) throw error;
+        await new Promise(resolve => setTimeout(resolve, delay + Math.random() * 1000));
+      }
+    }
+  };
+
   const fetchPrograms = async () => {
     try {
-      const response = await fetch('/api/programs');
-      if (response.ok) {
-        const data = await response.json();
-        setPrograms(data);
-      } else {
-        toast.error('Error al cargar flujos de trabajo');
-      }
+      setLoading(true);
+      const data = await fetchWithRetry('/api/programs');
+      setPrograms(data);
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Error de conexión');
+      toast.error('Error al cargar flujos de trabajo');
     } finally {
       setLoading(false);
     }
