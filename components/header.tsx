@@ -75,7 +75,7 @@ export function Header({ onMenuClick }: HeaderProps) {
               <>
                 <Link href="/programs">
                   <Button variant="ghost" size="sm">
-                    Programas
+                    Flujos de Trabajo
                   </Button>
                 </Link>
                 <Link href="/users">

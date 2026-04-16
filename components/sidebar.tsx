@@ -41,7 +41,7 @@ const navigationItems = [
     roles: ['ADMIN', 'COLABORADOR']
   },
   {
-    name: 'Programas',
+    name: 'Flujos de Trabajo',
     href: '/programs',
     icon: FolderOpen,
     roles: ['ADMIN']

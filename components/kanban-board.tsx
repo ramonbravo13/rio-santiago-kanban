@@ -185,10 +185,10 @@ export function KanbanBoard() {
         <Select value={filterProgram} onValueChange={setFilterProgram}>
           <SelectTrigger className="w-full sm:w-64">
             <Filter className="h-4 w-4 mr-2" />
-            <SelectValue placeholder="Filtrar por programa" />
+            <SelectValue placeholder="Filtrar por flujo de trabajo" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="all">Todos los programas</SelectItem>
+            <SelectItem value="all">Todos los flujos de trabajo</SelectItem>
             {programs.map(program => (
               <SelectItem key={program.id} value={program.id}>
                 {program.name}

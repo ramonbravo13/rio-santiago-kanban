@@ -16,7 +16,7 @@ export default async function ProgramsPage() {
       <div className="space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Gestión de Programas</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Gestión de Flujos de Trabajo</h1>
             <p className="mt-2 text-gray-600">
               Administra los programas institucionales del CETI
             </p>

@@ -241,18 +241,18 @@ export function EditTaskModal({ isOpen, onClose, onTaskUpdated, task, programs }
             </div>
           </div>
 
-          {/* Programa - solo admin puede cambiar */}
+          {/* Flujo de Trabajo - solo admin puede cambiar */}
           {isAdmin && (
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                Programa
+                Flujo de Trabajo
               </Label>
               <Select
                 value={formData.programId}
                 onValueChange={(value) => setFormData(prev => ({ ...prev, programId: value }))}
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Seleccionar programa" />
+                  <SelectValue placeholder="Seleccionar flujo de trabajo" />
                 </SelectTrigger>
                 <SelectContent>
                   {activePrograms.filter(program => program.id && program.id.trim() !== '').map(program => (
@@ -415,7 +415,7 @@ export function EditTaskModal({ isOpen, onClose, onTaskUpdated, task, programs }
           {!isAdmin && (
             <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
               <p className="text-sm text-blue-800">
-                <strong>Nota:</strong> Como colaborador, puedes editar la información de la tarea pero no cambiar el programa ni los responsables.
+                <strong>Nota:</strong> Como colaborador, puedes editar la información de la tarea pero no cambiar el flujo de trabajo ni los responsables.
               </p>
             </div>
           )}

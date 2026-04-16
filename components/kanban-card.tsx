@@ -390,7 +390,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
         </div>
       </div>
 
-      {/* Programa y Permisos */}
+      {/* Flujo de Trabajo y Permisos */}
       <div className="mb-3 flex flex-wrap gap-2">
         <Badge variant="outline" className="text-xs">
           {task.program?.name}

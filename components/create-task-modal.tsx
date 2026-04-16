@@ -181,10 +181,10 @@ export function CreateTaskModal({ isOpen, onClose, onTaskCreated, programs }: Cr
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {/* Programa */}
+            {/* Flujo de Trabajo */}
             <div className="space-y-2">
               <Label className="text-sm font-medium text-gray-700">
-                Programa *
+                Flujo de Trabajo *
               </Label>
               <Select
                 value={formData.programId}
@@ -192,7 +192,7 @@ export function CreateTaskModal({ isOpen, onClose, onTaskCreated, programs }: Cr
                 required
               >
                 <SelectTrigger>
-                  <SelectValue placeholder="Seleccionar programa" />
+                  <SelectValue placeholder="Seleccionar flujo de trabajo" />
                 </SelectTrigger>
                 <SelectContent>
                   {activePrograms.filter(program => program.id && program.id.trim() !== '').map(program => (

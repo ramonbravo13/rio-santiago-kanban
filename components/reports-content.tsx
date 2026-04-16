@@ -187,7 +187,7 @@ export function ReportsContent() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Programas Activos</CardTitle>
+            <CardTitle className="text-sm font-medium">Flujos de Trabajo Activos</CardTitle>
             <FolderOpen className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -247,7 +247,7 @@ export function ReportsContent() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Promedio Tareas/Programa</CardTitle>
+            <CardTitle className="text-sm font-medium">Promedio Tareas/Flujos de trabajo</CardTitle>
             <Activity className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -318,7 +318,7 @@ export function ReportsContent() {
         {/* Progreso por programa */}
         <Card>
           <CardHeader>
-            <CardTitle>Tareas por Programa</CardTitle>
+            <CardTitle>Tareas por Flujo de Trabajo</CardTitle>
           </CardHeader>
           <CardContent>
             <ResponsiveContainer width="100%" height={300}>

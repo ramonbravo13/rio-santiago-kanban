@@ -102,7 +102,7 @@ export function SearchContent() {
   const getTypeName = (type: string) => {
     switch (type) {
       case 'program':
-        return 'Programa';
+        return 'Flujo de Trabajo';
       case 'task':
         return 'Tarea';
       case 'user':
@@ -165,7 +165,7 @@ export function SearchContent() {
             <div className="relative">
               <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
               <Input
-                placeholder="Buscar en programas, tareas, usuarios..."
+                placeholder="Buscar en flujos de trabajo, tareas, usuarios..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="pl-10 text-base"
@@ -195,7 +195,7 @@ export function SearchContent() {
               Todos ({resultsByType.all})
             </TabsTrigger>
             <TabsTrigger value="program">
-              Programas ({resultsByType.program})
+              Flujos de Trabajo ({resultsByType.program})
             </TabsTrigger>
             <TabsTrigger value="task">
               Tareas ({resultsByType.task})
@@ -311,7 +311,7 @@ export function SearchContent() {
               <div>
                 <h4 className="font-medium mb-2">Qué puedes buscar:</h4>
                 <ul className="space-y-1 text-muted-foreground">
-                  <li>• Nombres de programas</li>
+                  <li>• Nombres de flujos de trabajo</li>
                   <li>• Títulos y descripciones de tareas</li>
                   <li>• Nombres de usuarios</li>
                   <li>• Contenido de comentarios</li>

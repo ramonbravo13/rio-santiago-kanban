@@ -59,7 +59,7 @@ export function ProgramManagement() {
         const data = await response.json();
         setPrograms(data);
       } else {
-        toast.error('Error al cargar programas');
+        toast.error('Error al cargar flujos de trabajo');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -90,7 +90,7 @@ export function ProgramManagement() {
       });
 
       if (response.ok) {
-        toast.success('Programa creado exitosamente');
+        toast.success('Flujo de trabajo creado exitosamente');
         setIsCreateModalOpen(false);
         setFormData({
           name: '',
@@ -103,7 +103,7 @@ export function ProgramManagement() {
         fetchPrograms();
       } else {
         const errorData = await response.json();
-        toast.error(errorData.error || 'Error al crear programa');
+        toast.error(errorData.error || 'Error al crear flujo de trabajo');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -132,7 +132,7 @@ export function ProgramManagement() {
       });
 
       if (response.ok) {
-        toast.success('Programa actualizado exitosamente');
+        toast.success('Flujo de trabajo actualizado exitosamente');
         setEditingProgram(null);
         setFormData({
           name: '',
@@ -145,7 +145,7 @@ export function ProgramManagement() {
         fetchPrograms();
       } else {
         const errorData = await response.json();
-        toast.error(errorData.error || 'Error al actualizar programa');
+        toast.error(errorData.error || 'Error al actualizar flujo de trabajo');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -160,11 +160,11 @@ export function ProgramManagement() {
       });
 
       if (response.ok) {
-        toast.success('Programa eliminado exitosamente');
+        toast.success('Flujo de trabajo eliminado exitosamente');
         fetchPrograms();
       } else {
         const errorData = await response.json();
-        toast.error(errorData.error || 'Error al eliminar programa');
+        toast.error(errorData.error || 'Error al eliminar flujo de trabajo');
       }
     } catch (error) {
       console.error('Error:', error);
@@ -236,7 +236,7 @@ export function ProgramManagement() {
           <div className="relative flex-1 max-w-md">
             <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
             <Input
-              placeholder="Buscar programas..."
+              placeholder="Buscar flujos de trabajo..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="pl-10"
@@ -261,22 +261,22 @@ export function ProgramManagement() {
             <DialogTrigger asChild>
               <Button className="ceti-button-primary">
                 <Plus className="h-4 w-4 mr-2" />
-                Nuevo Programa
+                Nuevo Flujo de Trabajo
               </Button>
             </DialogTrigger>
             <DialogContent className="max-w-2xl">
               <DialogHeader>
-                <DialogTitle>Crear Nuevo Programa</DialogTitle>
+                <DialogTitle>Crear Nuevo Flujo de Trabajo</DialogTitle>
               </DialogHeader>
               <div className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="create-name">Nombre del Programa *</Label>
+                    <Label htmlFor="create-name">Nombre del Flujo de Trabajo *</Label>
                     <Input
                       id="create-name"
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="Nombre del programa"
+                      placeholder="Nombre del flujo de trabajo"
                     />
                   </div>
                   <div className="space-y-2">
@@ -300,7 +300,7 @@ export function ProgramManagement() {
                     id="create-description"
                     value={formData.description}
                     onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                    placeholder="Descripción del programa"
+                    placeholder="Descripción del flujo de trabajo"
                     rows={3}
                   />
                 </div>
@@ -311,7 +311,7 @@ export function ProgramManagement() {
                     id="create-objective"
                     value={formData.generalObjective}
                     onChange={(e) => setFormData(prev => ({ ...prev, generalObjective: e.target.value }))}
-                    placeholder="Objetivo general del programa"
+                    placeholder="Objetivo general del flujo de trabajo"
                     rows={3}
                   />
                 </div>
@@ -342,7 +342,7 @@ export function ProgramManagement() {
                   Cancelar
                 </Button>
                 <Button onClick={handleCreateProgram}>
-                  Crear Programa
+                  Crear Flujo de Trabajo
                 </Button>
               </DialogFooter>
             </DialogContent>
@@ -385,9 +385,9 @@ export function ProgramManagement() {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>¿Eliminar programa?</AlertDialogTitle>
+                          <AlertDialogTitle>¿Eliminar flujo de trabajo?</AlertDialogTitle>
                           <AlertDialogDescription>
-                            Esta acción no se puede deshacer. Se eliminará el programa y todas las tareas asociadas.
+                            Esta acción no se puede deshacer. Se eliminará el flujo de trabajo y todas las tareas asociadas.
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
@@ -460,17 +460,17 @@ export function ProgramManagement() {
       <Dialog open={!!editingProgram} onOpenChange={(open) => !open && setEditingProgram(null)}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
-            <DialogTitle>Editar Programa</DialogTitle>
+            <DialogTitle>Editar Flujo de Trabajo</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="edit-name">Nombre del Programa *</Label>
+                <Label htmlFor="edit-name">Nombre del Flujo de Trabajo *</Label>
                 <Input
                   id="edit-name"
                   value={formData.name}
                   onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                  placeholder="Nombre del programa"
+                  placeholder="Nombre del flujo de trabajo"
                 />
               </div>
               <div className="space-y-2">
@@ -494,7 +494,7 @@ export function ProgramManagement() {
                 id="edit-description"
                 value={formData.description}
                 onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-                placeholder="Descripción del programa"
+                placeholder="Descripción del flujo de trabajo"
                 rows={3}
               />
             </div>
@@ -505,7 +505,7 @@ export function ProgramManagement() {
                 id="edit-objective"
                 value={formData.generalObjective}
                 onChange={(e) => setFormData(prev => ({ ...prev, generalObjective: e.target.value }))}
-                placeholder="Objetivo general del programa"
+                placeholder="Objetivo general del flujo de trabajo"
                 rows={3}
               />
             </div>
@@ -536,7 +536,7 @@ export function ProgramManagement() {
               Cancelar
             </Button>
             <Button onClick={handleUpdateProgram}>
-              Actualizar Programa
+              Actualizar Flujo de Trabajo
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -546,16 +546,16 @@ export function ProgramManagement() {
         <Card>
           <CardContent className="p-12 text-center">
             <FolderOpen className="h-12 w-12 mx-auto text-muted-foreground mb-4" />
-            <h3 className="text-lg font-semibold mb-2">No se encontraron programas</h3>
+            <h3 className="text-lg font-semibold mb-2">No se encontraron flujos de trabajo</h3>
             <p className="text-muted-foreground mb-4">
               {searchTerm || filterStatus !== 'all' 
-                ? 'No hay programas que coincidan con los filtros seleccionados.' 
-                : 'Aún no hay programas registrados.'}
+                ? 'No hay flujos de trabajo que coincidan con los filtros seleccionados.' 
+                : 'Aún no hay flujos de trabajo registrados.'}
             </p>
             {session?.user?.role === 'ADMIN' && (
               <Button onClick={() => setIsCreateModalOpen(true)}>
                 <Plus className="h-4 w-4 mr-2" />
-                Crear Primer Programa
+                Crear Primer Flujo de Trabajo
               </Button>
             )}
           </CardContent>
