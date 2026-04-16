@@ -33,6 +33,7 @@ interface Reservation {
   space: Space;
   user: { name: string; email: string };
   contactInfo: string;
+  createdAt?: string;
 }
 
 export function SpacesContent() {
