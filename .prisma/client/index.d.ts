@@ -73,6 +73,16 @@ export type AuditLog = $Result.DefaultSelection<Prisma.$AuditLogPayload>
  * 
  */
 export type Note = $Result.DefaultSelection<Prisma.$NotePayload>
+/**
+ * Model Space
+ * 
+ */
+export type Space = $Result.DefaultSelection<Prisma.$SpacePayload>
+/**
+ * Model SpaceReservation
+ * 
+ */
+export type SpaceReservation = $Result.DefaultSelection<Prisma.$SpaceReservationPayload>
 
 /**
  * Enums
@@ -103,6 +113,15 @@ export const TaskStatus: {
 
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
 
+
+export const SpaceReservationStatus: {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
+export type SpaceReservationStatus = (typeof SpaceReservationStatus)[keyof typeof SpaceReservationStatus]
+
 }
 
 export type UserRole = $Enums.UserRole
@@ -116,6 +135,10 @@ export const ProgramStatus: typeof $Enums.ProgramStatus
 export type TaskStatus = $Enums.TaskStatus
 
 export const TaskStatus: typeof $Enums.TaskStatus
+
+export type SpaceReservationStatus = $Enums.SpaceReservationStatus
+
+export const SpaceReservationStatus: typeof $Enums.SpaceReservationStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -361,6 +384,26 @@ export class PrismaClient<
     * ```
     */
   get note(): Prisma.NoteDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.space`: Exposes CRUD operations for the **Space** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Spaces
+    * const spaces = await prisma.space.findMany()
+    * ```
+    */
+  get space(): Prisma.SpaceDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.spaceReservation`: Exposes CRUD operations for the **SpaceReservation** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SpaceReservations
+    * const spaceReservations = await prisma.spaceReservation.findMany()
+    * ```
+    */
+  get spaceReservation(): Prisma.SpaceReservationDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -812,7 +855,9 @@ export namespace Prisma {
     Comment: 'Comment',
     File: 'File',
     AuditLog: 'AuditLog',
-    Note: 'Note'
+    Note: 'Note',
+    Space: 'Space',
+    SpaceReservation: 'SpaceReservation'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -831,7 +876,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "account" | "session" | "user" | "verificationToken" | "program" | "userProgram" | "task" | "taskAssignee" | "comment" | "file" | "auditLog" | "note"
+      modelProps: "account" | "session" | "user" | "verificationToken" | "program" | "userProgram" | "task" | "taskAssignee" | "comment" | "file" | "auditLog" | "note" | "space" | "spaceReservation"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1723,6 +1768,154 @@ export namespace Prisma {
           }
         }
       }
+      Space: {
+        payload: Prisma.$SpacePayload<ExtArgs>
+        fields: Prisma.SpaceFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SpaceFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SpaceFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>
+          }
+          findFirst: {
+            args: Prisma.SpaceFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SpaceFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>
+          }
+          findMany: {
+            args: Prisma.SpaceFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>[]
+          }
+          create: {
+            args: Prisma.SpaceCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>
+          }
+          createMany: {
+            args: Prisma.SpaceCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SpaceCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>[]
+          }
+          delete: {
+            args: Prisma.SpaceDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>
+          }
+          update: {
+            args: Prisma.SpaceUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>
+          }
+          deleteMany: {
+            args: Prisma.SpaceDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SpaceUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SpaceUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>[]
+          }
+          upsert: {
+            args: Prisma.SpaceUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpacePayload>
+          }
+          aggregate: {
+            args: Prisma.SpaceAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSpace>
+          }
+          groupBy: {
+            args: Prisma.SpaceGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SpaceGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SpaceCountArgs<ExtArgs>
+            result: $Utils.Optional<SpaceCountAggregateOutputType> | number
+          }
+        }
+      }
+      SpaceReservation: {
+        payload: Prisma.$SpaceReservationPayload<ExtArgs>
+        fields: Prisma.SpaceReservationFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SpaceReservationFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SpaceReservationFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>
+          }
+          findFirst: {
+            args: Prisma.SpaceReservationFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SpaceReservationFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>
+          }
+          findMany: {
+            args: Prisma.SpaceReservationFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>[]
+          }
+          create: {
+            args: Prisma.SpaceReservationCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>
+          }
+          createMany: {
+            args: Prisma.SpaceReservationCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SpaceReservationCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>[]
+          }
+          delete: {
+            args: Prisma.SpaceReservationDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>
+          }
+          update: {
+            args: Prisma.SpaceReservationUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>
+          }
+          deleteMany: {
+            args: Prisma.SpaceReservationDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SpaceReservationUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SpaceReservationUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>[]
+          }
+          upsert: {
+            args: Prisma.SpaceReservationUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SpaceReservationPayload>
+          }
+          aggregate: {
+            args: Prisma.SpaceReservationAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSpaceReservation>
+          }
+          groupBy: {
+            args: Prisma.SpaceReservationGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SpaceReservationGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SpaceReservationCountArgs<ExtArgs>
+            result: $Utils.Optional<SpaceReservationCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -1819,6 +2012,8 @@ export namespace Prisma {
     file?: FileOmit
     auditLog?: AuditLogOmit
     note?: NoteOmit
+    space?: SpaceOmit
+    spaceReservation?: SpaceReservationOmit
   }
 
   /* Types for Logging */
@@ -1922,6 +2117,7 @@ export namespace Prisma {
     createdTasks: number
     programAssignments: number
     notes: number
+    spaceReservations: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -1934,6 +2130,7 @@ export namespace Prisma {
     createdTasks?: boolean | UserCountOutputTypeCountCreatedTasksArgs
     programAssignments?: boolean | UserCountOutputTypeCountProgramAssignmentsArgs
     notes?: boolean | UserCountOutputTypeCountNotesArgs
+    spaceReservations?: boolean | UserCountOutputTypeCountSpaceReservationsArgs
   }
 
   // Custom InputTypes
@@ -2008,6 +2205,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountNotesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NoteWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSpaceReservationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpaceReservationWhereInput
   }
 
 
@@ -2097,6 +2301,37 @@ export namespace Prisma {
    */
   export type TaskCountOutputTypeCountAssigneesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: TaskAssigneeWhereInput
+  }
+
+
+  /**
+   * Count Type SpaceCountOutputType
+   */
+
+  export type SpaceCountOutputType = {
+    reservations: number
+  }
+
+  export type SpaceCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reservations?: boolean | SpaceCountOutputTypeCountReservationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * SpaceCountOutputType without action
+   */
+  export type SpaceCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceCountOutputType
+     */
+    select?: SpaceCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * SpaceCountOutputType without action
+   */
+  export type SpaceCountOutputTypeCountReservationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpaceReservationWhereInput
   }
 
 
@@ -4545,6 +4780,7 @@ export namespace Prisma {
     createdTasks?: boolean | User$createdTasksArgs<ExtArgs>
     programAssignments?: boolean | User$programAssignmentsArgs<ExtArgs>
     notes?: boolean | User$notesArgs<ExtArgs>
+    spaceReservations?: boolean | User$spaceReservationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4598,6 +4834,7 @@ export namespace Prisma {
     createdTasks?: boolean | User$createdTasksArgs<ExtArgs>
     programAssignments?: boolean | User$programAssignmentsArgs<ExtArgs>
     notes?: boolean | User$notesArgs<ExtArgs>
+    spaceReservations?: boolean | User$spaceReservationsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4615,6 +4852,7 @@ export namespace Prisma {
       createdTasks: Prisma.$TaskPayload<ExtArgs>[]
       programAssignments: Prisma.$UserProgramPayload<ExtArgs>[]
       notes: Prisma.$NotePayload<ExtArgs>[]
+      spaceReservations: Prisma.$SpaceReservationPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -5030,6 +5268,7 @@ export namespace Prisma {
     createdTasks<T extends User$createdTasksArgs<ExtArgs> = {}>(args?: Subset<T, User$createdTasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     programAssignments<T extends User$programAssignmentsArgs<ExtArgs> = {}>(args?: Subset<T, User$programAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$UserProgramPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notes<T extends User$notesArgs<ExtArgs> = {}>(args?: Subset<T, User$notesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    spaceReservations<T extends User$spaceReservationsArgs<ExtArgs> = {}>(args?: Subset<T, User$spaceReservationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5670,6 +5909,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NoteScalarFieldEnum | NoteScalarFieldEnum[]
+  }
+
+  /**
+   * User.spaceReservations
+   */
+  export type User$spaceReservationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    where?: SpaceReservationWhereInput
+    orderBy?: SpaceReservationOrderByWithRelationInput | SpaceReservationOrderByWithRelationInput[]
+    cursor?: SpaceReservationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SpaceReservationScalarFieldEnum | SpaceReservationScalarFieldEnum[]
   }
 
   /**
@@ -15626,6 +15889,2293 @@ export namespace Prisma {
 
 
   /**
+   * Model Space
+   */
+
+  export type AggregateSpace = {
+    _count: SpaceCountAggregateOutputType | null
+    _min: SpaceMinAggregateOutputType | null
+    _max: SpaceMaxAggregateOutputType | null
+  }
+
+  export type SpaceMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    color: string | null
+    isActive: boolean | null
+  }
+
+  export type SpaceMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    description: string | null
+    color: string | null
+    isActive: boolean | null
+  }
+
+  export type SpaceCountAggregateOutputType = {
+    id: number
+    name: number
+    description: number
+    color: number
+    isActive: number
+    _all: number
+  }
+
+
+  export type SpaceMinAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    color?: true
+    isActive?: true
+  }
+
+  export type SpaceMaxAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    color?: true
+    isActive?: true
+  }
+
+  export type SpaceCountAggregateInputType = {
+    id?: true
+    name?: true
+    description?: true
+    color?: true
+    isActive?: true
+    _all?: true
+  }
+
+  export type SpaceAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Space to aggregate.
+     */
+    where?: SpaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Spaces to fetch.
+     */
+    orderBy?: SpaceOrderByWithRelationInput | SpaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SpaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Spaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Spaces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Spaces
+    **/
+    _count?: true | SpaceCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SpaceMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SpaceMaxAggregateInputType
+  }
+
+  export type GetSpaceAggregateType<T extends SpaceAggregateArgs> = {
+        [P in keyof T & keyof AggregateSpace]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSpace[P]>
+      : GetScalarType<T[P], AggregateSpace[P]>
+  }
+
+
+
+
+  export type SpaceGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpaceWhereInput
+    orderBy?: SpaceOrderByWithAggregationInput | SpaceOrderByWithAggregationInput[]
+    by: SpaceScalarFieldEnum[] | SpaceScalarFieldEnum
+    having?: SpaceScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SpaceCountAggregateInputType | true
+    _min?: SpaceMinAggregateInputType
+    _max?: SpaceMaxAggregateInputType
+  }
+
+  export type SpaceGroupByOutputType = {
+    id: string
+    name: string
+    description: string | null
+    color: string | null
+    isActive: boolean
+    _count: SpaceCountAggregateOutputType | null
+    _min: SpaceMinAggregateOutputType | null
+    _max: SpaceMaxAggregateOutputType | null
+  }
+
+  type GetSpaceGroupByPayload<T extends SpaceGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SpaceGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SpaceGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SpaceGroupByOutputType[P]>
+            : GetScalarType<T[P], SpaceGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SpaceSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    color?: boolean
+    isActive?: boolean
+    reservations?: boolean | Space$reservationsArgs<ExtArgs>
+    _count?: boolean | SpaceCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["space"]>
+
+  export type SpaceSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    color?: boolean
+    isActive?: boolean
+  }, ExtArgs["result"]["space"]>
+
+  export type SpaceSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    color?: boolean
+    isActive?: boolean
+  }, ExtArgs["result"]["space"]>
+
+  export type SpaceSelectScalar = {
+    id?: boolean
+    name?: boolean
+    description?: boolean
+    color?: boolean
+    isActive?: boolean
+  }
+
+  export type SpaceOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "color" | "isActive", ExtArgs["result"]["space"]>
+  export type SpaceInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    reservations?: boolean | Space$reservationsArgs<ExtArgs>
+    _count?: boolean | SpaceCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type SpaceIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type SpaceIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $SpacePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Space"
+    objects: {
+      reservations: Prisma.$SpaceReservationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      description: string | null
+      color: string | null
+      isActive: boolean
+    }, ExtArgs["result"]["space"]>
+    composites: {}
+  }
+
+  type SpaceGetPayload<S extends boolean | null | undefined | SpaceDefaultArgs> = $Result.GetResult<Prisma.$SpacePayload, S>
+
+  type SpaceCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SpaceFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SpaceCountAggregateInputType | true
+    }
+
+  export interface SpaceDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Space'], meta: { name: 'Space' } }
+    /**
+     * Find zero or one Space that matches the filter.
+     * @param {SpaceFindUniqueArgs} args - Arguments to find a Space
+     * @example
+     * // Get one Space
+     * const space = await prisma.space.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SpaceFindUniqueArgs>(args: SelectSubset<T, SpaceFindUniqueArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Space that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SpaceFindUniqueOrThrowArgs} args - Arguments to find a Space
+     * @example
+     * // Get one Space
+     * const space = await prisma.space.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SpaceFindUniqueOrThrowArgs>(args: SelectSubset<T, SpaceFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Space that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceFindFirstArgs} args - Arguments to find a Space
+     * @example
+     * // Get one Space
+     * const space = await prisma.space.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SpaceFindFirstArgs>(args?: SelectSubset<T, SpaceFindFirstArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Space that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceFindFirstOrThrowArgs} args - Arguments to find a Space
+     * @example
+     * // Get one Space
+     * const space = await prisma.space.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SpaceFindFirstOrThrowArgs>(args?: SelectSubset<T, SpaceFindFirstOrThrowArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Spaces that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Spaces
+     * const spaces = await prisma.space.findMany()
+     * 
+     * // Get first 10 Spaces
+     * const spaces = await prisma.space.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const spaceWithIdOnly = await prisma.space.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SpaceFindManyArgs>(args?: SelectSubset<T, SpaceFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Space.
+     * @param {SpaceCreateArgs} args - Arguments to create a Space.
+     * @example
+     * // Create one Space
+     * const Space = await prisma.space.create({
+     *   data: {
+     *     // ... data to create a Space
+     *   }
+     * })
+     * 
+     */
+    create<T extends SpaceCreateArgs>(args: SelectSubset<T, SpaceCreateArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Spaces.
+     * @param {SpaceCreateManyArgs} args - Arguments to create many Spaces.
+     * @example
+     * // Create many Spaces
+     * const space = await prisma.space.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SpaceCreateManyArgs>(args?: SelectSubset<T, SpaceCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Spaces and returns the data saved in the database.
+     * @param {SpaceCreateManyAndReturnArgs} args - Arguments to create many Spaces.
+     * @example
+     * // Create many Spaces
+     * const space = await prisma.space.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Spaces and only return the `id`
+     * const spaceWithIdOnly = await prisma.space.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SpaceCreateManyAndReturnArgs>(args?: SelectSubset<T, SpaceCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Space.
+     * @param {SpaceDeleteArgs} args - Arguments to delete one Space.
+     * @example
+     * // Delete one Space
+     * const Space = await prisma.space.delete({
+     *   where: {
+     *     // ... filter to delete one Space
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SpaceDeleteArgs>(args: SelectSubset<T, SpaceDeleteArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Space.
+     * @param {SpaceUpdateArgs} args - Arguments to update one Space.
+     * @example
+     * // Update one Space
+     * const space = await prisma.space.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SpaceUpdateArgs>(args: SelectSubset<T, SpaceUpdateArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Spaces.
+     * @param {SpaceDeleteManyArgs} args - Arguments to filter Spaces to delete.
+     * @example
+     * // Delete a few Spaces
+     * const { count } = await prisma.space.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SpaceDeleteManyArgs>(args?: SelectSubset<T, SpaceDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Spaces.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Spaces
+     * const space = await prisma.space.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SpaceUpdateManyArgs>(args: SelectSubset<T, SpaceUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Spaces and returns the data updated in the database.
+     * @param {SpaceUpdateManyAndReturnArgs} args - Arguments to update many Spaces.
+     * @example
+     * // Update many Spaces
+     * const space = await prisma.space.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Spaces and only return the `id`
+     * const spaceWithIdOnly = await prisma.space.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SpaceUpdateManyAndReturnArgs>(args: SelectSubset<T, SpaceUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Space.
+     * @param {SpaceUpsertArgs} args - Arguments to update or create a Space.
+     * @example
+     * // Update or create a Space
+     * const space = await prisma.space.upsert({
+     *   create: {
+     *     // ... data to create a Space
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Space we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SpaceUpsertArgs>(args: SelectSubset<T, SpaceUpsertArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Spaces.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceCountArgs} args - Arguments to filter Spaces to count.
+     * @example
+     * // Count the number of Spaces
+     * const count = await prisma.space.count({
+     *   where: {
+     *     // ... the filter for the Spaces we want to count
+     *   }
+     * })
+    **/
+    count<T extends SpaceCountArgs>(
+      args?: Subset<T, SpaceCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SpaceCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Space.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SpaceAggregateArgs>(args: Subset<T, SpaceAggregateArgs>): Prisma.PrismaPromise<GetSpaceAggregateType<T>>
+
+    /**
+     * Group by Space.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SpaceGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SpaceGroupByArgs['orderBy'] }
+        : { orderBy?: SpaceGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SpaceGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSpaceGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Space model
+   */
+  readonly fields: SpaceFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Space.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SpaceClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    reservations<T extends Space$reservationsArgs<ExtArgs> = {}>(args?: Subset<T, Space$reservationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Space model
+   */
+  interface SpaceFieldRefs {
+    readonly id: FieldRef<"Space", 'String'>
+    readonly name: FieldRef<"Space", 'String'>
+    readonly description: FieldRef<"Space", 'String'>
+    readonly color: FieldRef<"Space", 'String'>
+    readonly isActive: FieldRef<"Space", 'Boolean'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Space findUnique
+   */
+  export type SpaceFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * Filter, which Space to fetch.
+     */
+    where: SpaceWhereUniqueInput
+  }
+
+  /**
+   * Space findUniqueOrThrow
+   */
+  export type SpaceFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * Filter, which Space to fetch.
+     */
+    where: SpaceWhereUniqueInput
+  }
+
+  /**
+   * Space findFirst
+   */
+  export type SpaceFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * Filter, which Space to fetch.
+     */
+    where?: SpaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Spaces to fetch.
+     */
+    orderBy?: SpaceOrderByWithRelationInput | SpaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Spaces.
+     */
+    cursor?: SpaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Spaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Spaces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Spaces.
+     */
+    distinct?: SpaceScalarFieldEnum | SpaceScalarFieldEnum[]
+  }
+
+  /**
+   * Space findFirstOrThrow
+   */
+  export type SpaceFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * Filter, which Space to fetch.
+     */
+    where?: SpaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Spaces to fetch.
+     */
+    orderBy?: SpaceOrderByWithRelationInput | SpaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Spaces.
+     */
+    cursor?: SpaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Spaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Spaces.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Spaces.
+     */
+    distinct?: SpaceScalarFieldEnum | SpaceScalarFieldEnum[]
+  }
+
+  /**
+   * Space findMany
+   */
+  export type SpaceFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * Filter, which Spaces to fetch.
+     */
+    where?: SpaceWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Spaces to fetch.
+     */
+    orderBy?: SpaceOrderByWithRelationInput | SpaceOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Spaces.
+     */
+    cursor?: SpaceWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Spaces from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Spaces.
+     */
+    skip?: number
+    distinct?: SpaceScalarFieldEnum | SpaceScalarFieldEnum[]
+  }
+
+  /**
+   * Space create
+   */
+  export type SpaceCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Space.
+     */
+    data: XOR<SpaceCreateInput, SpaceUncheckedCreateInput>
+  }
+
+  /**
+   * Space createMany
+   */
+  export type SpaceCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Spaces.
+     */
+    data: SpaceCreateManyInput | SpaceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Space createManyAndReturn
+   */
+  export type SpaceCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * The data used to create many Spaces.
+     */
+    data: SpaceCreateManyInput | SpaceCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Space update
+   */
+  export type SpaceUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Space.
+     */
+    data: XOR<SpaceUpdateInput, SpaceUncheckedUpdateInput>
+    /**
+     * Choose, which Space to update.
+     */
+    where: SpaceWhereUniqueInput
+  }
+
+  /**
+   * Space updateMany
+   */
+  export type SpaceUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Spaces.
+     */
+    data: XOR<SpaceUpdateManyMutationInput, SpaceUncheckedUpdateManyInput>
+    /**
+     * Filter which Spaces to update
+     */
+    where?: SpaceWhereInput
+    /**
+     * Limit how many Spaces to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Space updateManyAndReturn
+   */
+  export type SpaceUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * The data used to update Spaces.
+     */
+    data: XOR<SpaceUpdateManyMutationInput, SpaceUncheckedUpdateManyInput>
+    /**
+     * Filter which Spaces to update
+     */
+    where?: SpaceWhereInput
+    /**
+     * Limit how many Spaces to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Space upsert
+   */
+  export type SpaceUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Space to update in case it exists.
+     */
+    where: SpaceWhereUniqueInput
+    /**
+     * In case the Space found by the `where` argument doesn't exist, create a new Space with this data.
+     */
+    create: XOR<SpaceCreateInput, SpaceUncheckedCreateInput>
+    /**
+     * In case the Space was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SpaceUpdateInput, SpaceUncheckedUpdateInput>
+  }
+
+  /**
+   * Space delete
+   */
+  export type SpaceDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+    /**
+     * Filter which Space to delete.
+     */
+    where: SpaceWhereUniqueInput
+  }
+
+  /**
+   * Space deleteMany
+   */
+  export type SpaceDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Spaces to delete
+     */
+    where?: SpaceWhereInput
+    /**
+     * Limit how many Spaces to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Space.reservations
+   */
+  export type Space$reservationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    where?: SpaceReservationWhereInput
+    orderBy?: SpaceReservationOrderByWithRelationInput | SpaceReservationOrderByWithRelationInput[]
+    cursor?: SpaceReservationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SpaceReservationScalarFieldEnum | SpaceReservationScalarFieldEnum[]
+  }
+
+  /**
+   * Space without action
+   */
+  export type SpaceDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Space
+     */
+    select?: SpaceSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Space
+     */
+    omit?: SpaceOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SpaceReservation
+   */
+
+  export type AggregateSpaceReservation = {
+    _count: SpaceReservationCountAggregateOutputType | null
+    _avg: SpaceReservationAvgAggregateOutputType | null
+    _sum: SpaceReservationSumAggregateOutputType | null
+    _min: SpaceReservationMinAggregateOutputType | null
+    _max: SpaceReservationMaxAggregateOutputType | null
+  }
+
+  export type SpaceReservationAvgAggregateOutputType = {
+    attendees: number | null
+  }
+
+  export type SpaceReservationSumAggregateOutputType = {
+    attendees: number | null
+  }
+
+  export type SpaceReservationMinAggregateOutputType = {
+    id: string | null
+    eventName: string | null
+    date: Date | null
+    startTime: Date | null
+    endTime: Date | null
+    spaceId: string | null
+    description: string | null
+    contactInfo: string | null
+    attendees: number | null
+    resources: string | null
+    status: $Enums.SpaceReservationStatus | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SpaceReservationMaxAggregateOutputType = {
+    id: string | null
+    eventName: string | null
+    date: Date | null
+    startTime: Date | null
+    endTime: Date | null
+    spaceId: string | null
+    description: string | null
+    contactInfo: string | null
+    attendees: number | null
+    resources: string | null
+    status: $Enums.SpaceReservationStatus | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type SpaceReservationCountAggregateOutputType = {
+    id: number
+    eventName: number
+    date: number
+    startTime: number
+    endTime: number
+    spaceId: number
+    description: number
+    contactInfo: number
+    attendees: number
+    resources: number
+    status: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type SpaceReservationAvgAggregateInputType = {
+    attendees?: true
+  }
+
+  export type SpaceReservationSumAggregateInputType = {
+    attendees?: true
+  }
+
+  export type SpaceReservationMinAggregateInputType = {
+    id?: true
+    eventName?: true
+    date?: true
+    startTime?: true
+    endTime?: true
+    spaceId?: true
+    description?: true
+    contactInfo?: true
+    attendees?: true
+    resources?: true
+    status?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SpaceReservationMaxAggregateInputType = {
+    id?: true
+    eventName?: true
+    date?: true
+    startTime?: true
+    endTime?: true
+    spaceId?: true
+    description?: true
+    contactInfo?: true
+    attendees?: true
+    resources?: true
+    status?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type SpaceReservationCountAggregateInputType = {
+    id?: true
+    eventName?: true
+    date?: true
+    startTime?: true
+    endTime?: true
+    spaceId?: true
+    description?: true
+    contactInfo?: true
+    attendees?: true
+    resources?: true
+    status?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type SpaceReservationAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SpaceReservation to aggregate.
+     */
+    where?: SpaceReservationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SpaceReservations to fetch.
+     */
+    orderBy?: SpaceReservationOrderByWithRelationInput | SpaceReservationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SpaceReservationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SpaceReservations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SpaceReservations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SpaceReservations
+    **/
+    _count?: true | SpaceReservationCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SpaceReservationAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SpaceReservationSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SpaceReservationMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SpaceReservationMaxAggregateInputType
+  }
+
+  export type GetSpaceReservationAggregateType<T extends SpaceReservationAggregateArgs> = {
+        [P in keyof T & keyof AggregateSpaceReservation]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSpaceReservation[P]>
+      : GetScalarType<T[P], AggregateSpaceReservation[P]>
+  }
+
+
+
+
+  export type SpaceReservationGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SpaceReservationWhereInput
+    orderBy?: SpaceReservationOrderByWithAggregationInput | SpaceReservationOrderByWithAggregationInput[]
+    by: SpaceReservationScalarFieldEnum[] | SpaceReservationScalarFieldEnum
+    having?: SpaceReservationScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SpaceReservationCountAggregateInputType | true
+    _avg?: SpaceReservationAvgAggregateInputType
+    _sum?: SpaceReservationSumAggregateInputType
+    _min?: SpaceReservationMinAggregateInputType
+    _max?: SpaceReservationMaxAggregateInputType
+  }
+
+  export type SpaceReservationGroupByOutputType = {
+    id: string
+    eventName: string
+    date: Date
+    startTime: Date
+    endTime: Date
+    spaceId: string
+    description: string | null
+    contactInfo: string | null
+    attendees: number | null
+    resources: string | null
+    status: $Enums.SpaceReservationStatus
+    userId: string
+    createdAt: Date
+    updatedAt: Date
+    _count: SpaceReservationCountAggregateOutputType | null
+    _avg: SpaceReservationAvgAggregateOutputType | null
+    _sum: SpaceReservationSumAggregateOutputType | null
+    _min: SpaceReservationMinAggregateOutputType | null
+    _max: SpaceReservationMaxAggregateOutputType | null
+  }
+
+  type GetSpaceReservationGroupByPayload<T extends SpaceReservationGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SpaceReservationGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SpaceReservationGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SpaceReservationGroupByOutputType[P]>
+            : GetScalarType<T[P], SpaceReservationGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SpaceReservationSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventName?: boolean
+    date?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    spaceId?: boolean
+    description?: boolean
+    contactInfo?: boolean
+    attendees?: boolean
+    resources?: boolean
+    status?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    space?: boolean | SpaceDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["spaceReservation"]>
+
+  export type SpaceReservationSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventName?: boolean
+    date?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    spaceId?: boolean
+    description?: boolean
+    contactInfo?: boolean
+    attendees?: boolean
+    resources?: boolean
+    status?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    space?: boolean | SpaceDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["spaceReservation"]>
+
+  export type SpaceReservationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    eventName?: boolean
+    date?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    spaceId?: boolean
+    description?: boolean
+    contactInfo?: boolean
+    attendees?: boolean
+    resources?: boolean
+    status?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    space?: boolean | SpaceDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["spaceReservation"]>
+
+  export type SpaceReservationSelectScalar = {
+    id?: boolean
+    eventName?: boolean
+    date?: boolean
+    startTime?: boolean
+    endTime?: boolean
+    spaceId?: boolean
+    description?: boolean
+    contactInfo?: boolean
+    attendees?: boolean
+    resources?: boolean
+    status?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type SpaceReservationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "eventName" | "date" | "startTime" | "endTime" | "spaceId" | "description" | "contactInfo" | "attendees" | "resources" | "status" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["spaceReservation"]>
+  export type SpaceReservationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    space?: boolean | SpaceDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SpaceReservationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    space?: boolean | SpaceDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SpaceReservationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    space?: boolean | SpaceDefaultArgs<ExtArgs>
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SpaceReservationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SpaceReservation"
+    objects: {
+      space: Prisma.$SpacePayload<ExtArgs>
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      eventName: string
+      date: Date
+      startTime: Date
+      endTime: Date
+      spaceId: string
+      description: string | null
+      contactInfo: string | null
+      attendees: number | null
+      resources: string | null
+      status: $Enums.SpaceReservationStatus
+      userId: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["spaceReservation"]>
+    composites: {}
+  }
+
+  type SpaceReservationGetPayload<S extends boolean | null | undefined | SpaceReservationDefaultArgs> = $Result.GetResult<Prisma.$SpaceReservationPayload, S>
+
+  type SpaceReservationCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SpaceReservationFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SpaceReservationCountAggregateInputType | true
+    }
+
+  export interface SpaceReservationDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SpaceReservation'], meta: { name: 'SpaceReservation' } }
+    /**
+     * Find zero or one SpaceReservation that matches the filter.
+     * @param {SpaceReservationFindUniqueArgs} args - Arguments to find a SpaceReservation
+     * @example
+     * // Get one SpaceReservation
+     * const spaceReservation = await prisma.spaceReservation.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SpaceReservationFindUniqueArgs>(args: SelectSubset<T, SpaceReservationFindUniqueArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SpaceReservation that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SpaceReservationFindUniqueOrThrowArgs} args - Arguments to find a SpaceReservation
+     * @example
+     * // Get one SpaceReservation
+     * const spaceReservation = await prisma.spaceReservation.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SpaceReservationFindUniqueOrThrowArgs>(args: SelectSubset<T, SpaceReservationFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SpaceReservation that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceReservationFindFirstArgs} args - Arguments to find a SpaceReservation
+     * @example
+     * // Get one SpaceReservation
+     * const spaceReservation = await prisma.spaceReservation.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SpaceReservationFindFirstArgs>(args?: SelectSubset<T, SpaceReservationFindFirstArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SpaceReservation that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceReservationFindFirstOrThrowArgs} args - Arguments to find a SpaceReservation
+     * @example
+     * // Get one SpaceReservation
+     * const spaceReservation = await prisma.spaceReservation.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SpaceReservationFindFirstOrThrowArgs>(args?: SelectSubset<T, SpaceReservationFindFirstOrThrowArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SpaceReservations that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceReservationFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SpaceReservations
+     * const spaceReservations = await prisma.spaceReservation.findMany()
+     * 
+     * // Get first 10 SpaceReservations
+     * const spaceReservations = await prisma.spaceReservation.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const spaceReservationWithIdOnly = await prisma.spaceReservation.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SpaceReservationFindManyArgs>(args?: SelectSubset<T, SpaceReservationFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SpaceReservation.
+     * @param {SpaceReservationCreateArgs} args - Arguments to create a SpaceReservation.
+     * @example
+     * // Create one SpaceReservation
+     * const SpaceReservation = await prisma.spaceReservation.create({
+     *   data: {
+     *     // ... data to create a SpaceReservation
+     *   }
+     * })
+     * 
+     */
+    create<T extends SpaceReservationCreateArgs>(args: SelectSubset<T, SpaceReservationCreateArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SpaceReservations.
+     * @param {SpaceReservationCreateManyArgs} args - Arguments to create many SpaceReservations.
+     * @example
+     * // Create many SpaceReservations
+     * const spaceReservation = await prisma.spaceReservation.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SpaceReservationCreateManyArgs>(args?: SelectSubset<T, SpaceReservationCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SpaceReservations and returns the data saved in the database.
+     * @param {SpaceReservationCreateManyAndReturnArgs} args - Arguments to create many SpaceReservations.
+     * @example
+     * // Create many SpaceReservations
+     * const spaceReservation = await prisma.spaceReservation.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SpaceReservations and only return the `id`
+     * const spaceReservationWithIdOnly = await prisma.spaceReservation.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SpaceReservationCreateManyAndReturnArgs>(args?: SelectSubset<T, SpaceReservationCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SpaceReservation.
+     * @param {SpaceReservationDeleteArgs} args - Arguments to delete one SpaceReservation.
+     * @example
+     * // Delete one SpaceReservation
+     * const SpaceReservation = await prisma.spaceReservation.delete({
+     *   where: {
+     *     // ... filter to delete one SpaceReservation
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SpaceReservationDeleteArgs>(args: SelectSubset<T, SpaceReservationDeleteArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SpaceReservation.
+     * @param {SpaceReservationUpdateArgs} args - Arguments to update one SpaceReservation.
+     * @example
+     * // Update one SpaceReservation
+     * const spaceReservation = await prisma.spaceReservation.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SpaceReservationUpdateArgs>(args: SelectSubset<T, SpaceReservationUpdateArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SpaceReservations.
+     * @param {SpaceReservationDeleteManyArgs} args - Arguments to filter SpaceReservations to delete.
+     * @example
+     * // Delete a few SpaceReservations
+     * const { count } = await prisma.spaceReservation.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SpaceReservationDeleteManyArgs>(args?: SelectSubset<T, SpaceReservationDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SpaceReservations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceReservationUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SpaceReservations
+     * const spaceReservation = await prisma.spaceReservation.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SpaceReservationUpdateManyArgs>(args: SelectSubset<T, SpaceReservationUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SpaceReservations and returns the data updated in the database.
+     * @param {SpaceReservationUpdateManyAndReturnArgs} args - Arguments to update many SpaceReservations.
+     * @example
+     * // Update many SpaceReservations
+     * const spaceReservation = await prisma.spaceReservation.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SpaceReservations and only return the `id`
+     * const spaceReservationWithIdOnly = await prisma.spaceReservation.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SpaceReservationUpdateManyAndReturnArgs>(args: SelectSubset<T, SpaceReservationUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SpaceReservation.
+     * @param {SpaceReservationUpsertArgs} args - Arguments to update or create a SpaceReservation.
+     * @example
+     * // Update or create a SpaceReservation
+     * const spaceReservation = await prisma.spaceReservation.upsert({
+     *   create: {
+     *     // ... data to create a SpaceReservation
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SpaceReservation we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SpaceReservationUpsertArgs>(args: SelectSubset<T, SpaceReservationUpsertArgs<ExtArgs>>): Prisma__SpaceReservationClient<$Result.GetResult<Prisma.$SpaceReservationPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SpaceReservations.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceReservationCountArgs} args - Arguments to filter SpaceReservations to count.
+     * @example
+     * // Count the number of SpaceReservations
+     * const count = await prisma.spaceReservation.count({
+     *   where: {
+     *     // ... the filter for the SpaceReservations we want to count
+     *   }
+     * })
+    **/
+    count<T extends SpaceReservationCountArgs>(
+      args?: Subset<T, SpaceReservationCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SpaceReservationCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SpaceReservation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceReservationAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SpaceReservationAggregateArgs>(args: Subset<T, SpaceReservationAggregateArgs>): Prisma.PrismaPromise<GetSpaceReservationAggregateType<T>>
+
+    /**
+     * Group by SpaceReservation.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SpaceReservationGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SpaceReservationGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SpaceReservationGroupByArgs['orderBy'] }
+        : { orderBy?: SpaceReservationGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SpaceReservationGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSpaceReservationGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SpaceReservation model
+   */
+  readonly fields: SpaceReservationFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SpaceReservation.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SpaceReservationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    space<T extends SpaceDefaultArgs<ExtArgs> = {}>(args?: Subset<T, SpaceDefaultArgs<ExtArgs>>): Prisma__SpaceClient<$Result.GetResult<Prisma.$SpacePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SpaceReservation model
+   */
+  interface SpaceReservationFieldRefs {
+    readonly id: FieldRef<"SpaceReservation", 'String'>
+    readonly eventName: FieldRef<"SpaceReservation", 'String'>
+    readonly date: FieldRef<"SpaceReservation", 'DateTime'>
+    readonly startTime: FieldRef<"SpaceReservation", 'DateTime'>
+    readonly endTime: FieldRef<"SpaceReservation", 'DateTime'>
+    readonly spaceId: FieldRef<"SpaceReservation", 'String'>
+    readonly description: FieldRef<"SpaceReservation", 'String'>
+    readonly contactInfo: FieldRef<"SpaceReservation", 'String'>
+    readonly attendees: FieldRef<"SpaceReservation", 'Int'>
+    readonly resources: FieldRef<"SpaceReservation", 'String'>
+    readonly status: FieldRef<"SpaceReservation", 'SpaceReservationStatus'>
+    readonly userId: FieldRef<"SpaceReservation", 'String'>
+    readonly createdAt: FieldRef<"SpaceReservation", 'DateTime'>
+    readonly updatedAt: FieldRef<"SpaceReservation", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SpaceReservation findUnique
+   */
+  export type SpaceReservationFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * Filter, which SpaceReservation to fetch.
+     */
+    where: SpaceReservationWhereUniqueInput
+  }
+
+  /**
+   * SpaceReservation findUniqueOrThrow
+   */
+  export type SpaceReservationFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * Filter, which SpaceReservation to fetch.
+     */
+    where: SpaceReservationWhereUniqueInput
+  }
+
+  /**
+   * SpaceReservation findFirst
+   */
+  export type SpaceReservationFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * Filter, which SpaceReservation to fetch.
+     */
+    where?: SpaceReservationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SpaceReservations to fetch.
+     */
+    orderBy?: SpaceReservationOrderByWithRelationInput | SpaceReservationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SpaceReservations.
+     */
+    cursor?: SpaceReservationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SpaceReservations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SpaceReservations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SpaceReservations.
+     */
+    distinct?: SpaceReservationScalarFieldEnum | SpaceReservationScalarFieldEnum[]
+  }
+
+  /**
+   * SpaceReservation findFirstOrThrow
+   */
+  export type SpaceReservationFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * Filter, which SpaceReservation to fetch.
+     */
+    where?: SpaceReservationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SpaceReservations to fetch.
+     */
+    orderBy?: SpaceReservationOrderByWithRelationInput | SpaceReservationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SpaceReservations.
+     */
+    cursor?: SpaceReservationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SpaceReservations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SpaceReservations.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SpaceReservations.
+     */
+    distinct?: SpaceReservationScalarFieldEnum | SpaceReservationScalarFieldEnum[]
+  }
+
+  /**
+   * SpaceReservation findMany
+   */
+  export type SpaceReservationFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * Filter, which SpaceReservations to fetch.
+     */
+    where?: SpaceReservationWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SpaceReservations to fetch.
+     */
+    orderBy?: SpaceReservationOrderByWithRelationInput | SpaceReservationOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SpaceReservations.
+     */
+    cursor?: SpaceReservationWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SpaceReservations from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SpaceReservations.
+     */
+    skip?: number
+    distinct?: SpaceReservationScalarFieldEnum | SpaceReservationScalarFieldEnum[]
+  }
+
+  /**
+   * SpaceReservation create
+   */
+  export type SpaceReservationCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SpaceReservation.
+     */
+    data: XOR<SpaceReservationCreateInput, SpaceReservationUncheckedCreateInput>
+  }
+
+  /**
+   * SpaceReservation createMany
+   */
+  export type SpaceReservationCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SpaceReservations.
+     */
+    data: SpaceReservationCreateManyInput | SpaceReservationCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SpaceReservation createManyAndReturn
+   */
+  export type SpaceReservationCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * The data used to create many SpaceReservations.
+     */
+    data: SpaceReservationCreateManyInput | SpaceReservationCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SpaceReservation update
+   */
+  export type SpaceReservationUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SpaceReservation.
+     */
+    data: XOR<SpaceReservationUpdateInput, SpaceReservationUncheckedUpdateInput>
+    /**
+     * Choose, which SpaceReservation to update.
+     */
+    where: SpaceReservationWhereUniqueInput
+  }
+
+  /**
+   * SpaceReservation updateMany
+   */
+  export type SpaceReservationUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SpaceReservations.
+     */
+    data: XOR<SpaceReservationUpdateManyMutationInput, SpaceReservationUncheckedUpdateManyInput>
+    /**
+     * Filter which SpaceReservations to update
+     */
+    where?: SpaceReservationWhereInput
+    /**
+     * Limit how many SpaceReservations to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SpaceReservation updateManyAndReturn
+   */
+  export type SpaceReservationUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * The data used to update SpaceReservations.
+     */
+    data: XOR<SpaceReservationUpdateManyMutationInput, SpaceReservationUncheckedUpdateManyInput>
+    /**
+     * Filter which SpaceReservations to update
+     */
+    where?: SpaceReservationWhereInput
+    /**
+     * Limit how many SpaceReservations to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SpaceReservation upsert
+   */
+  export type SpaceReservationUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SpaceReservation to update in case it exists.
+     */
+    where: SpaceReservationWhereUniqueInput
+    /**
+     * In case the SpaceReservation found by the `where` argument doesn't exist, create a new SpaceReservation with this data.
+     */
+    create: XOR<SpaceReservationCreateInput, SpaceReservationUncheckedCreateInput>
+    /**
+     * In case the SpaceReservation was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SpaceReservationUpdateInput, SpaceReservationUncheckedUpdateInput>
+  }
+
+  /**
+   * SpaceReservation delete
+   */
+  export type SpaceReservationDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+    /**
+     * Filter which SpaceReservation to delete.
+     */
+    where: SpaceReservationWhereUniqueInput
+  }
+
+  /**
+   * SpaceReservation deleteMany
+   */
+  export type SpaceReservationDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SpaceReservations to delete
+     */
+    where?: SpaceReservationWhereInput
+    /**
+     * Limit how many SpaceReservations to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SpaceReservation without action
+   */
+  export type SpaceReservationDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SpaceReservation
+     */
+    select?: SpaceReservationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SpaceReservation
+     */
+    omit?: SpaceReservationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SpaceReservationInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -15800,6 +18350,37 @@ export namespace Prisma {
   export type NoteScalarFieldEnum = (typeof NoteScalarFieldEnum)[keyof typeof NoteScalarFieldEnum]
 
 
+  export const SpaceScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    description: 'description',
+    color: 'color',
+    isActive: 'isActive'
+  };
+
+  export type SpaceScalarFieldEnum = (typeof SpaceScalarFieldEnum)[keyof typeof SpaceScalarFieldEnum]
+
+
+  export const SpaceReservationScalarFieldEnum: {
+    id: 'id',
+    eventName: 'eventName',
+    date: 'date',
+    startTime: 'startTime',
+    endTime: 'endTime',
+    spaceId: 'spaceId',
+    description: 'description',
+    contactInfo: 'contactInfo',
+    attendees: 'attendees',
+    resources: 'resources',
+    status: 'status',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type SpaceReservationScalarFieldEnum = (typeof SpaceReservationScalarFieldEnum)[keyof typeof SpaceReservationScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -15948,6 +18529,20 @@ export namespace Prisma {
    * Reference to a field of type 'QueryMode'
    */
   export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+  /**
+   * Reference to a field of type 'SpaceReservationStatus'
+   */
+  export type EnumSpaceReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpaceReservationStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'SpaceReservationStatus[]'
+   */
+  export type ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'SpaceReservationStatus[]'>
     
 
 
@@ -16134,6 +18729,7 @@ export namespace Prisma {
     createdTasks?: TaskListRelationFilter
     programAssignments?: UserProgramListRelationFilter
     notes?: NoteListRelationFilter
+    spaceReservations?: SpaceReservationListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -16156,6 +18752,7 @@ export namespace Prisma {
     createdTasks?: TaskOrderByRelationAggregateInput
     programAssignments?: UserProgramOrderByRelationAggregateInput
     notes?: NoteOrderByRelationAggregateInput
+    spaceReservations?: SpaceReservationOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -16181,6 +18778,7 @@ export namespace Prisma {
     createdTasks?: TaskListRelationFilter
     programAssignments?: UserProgramListRelationFilter
     notes?: NoteListRelationFilter
+    spaceReservations?: SpaceReservationListRelationFilter
   }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
@@ -16831,6 +19429,166 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Note"> | Date | string
   }
 
+  export type SpaceWhereInput = {
+    AND?: SpaceWhereInput | SpaceWhereInput[]
+    OR?: SpaceWhereInput[]
+    NOT?: SpaceWhereInput | SpaceWhereInput[]
+    id?: StringFilter<"Space"> | string
+    name?: StringFilter<"Space"> | string
+    description?: StringNullableFilter<"Space"> | string | null
+    color?: StringNullableFilter<"Space"> | string | null
+    isActive?: BoolFilter<"Space"> | boolean
+    reservations?: SpaceReservationListRelationFilter
+  }
+
+  export type SpaceOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    reservations?: SpaceReservationOrderByRelationAggregateInput
+  }
+
+  export type SpaceWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SpaceWhereInput | SpaceWhereInput[]
+    OR?: SpaceWhereInput[]
+    NOT?: SpaceWhereInput | SpaceWhereInput[]
+    name?: StringFilter<"Space"> | string
+    description?: StringNullableFilter<"Space"> | string | null
+    color?: StringNullableFilter<"Space"> | string | null
+    isActive?: BoolFilter<"Space"> | boolean
+    reservations?: SpaceReservationListRelationFilter
+  }, "id">
+
+  export type SpaceOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    isActive?: SortOrder
+    _count?: SpaceCountOrderByAggregateInput
+    _max?: SpaceMaxOrderByAggregateInput
+    _min?: SpaceMinOrderByAggregateInput
+  }
+
+  export type SpaceScalarWhereWithAggregatesInput = {
+    AND?: SpaceScalarWhereWithAggregatesInput | SpaceScalarWhereWithAggregatesInput[]
+    OR?: SpaceScalarWhereWithAggregatesInput[]
+    NOT?: SpaceScalarWhereWithAggregatesInput | SpaceScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Space"> | string
+    name?: StringWithAggregatesFilter<"Space"> | string
+    description?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    color?: StringNullableWithAggregatesFilter<"Space"> | string | null
+    isActive?: BoolWithAggregatesFilter<"Space"> | boolean
+  }
+
+  export type SpaceReservationWhereInput = {
+    AND?: SpaceReservationWhereInput | SpaceReservationWhereInput[]
+    OR?: SpaceReservationWhereInput[]
+    NOT?: SpaceReservationWhereInput | SpaceReservationWhereInput[]
+    id?: StringFilter<"SpaceReservation"> | string
+    eventName?: StringFilter<"SpaceReservation"> | string
+    date?: DateTimeFilter<"SpaceReservation"> | Date | string
+    startTime?: DateTimeFilter<"SpaceReservation"> | Date | string
+    endTime?: DateTimeFilter<"SpaceReservation"> | Date | string
+    spaceId?: StringFilter<"SpaceReservation"> | string
+    description?: StringNullableFilter<"SpaceReservation"> | string | null
+    contactInfo?: StringNullableFilter<"SpaceReservation"> | string | null
+    attendees?: IntNullableFilter<"SpaceReservation"> | number | null
+    resources?: StringNullableFilter<"SpaceReservation"> | string | null
+    status?: EnumSpaceReservationStatusFilter<"SpaceReservation"> | $Enums.SpaceReservationStatus
+    userId?: StringFilter<"SpaceReservation"> | string
+    createdAt?: DateTimeFilter<"SpaceReservation"> | Date | string
+    updatedAt?: DateTimeFilter<"SpaceReservation"> | Date | string
+    space?: XOR<SpaceScalarRelationFilter, SpaceWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SpaceReservationOrderByWithRelationInput = {
+    id?: SortOrder
+    eventName?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    spaceId?: SortOrder
+    description?: SortOrderInput | SortOrder
+    contactInfo?: SortOrderInput | SortOrder
+    attendees?: SortOrderInput | SortOrder
+    resources?: SortOrderInput | SortOrder
+    status?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    space?: SpaceOrderByWithRelationInput
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type SpaceReservationWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SpaceReservationWhereInput | SpaceReservationWhereInput[]
+    OR?: SpaceReservationWhereInput[]
+    NOT?: SpaceReservationWhereInput | SpaceReservationWhereInput[]
+    eventName?: StringFilter<"SpaceReservation"> | string
+    date?: DateTimeFilter<"SpaceReservation"> | Date | string
+    startTime?: DateTimeFilter<"SpaceReservation"> | Date | string
+    endTime?: DateTimeFilter<"SpaceReservation"> | Date | string
+    spaceId?: StringFilter<"SpaceReservation"> | string
+    description?: StringNullableFilter<"SpaceReservation"> | string | null
+    contactInfo?: StringNullableFilter<"SpaceReservation"> | string | null
+    attendees?: IntNullableFilter<"SpaceReservation"> | number | null
+    resources?: StringNullableFilter<"SpaceReservation"> | string | null
+    status?: EnumSpaceReservationStatusFilter<"SpaceReservation"> | $Enums.SpaceReservationStatus
+    userId?: StringFilter<"SpaceReservation"> | string
+    createdAt?: DateTimeFilter<"SpaceReservation"> | Date | string
+    updatedAt?: DateTimeFilter<"SpaceReservation"> | Date | string
+    space?: XOR<SpaceScalarRelationFilter, SpaceWhereInput>
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type SpaceReservationOrderByWithAggregationInput = {
+    id?: SortOrder
+    eventName?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    spaceId?: SortOrder
+    description?: SortOrderInput | SortOrder
+    contactInfo?: SortOrderInput | SortOrder
+    attendees?: SortOrderInput | SortOrder
+    resources?: SortOrderInput | SortOrder
+    status?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: SpaceReservationCountOrderByAggregateInput
+    _avg?: SpaceReservationAvgOrderByAggregateInput
+    _max?: SpaceReservationMaxOrderByAggregateInput
+    _min?: SpaceReservationMinOrderByAggregateInput
+    _sum?: SpaceReservationSumOrderByAggregateInput
+  }
+
+  export type SpaceReservationScalarWhereWithAggregatesInput = {
+    AND?: SpaceReservationScalarWhereWithAggregatesInput | SpaceReservationScalarWhereWithAggregatesInput[]
+    OR?: SpaceReservationScalarWhereWithAggregatesInput[]
+    NOT?: SpaceReservationScalarWhereWithAggregatesInput | SpaceReservationScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SpaceReservation"> | string
+    eventName?: StringWithAggregatesFilter<"SpaceReservation"> | string
+    date?: DateTimeWithAggregatesFilter<"SpaceReservation"> | Date | string
+    startTime?: DateTimeWithAggregatesFilter<"SpaceReservation"> | Date | string
+    endTime?: DateTimeWithAggregatesFilter<"SpaceReservation"> | Date | string
+    spaceId?: StringWithAggregatesFilter<"SpaceReservation"> | string
+    description?: StringNullableWithAggregatesFilter<"SpaceReservation"> | string | null
+    contactInfo?: StringNullableWithAggregatesFilter<"SpaceReservation"> | string | null
+    attendees?: IntNullableWithAggregatesFilter<"SpaceReservation"> | number | null
+    resources?: StringNullableWithAggregatesFilter<"SpaceReservation"> | string | null
+    status?: EnumSpaceReservationStatusWithAggregatesFilter<"SpaceReservation"> | $Enums.SpaceReservationStatus
+    userId?: StringWithAggregatesFilter<"SpaceReservation"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"SpaceReservation"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"SpaceReservation"> | Date | string
+  }
+
   export type AccountCreateInput = {
     id?: string
     type: string
@@ -17003,6 +19761,7 @@ export namespace Prisma {
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -17025,6 +19784,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -17047,6 +19807,7 @@ export namespace Prisma {
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -17069,6 +19830,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -17748,6 +20510,183 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SpaceCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    color?: string | null
+    isActive?: boolean
+    reservations?: SpaceReservationCreateNestedManyWithoutSpaceInput
+  }
+
+  export type SpaceUncheckedCreateInput = {
+    id?: string
+    name: string
+    description?: string | null
+    color?: string | null
+    isActive?: boolean
+    reservations?: SpaceReservationUncheckedCreateNestedManyWithoutSpaceInput
+  }
+
+  export type SpaceUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    reservations?: SpaceReservationUpdateManyWithoutSpaceNestedInput
+  }
+
+  export type SpaceUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    reservations?: SpaceReservationUncheckedUpdateManyWithoutSpaceNestedInput
+  }
+
+  export type SpaceCreateManyInput = {
+    id?: string
+    name: string
+    description?: string | null
+    color?: string | null
+    isActive?: boolean
+  }
+
+  export type SpaceUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SpaceUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SpaceReservationCreateInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    space: SpaceCreateNestedOneWithoutReservationsInput
+    user: UserCreateNestedOneWithoutSpaceReservationsInput
+  }
+
+  export type SpaceReservationUncheckedCreateInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    spaceId: string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SpaceReservationUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    space?: SpaceUpdateOneRequiredWithoutReservationsNestedInput
+    user?: UserUpdateOneRequiredWithoutSpaceReservationsNestedInput
+  }
+
+  export type SpaceReservationUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    spaceId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SpaceReservationCreateManyInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    spaceId: string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SpaceReservationUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SpaceReservationUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    spaceId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -18032,6 +20971,12 @@ export namespace Prisma {
     none?: NoteWhereInput
   }
 
+  export type SpaceReservationListRelationFilter = {
+    every?: SpaceReservationWhereInput
+    some?: SpaceReservationWhereInput
+    none?: SpaceReservationWhereInput
+  }
+
   export type AccountOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -18065,6 +21010,10 @@ export namespace Prisma {
   }
 
   export type NoteOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SpaceReservationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -18559,6 +21508,111 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type SpaceCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type SpaceMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type SpaceMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    description?: SortOrder
+    color?: SortOrder
+    isActive?: SortOrder
+  }
+
+  export type EnumSpaceReservationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceReservationStatus | EnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceReservationStatusFilter<$PrismaModel> | $Enums.SpaceReservationStatus
+  }
+
+  export type SpaceScalarRelationFilter = {
+    is?: SpaceWhereInput
+    isNot?: SpaceWhereInput
+  }
+
+  export type SpaceReservationCountOrderByAggregateInput = {
+    id?: SortOrder
+    eventName?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    spaceId?: SortOrder
+    description?: SortOrder
+    contactInfo?: SortOrder
+    attendees?: SortOrder
+    resources?: SortOrder
+    status?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SpaceReservationAvgOrderByAggregateInput = {
+    attendees?: SortOrder
+  }
+
+  export type SpaceReservationMaxOrderByAggregateInput = {
+    id?: SortOrder
+    eventName?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    spaceId?: SortOrder
+    description?: SortOrder
+    contactInfo?: SortOrder
+    attendees?: SortOrder
+    resources?: SortOrder
+    status?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SpaceReservationMinOrderByAggregateInput = {
+    id?: SortOrder
+    eventName?: SortOrder
+    date?: SortOrder
+    startTime?: SortOrder
+    endTime?: SortOrder
+    spaceId?: SortOrder
+    description?: SortOrder
+    contactInfo?: SortOrder
+    attendees?: SortOrder
+    resources?: SortOrder
+    status?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type SpaceReservationSumOrderByAggregateInput = {
+    attendees?: SortOrder
+  }
+
+  export type EnumSpaceReservationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceReservationStatus | EnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceReservationStatusWithAggregatesFilter<$PrismaModel> | $Enums.SpaceReservationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSpaceReservationStatusFilter<$PrismaModel>
+    _max?: NestedEnumSpaceReservationStatusFilter<$PrismaModel>
+  }
+
   export type UserCreateNestedOneWithoutAccountsInput = {
     create?: XOR<UserCreateWithoutAccountsInput, UserUncheckedCreateWithoutAccountsInput>
     connectOrCreate?: UserCreateOrConnectWithoutAccountsInput
@@ -18670,6 +21724,13 @@ export namespace Prisma {
     connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
   }
 
+  export type SpaceReservationCreateNestedManyWithoutUserInput = {
+    create?: XOR<SpaceReservationCreateWithoutUserInput, SpaceReservationUncheckedCreateWithoutUserInput> | SpaceReservationCreateWithoutUserInput[] | SpaceReservationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutUserInput | SpaceReservationCreateOrConnectWithoutUserInput[]
+    createMany?: SpaceReservationCreateManyUserInputEnvelope
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+  }
+
   export type AccountUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -18731,6 +21792,13 @@ export namespace Prisma {
     connectOrCreate?: NoteCreateOrConnectWithoutUserInput | NoteCreateOrConnectWithoutUserInput[]
     createMany?: NoteCreateManyUserInputEnvelope
     connect?: NoteWhereUniqueInput | NoteWhereUniqueInput[]
+  }
+
+  export type SpaceReservationUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<SpaceReservationCreateWithoutUserInput, SpaceReservationUncheckedCreateWithoutUserInput> | SpaceReservationCreateWithoutUserInput[] | SpaceReservationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutUserInput | SpaceReservationCreateOrConnectWithoutUserInput[]
+    createMany?: SpaceReservationCreateManyUserInputEnvelope
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
   }
 
   export type NullableDateTimeFieldUpdateOperationsInput = {
@@ -18871,6 +21939,20 @@ export namespace Prisma {
     deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
   }
 
+  export type SpaceReservationUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SpaceReservationCreateWithoutUserInput, SpaceReservationUncheckedCreateWithoutUserInput> | SpaceReservationCreateWithoutUserInput[] | SpaceReservationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutUserInput | SpaceReservationCreateOrConnectWithoutUserInput[]
+    upsert?: SpaceReservationUpsertWithWhereUniqueWithoutUserInput | SpaceReservationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SpaceReservationCreateManyUserInputEnvelope
+    set?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    disconnect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    delete?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    update?: SpaceReservationUpdateWithWhereUniqueWithoutUserInput | SpaceReservationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SpaceReservationUpdateManyWithWhereWithoutUserInput | SpaceReservationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SpaceReservationScalarWhereInput | SpaceReservationScalarWhereInput[]
+  }
+
   export type AccountUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<AccountCreateWithoutUserInput, AccountUncheckedCreateWithoutUserInput> | AccountCreateWithoutUserInput[] | AccountUncheckedCreateWithoutUserInput[]
     connectOrCreate?: AccountCreateOrConnectWithoutUserInput | AccountCreateOrConnectWithoutUserInput[]
@@ -18995,6 +22077,20 @@ export namespace Prisma {
     update?: NoteUpdateWithWhereUniqueWithoutUserInput | NoteUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: NoteUpdateManyWithWhereWithoutUserInput | NoteUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: NoteScalarWhereInput | NoteScalarWhereInput[]
+  }
+
+  export type SpaceReservationUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<SpaceReservationCreateWithoutUserInput, SpaceReservationUncheckedCreateWithoutUserInput> | SpaceReservationCreateWithoutUserInput[] | SpaceReservationUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutUserInput | SpaceReservationCreateOrConnectWithoutUserInput[]
+    upsert?: SpaceReservationUpsertWithWhereUniqueWithoutUserInput | SpaceReservationUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: SpaceReservationCreateManyUserInputEnvelope
+    set?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    disconnect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    delete?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    update?: SpaceReservationUpdateWithWhereUniqueWithoutUserInput | SpaceReservationUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: SpaceReservationUpdateManyWithWhereWithoutUserInput | SpaceReservationUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: SpaceReservationScalarWhereInput | SpaceReservationScalarWhereInput[]
   }
 
   export type TaskCreateNestedManyWithoutProgramInput = {
@@ -19393,6 +22489,80 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutNotesInput, UserUpdateWithoutNotesInput>, UserUncheckedUpdateWithoutNotesInput>
   }
 
+  export type SpaceReservationCreateNestedManyWithoutSpaceInput = {
+    create?: XOR<SpaceReservationCreateWithoutSpaceInput, SpaceReservationUncheckedCreateWithoutSpaceInput> | SpaceReservationCreateWithoutSpaceInput[] | SpaceReservationUncheckedCreateWithoutSpaceInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutSpaceInput | SpaceReservationCreateOrConnectWithoutSpaceInput[]
+    createMany?: SpaceReservationCreateManySpaceInputEnvelope
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+  }
+
+  export type SpaceReservationUncheckedCreateNestedManyWithoutSpaceInput = {
+    create?: XOR<SpaceReservationCreateWithoutSpaceInput, SpaceReservationUncheckedCreateWithoutSpaceInput> | SpaceReservationCreateWithoutSpaceInput[] | SpaceReservationUncheckedCreateWithoutSpaceInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutSpaceInput | SpaceReservationCreateOrConnectWithoutSpaceInput[]
+    createMany?: SpaceReservationCreateManySpaceInputEnvelope
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+  }
+
+  export type SpaceReservationUpdateManyWithoutSpaceNestedInput = {
+    create?: XOR<SpaceReservationCreateWithoutSpaceInput, SpaceReservationUncheckedCreateWithoutSpaceInput> | SpaceReservationCreateWithoutSpaceInput[] | SpaceReservationUncheckedCreateWithoutSpaceInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutSpaceInput | SpaceReservationCreateOrConnectWithoutSpaceInput[]
+    upsert?: SpaceReservationUpsertWithWhereUniqueWithoutSpaceInput | SpaceReservationUpsertWithWhereUniqueWithoutSpaceInput[]
+    createMany?: SpaceReservationCreateManySpaceInputEnvelope
+    set?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    disconnect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    delete?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    update?: SpaceReservationUpdateWithWhereUniqueWithoutSpaceInput | SpaceReservationUpdateWithWhereUniqueWithoutSpaceInput[]
+    updateMany?: SpaceReservationUpdateManyWithWhereWithoutSpaceInput | SpaceReservationUpdateManyWithWhereWithoutSpaceInput[]
+    deleteMany?: SpaceReservationScalarWhereInput | SpaceReservationScalarWhereInput[]
+  }
+
+  export type SpaceReservationUncheckedUpdateManyWithoutSpaceNestedInput = {
+    create?: XOR<SpaceReservationCreateWithoutSpaceInput, SpaceReservationUncheckedCreateWithoutSpaceInput> | SpaceReservationCreateWithoutSpaceInput[] | SpaceReservationUncheckedCreateWithoutSpaceInput[]
+    connectOrCreate?: SpaceReservationCreateOrConnectWithoutSpaceInput | SpaceReservationCreateOrConnectWithoutSpaceInput[]
+    upsert?: SpaceReservationUpsertWithWhereUniqueWithoutSpaceInput | SpaceReservationUpsertWithWhereUniqueWithoutSpaceInput[]
+    createMany?: SpaceReservationCreateManySpaceInputEnvelope
+    set?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    disconnect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    delete?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    connect?: SpaceReservationWhereUniqueInput | SpaceReservationWhereUniqueInput[]
+    update?: SpaceReservationUpdateWithWhereUniqueWithoutSpaceInput | SpaceReservationUpdateWithWhereUniqueWithoutSpaceInput[]
+    updateMany?: SpaceReservationUpdateManyWithWhereWithoutSpaceInput | SpaceReservationUpdateManyWithWhereWithoutSpaceInput[]
+    deleteMany?: SpaceReservationScalarWhereInput | SpaceReservationScalarWhereInput[]
+  }
+
+  export type SpaceCreateNestedOneWithoutReservationsInput = {
+    create?: XOR<SpaceCreateWithoutReservationsInput, SpaceUncheckedCreateWithoutReservationsInput>
+    connectOrCreate?: SpaceCreateOrConnectWithoutReservationsInput
+    connect?: SpaceWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutSpaceReservationsInput = {
+    create?: XOR<UserCreateWithoutSpaceReservationsInput, UserUncheckedCreateWithoutSpaceReservationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSpaceReservationsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumSpaceReservationStatusFieldUpdateOperationsInput = {
+    set?: $Enums.SpaceReservationStatus
+  }
+
+  export type SpaceUpdateOneRequiredWithoutReservationsNestedInput = {
+    create?: XOR<SpaceCreateWithoutReservationsInput, SpaceUncheckedCreateWithoutReservationsInput>
+    connectOrCreate?: SpaceCreateOrConnectWithoutReservationsInput
+    upsert?: SpaceUpsertWithoutReservationsInput
+    connect?: SpaceWhereUniqueInput
+    update?: XOR<XOR<SpaceUpdateToOneWithWhereWithoutReservationsInput, SpaceUpdateWithoutReservationsInput>, SpaceUncheckedUpdateWithoutReservationsInput>
+  }
+
+  export type UserUpdateOneRequiredWithoutSpaceReservationsNestedInput = {
+    create?: XOR<UserCreateWithoutSpaceReservationsInput, UserUncheckedCreateWithoutSpaceReservationsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSpaceReservationsInput
+    upsert?: UserUpsertWithoutSpaceReservationsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSpaceReservationsInput, UserUpdateWithoutSpaceReservationsInput>, UserUncheckedUpdateWithoutSpaceReservationsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -19668,6 +22838,23 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type NestedEnumSpaceReservationStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceReservationStatus | EnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceReservationStatusFilter<$PrismaModel> | $Enums.SpaceReservationStatus
+  }
+
+  export type NestedEnumSpaceReservationStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.SpaceReservationStatus | EnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.SpaceReservationStatus[] | ListEnumSpaceReservationStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumSpaceReservationStatusWithAggregatesFilter<$PrismaModel> | $Enums.SpaceReservationStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumSpaceReservationStatusFilter<$PrismaModel>
+    _max?: NestedEnumSpaceReservationStatusFilter<$PrismaModel>
+  }
+
   export type UserCreateWithoutAccountsInput = {
     id?: string
     name?: string | null
@@ -19687,6 +22874,7 @@ export namespace Prisma {
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAccountsInput = {
@@ -19708,6 +22896,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAccountsInput = {
@@ -19745,6 +22934,7 @@ export namespace Prisma {
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -19766,6 +22956,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -19787,6 +22978,7 @@ export namespace Prisma {
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -19808,6 +23000,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -19845,6 +23038,7 @@ export namespace Prisma {
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -19866,6 +23060,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateWithoutUserInput = {
@@ -20134,6 +23329,48 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type SpaceReservationCreateWithoutUserInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    space: SpaceCreateNestedOneWithoutReservationsInput
+  }
+
+  export type SpaceReservationUncheckedCreateWithoutUserInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    spaceId: string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SpaceReservationCreateOrConnectWithoutUserInput = {
+    where: SpaceReservationWhereUniqueInput
+    create: XOR<SpaceReservationCreateWithoutUserInput, SpaceReservationUncheckedCreateWithoutUserInput>
+  }
+
+  export type SpaceReservationCreateManyUserInputEnvelope = {
+    data: SpaceReservationCreateManyUserInput | SpaceReservationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type AccountUpsertWithWhereUniqueWithoutUserInput = {
     where: AccountWhereUniqueInput
     update: XOR<AccountUpdateWithoutUserInput, AccountUncheckedUpdateWithoutUserInput>
@@ -20399,6 +23636,42 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Note"> | Date | string
   }
 
+  export type SpaceReservationUpsertWithWhereUniqueWithoutUserInput = {
+    where: SpaceReservationWhereUniqueInput
+    update: XOR<SpaceReservationUpdateWithoutUserInput, SpaceReservationUncheckedUpdateWithoutUserInput>
+    create: XOR<SpaceReservationCreateWithoutUserInput, SpaceReservationUncheckedCreateWithoutUserInput>
+  }
+
+  export type SpaceReservationUpdateWithWhereUniqueWithoutUserInput = {
+    where: SpaceReservationWhereUniqueInput
+    data: XOR<SpaceReservationUpdateWithoutUserInput, SpaceReservationUncheckedUpdateWithoutUserInput>
+  }
+
+  export type SpaceReservationUpdateManyWithWhereWithoutUserInput = {
+    where: SpaceReservationScalarWhereInput
+    data: XOR<SpaceReservationUpdateManyMutationInput, SpaceReservationUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type SpaceReservationScalarWhereInput = {
+    AND?: SpaceReservationScalarWhereInput | SpaceReservationScalarWhereInput[]
+    OR?: SpaceReservationScalarWhereInput[]
+    NOT?: SpaceReservationScalarWhereInput | SpaceReservationScalarWhereInput[]
+    id?: StringFilter<"SpaceReservation"> | string
+    eventName?: StringFilter<"SpaceReservation"> | string
+    date?: DateTimeFilter<"SpaceReservation"> | Date | string
+    startTime?: DateTimeFilter<"SpaceReservation"> | Date | string
+    endTime?: DateTimeFilter<"SpaceReservation"> | Date | string
+    spaceId?: StringFilter<"SpaceReservation"> | string
+    description?: StringNullableFilter<"SpaceReservation"> | string | null
+    contactInfo?: StringNullableFilter<"SpaceReservation"> | string | null
+    attendees?: IntNullableFilter<"SpaceReservation"> | number | null
+    resources?: StringNullableFilter<"SpaceReservation"> | string | null
+    status?: EnumSpaceReservationStatusFilter<"SpaceReservation"> | $Enums.SpaceReservationStatus
+    userId?: StringFilter<"SpaceReservation"> | string
+    createdAt?: DateTimeFilter<"SpaceReservation"> | Date | string
+    updatedAt?: DateTimeFilter<"SpaceReservation"> | Date | string
+  }
+
   export type TaskCreateWithoutProgramInput = {
     id?: string
     name: string
@@ -20545,6 +23818,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeCreateNestedManyWithoutUserInput
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutProgramAssignmentsInput = {
@@ -20566,6 +23840,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUncheckedCreateNestedManyWithoutUserInput
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutProgramAssignmentsInput = {
@@ -20640,6 +23915,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUpdateManyWithoutUserNestedInput
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutProgramAssignmentsInput = {
@@ -20661,6 +23937,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUncheckedUpdateManyWithoutUserNestedInput
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type CommentCreateWithoutTaskInput = {
@@ -20762,6 +24039,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeCreateNestedManyWithoutUserInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCreatedTasksInput = {
@@ -20783,6 +24061,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUncheckedCreateNestedManyWithoutUserInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCreatedTasksInput = {
@@ -20899,6 +24178,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUpdateManyWithoutUserNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCreatedTasksInput = {
@@ -20920,6 +24200,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUncheckedUpdateManyWithoutUserNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ProgramUpsertWithoutTasksInput = {
@@ -21017,6 +24298,7 @@ export namespace Prisma {
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedTasksInput = {
@@ -21038,6 +24320,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedTasksInput = {
@@ -21120,6 +24403,7 @@ export namespace Prisma {
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedTasksInput = {
@@ -21141,6 +24425,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCommentsInput = {
@@ -21162,6 +24447,7 @@ export namespace Prisma {
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCommentsInput = {
@@ -21183,6 +24469,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCommentsInput = {
@@ -21259,6 +24546,7 @@ export namespace Prisma {
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCommentsInput = {
@@ -21280,6 +24568,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type TaskUpsertWithoutCommentsInput = {
@@ -21385,6 +24674,7 @@ export namespace Prisma {
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutUploadedFilesInput = {
@@ -21406,6 +24696,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutUploadedFilesInput = {
@@ -21488,6 +24779,7 @@ export namespace Prisma {
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutUploadedFilesInput = {
@@ -21509,6 +24801,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutAuditLogsInput = {
@@ -21530,6 +24823,7 @@ export namespace Prisma {
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
     notes?: NoteCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAuditLogsInput = {
@@ -21551,6 +24845,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
     notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAuditLogsInput = {
@@ -21588,6 +24883,7 @@ export namespace Prisma {
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
     notes?: NoteUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAuditLogsInput = {
@@ -21609,6 +24905,7 @@ export namespace Prisma {
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
     notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotesInput = {
@@ -21630,6 +24927,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeCreateNestedManyWithoutUserInput
     createdTasks?: TaskCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotesInput = {
@@ -21651,6 +24949,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUncheckedCreateNestedManyWithoutUserInput
     createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
     programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
+    spaceReservations?: SpaceReservationUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotesInput = {
@@ -21688,6 +24987,7 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUpdateManyWithoutUserNestedInput
     createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotesInput = {
@@ -21709,6 +25009,217 @@ export namespace Prisma {
     assignedTasks?: TaskAssigneeUncheckedUpdateManyWithoutUserNestedInput
     createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
     programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
+    spaceReservations?: SpaceReservationUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type SpaceReservationCreateWithoutSpaceInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutSpaceReservationsInput
+  }
+
+  export type SpaceReservationUncheckedCreateWithoutSpaceInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SpaceReservationCreateOrConnectWithoutSpaceInput = {
+    where: SpaceReservationWhereUniqueInput
+    create: XOR<SpaceReservationCreateWithoutSpaceInput, SpaceReservationUncheckedCreateWithoutSpaceInput>
+  }
+
+  export type SpaceReservationCreateManySpaceInputEnvelope = {
+    data: SpaceReservationCreateManySpaceInput | SpaceReservationCreateManySpaceInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type SpaceReservationUpsertWithWhereUniqueWithoutSpaceInput = {
+    where: SpaceReservationWhereUniqueInput
+    update: XOR<SpaceReservationUpdateWithoutSpaceInput, SpaceReservationUncheckedUpdateWithoutSpaceInput>
+    create: XOR<SpaceReservationCreateWithoutSpaceInput, SpaceReservationUncheckedCreateWithoutSpaceInput>
+  }
+
+  export type SpaceReservationUpdateWithWhereUniqueWithoutSpaceInput = {
+    where: SpaceReservationWhereUniqueInput
+    data: XOR<SpaceReservationUpdateWithoutSpaceInput, SpaceReservationUncheckedUpdateWithoutSpaceInput>
+  }
+
+  export type SpaceReservationUpdateManyWithWhereWithoutSpaceInput = {
+    where: SpaceReservationScalarWhereInput
+    data: XOR<SpaceReservationUpdateManyMutationInput, SpaceReservationUncheckedUpdateManyWithoutSpaceInput>
+  }
+
+  export type SpaceCreateWithoutReservationsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    color?: string | null
+    isActive?: boolean
+  }
+
+  export type SpaceUncheckedCreateWithoutReservationsInput = {
+    id?: string
+    name: string
+    description?: string | null
+    color?: string | null
+    isActive?: boolean
+  }
+
+  export type SpaceCreateOrConnectWithoutReservationsInput = {
+    where: SpaceWhereUniqueInput
+    create: XOR<SpaceCreateWithoutReservationsInput, SpaceUncheckedCreateWithoutReservationsInput>
+  }
+
+  export type UserCreateWithoutSpaceReservationsInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountCreateNestedManyWithoutUserInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogCreateNestedManyWithoutUserInput
+    comments?: CommentCreateNestedManyWithoutAuthorInput
+    uploadedFiles?: FileCreateNestedManyWithoutUploadedByInput
+    assignedTasks?: TaskAssigneeCreateNestedManyWithoutUserInput
+    createdTasks?: TaskCreateNestedManyWithoutCreatorInput
+    programAssignments?: UserProgramCreateNestedManyWithoutUserInput
+    notes?: NoteCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSpaceReservationsInput = {
+    id?: string
+    name?: string | null
+    email: string
+    emailVerified?: Date | string | null
+    image?: string | null
+    password?: string | null
+    role?: $Enums.UserRole
+    isActive?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    auditLogs?: AuditLogUncheckedCreateNestedManyWithoutUserInput
+    comments?: CommentUncheckedCreateNestedManyWithoutAuthorInput
+    uploadedFiles?: FileUncheckedCreateNestedManyWithoutUploadedByInput
+    assignedTasks?: TaskAssigneeUncheckedCreateNestedManyWithoutUserInput
+    createdTasks?: TaskUncheckedCreateNestedManyWithoutCreatorInput
+    programAssignments?: UserProgramUncheckedCreateNestedManyWithoutUserInput
+    notes?: NoteUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSpaceReservationsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSpaceReservationsInput, UserUncheckedCreateWithoutSpaceReservationsInput>
+  }
+
+  export type SpaceUpsertWithoutReservationsInput = {
+    update: XOR<SpaceUpdateWithoutReservationsInput, SpaceUncheckedUpdateWithoutReservationsInput>
+    create: XOR<SpaceCreateWithoutReservationsInput, SpaceUncheckedCreateWithoutReservationsInput>
+    where?: SpaceWhereInput
+  }
+
+  export type SpaceUpdateToOneWithWhereWithoutReservationsInput = {
+    where?: SpaceWhereInput
+    data: XOR<SpaceUpdateWithoutReservationsInput, SpaceUncheckedUpdateWithoutReservationsInput>
+  }
+
+  export type SpaceUpdateWithoutReservationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type SpaceUncheckedUpdateWithoutReservationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+  }
+
+  export type UserUpsertWithoutSpaceReservationsInput = {
+    update: XOR<UserUpdateWithoutSpaceReservationsInput, UserUncheckedUpdateWithoutSpaceReservationsInput>
+    create: XOR<UserCreateWithoutSpaceReservationsInput, UserUncheckedCreateWithoutSpaceReservationsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSpaceReservationsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSpaceReservationsInput, UserUncheckedUpdateWithoutSpaceReservationsInput>
+  }
+
+  export type UserUpdateWithoutSpaceReservationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUpdateManyWithoutUserNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUpdateManyWithoutUserNestedInput
+    comments?: CommentUpdateManyWithoutAuthorNestedInput
+    uploadedFiles?: FileUpdateManyWithoutUploadedByNestedInput
+    assignedTasks?: TaskAssigneeUpdateManyWithoutUserNestedInput
+    createdTasks?: TaskUpdateManyWithoutCreatorNestedInput
+    programAssignments?: UserProgramUpdateManyWithoutUserNestedInput
+    notes?: NoteUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSpaceReservationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    emailVerified?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    password?: NullableStringFieldUpdateOperationsInput | string | null
+    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    auditLogs?: AuditLogUncheckedUpdateManyWithoutUserNestedInput
+    comments?: CommentUncheckedUpdateManyWithoutAuthorNestedInput
+    uploadedFiles?: FileUncheckedUpdateManyWithoutUploadedByNestedInput
+    assignedTasks?: TaskAssigneeUncheckedUpdateManyWithoutUserNestedInput
+    createdTasks?: TaskUncheckedUpdateManyWithoutCreatorNestedInput
+    programAssignments?: UserProgramUncheckedUpdateManyWithoutUserNestedInput
+    notes?: NoteUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type AccountCreateManyUserInput = {
@@ -21792,6 +25303,22 @@ export namespace Prisma {
     title: string
     content?: string | null
     todos?: NullableJsonNullValueInput | InputJsonValue
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SpaceReservationCreateManyUserInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    spaceId: string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -22057,6 +25584,54 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SpaceReservationUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    space?: SpaceUpdateOneRequiredWithoutReservationsNestedInput
+  }
+
+  export type SpaceReservationUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    spaceId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SpaceReservationUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    spaceId?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type TaskCreateManyProgramInput = {
     id?: string
     name: string
@@ -22237,6 +25812,70 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SpaceReservationCreateManySpaceInput = {
+    id?: string
+    eventName: string
+    date: Date | string
+    startTime: Date | string
+    endTime: Date | string
+    description?: string | null
+    contactInfo?: string | null
+    attendees?: number | null
+    resources?: string | null
+    status?: $Enums.SpaceReservationStatus
+    userId: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type SpaceReservationUpdateWithoutSpaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutSpaceReservationsNestedInput
+  }
+
+  export type SpaceReservationUncheckedUpdateWithoutSpaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SpaceReservationUncheckedUpdateManyWithoutSpaceInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    eventName?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    startTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    endTime?: DateTimeFieldUpdateOperationsInput | Date | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    contactInfo?: NullableStringFieldUpdateOperationsInput | string | null
+    attendees?: NullableIntFieldUpdateOperationsInput | number | null
+    resources?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumSpaceReservationStatusFieldUpdateOperationsInput | $Enums.SpaceReservationStatus
+    userId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

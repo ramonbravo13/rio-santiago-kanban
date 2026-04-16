@@ -245,6 +245,31 @@ exports.Prisma.NoteScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SpaceScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  color: 'color',
+  isActive: 'isActive'
+};
+
+exports.Prisma.SpaceReservationScalarFieldEnum = {
+  id: 'id',
+  eventName: 'eventName',
+  date: 'date',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  spaceId: 'spaceId',
+  description: 'description',
+  contactInfo: 'contactInfo',
+  attendees: 'attendees',
+  resources: 'resources',
+  status: 'status',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -287,6 +312,12 @@ exports.TaskStatus = exports.$Enums.TaskStatus = {
   DONE: 'DONE'
 };
 
+exports.SpaceReservationStatus = exports.$Enums.SpaceReservationStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED'
+};
+
 exports.Prisma.ModelName = {
   Account: 'Account',
   Session: 'Session',
@@ -299,7 +330,9 @@ exports.Prisma.ModelName = {
   Comment: 'Comment',
   File: 'File',
   AuditLog: 'AuditLog',
-  Note: 'Note'
+  Note: 'Note',
+  Space: 'Space',
+  SpaceReservation: 'SpaceReservation'
 };
 
 /**

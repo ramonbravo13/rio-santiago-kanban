@@ -36,25 +36,26 @@ model Session {
 }
 
 model User {
-  id                 String         @id @default(cuid())
+  id                 String             @id @default(cuid())
   name               String?
-  email              String         @unique
+  email              String             @unique
   emailVerified      DateTime?
   image              String?
   password           String?
-  role               UserRole       @default(COLABORADOR)
-  isActive           Boolean        @default(true)
-  createdAt          DateTime       @default(now())
-  updatedAt          DateTime       @updatedAt
+  role               UserRole           @default(COLABORADOR)
+  isActive           Boolean            @default(true)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
   accounts           Account[]
   sessions           Session[]
   auditLogs          AuditLog[]
   comments           Comment[]
   uploadedFiles      File[]
   assignedTasks      TaskAssignee[]
-  createdTasks       Task[]         @relation("TaskCreator")
+  createdTasks       Task[]             @relation("TaskCreator")
   programAssignments UserProgram[]
   notes              Note[]
+  spaceReservations  SpaceReservation[]
 
   @@map("users")
 }
@@ -201,4 +202,45 @@ enum TaskStatus {
   TODO
   IN_PROGRESS
   DONE
+}
+
+enum SpaceReservationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model Space {
+  id           String             @id @default(cuid())
+  name         String
+  description  String?
+  color        String? // Para la agenda visual
+  isActive     Boolean            @default(true)
+  reservations SpaceReservation[]
+
+  @@map("spaces")
+}
+
+model SpaceReservation {
+  id          String                 @id @default(cuid())
+  eventName   String
+  date        DateTime
+  startTime   DateTime
+  endTime     DateTime
+  spaceId     String
+  description String?
+  contactInfo String?
+  attendees   Int?
+  resources   String?
+  status      SpaceReservationStatus @default(PENDING)
+  userId      String
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
+
+  space Space @relation(fields: [spaceId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([spaceId])
+  @@index([userId])
+  @@map("space_reservations")
 }

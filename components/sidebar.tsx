@@ -17,7 +17,8 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
-  BookText
+  BookText,
+  Calendar
 } from 'lucide-react';
 
 interface SidebarProps {
@@ -51,6 +52,12 @@ const navigationItems = [
     href: '/users',
     icon: Users,
     roles: ['ADMIN']
+  },
+  {
+    name: 'Agenda de Espacios',
+    href: '/spaces',
+    icon: Calendar,
+    roles: ['ADMIN', 'COLABORADOR']
   },
   {
     name: 'KPIs y Reportes',
