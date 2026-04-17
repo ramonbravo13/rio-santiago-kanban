@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -62,6 +61,27 @@ const PREV_STATUS: Record<TaskStatus, TaskStatus | null> = {
   [TaskStatus.IN_PROGRESS]: TaskStatus.TODO,
   [TaskStatus.DONE]: TaskStatus.IN_PROGRESS,
 };
+
+const PROGRAM_COLORS = [
+  'bg-blue-50 text-blue-700 border-blue-200',
+  'bg-emerald-50 text-emerald-700 border-emerald-200',
+  'bg-purple-50 text-purple-700 border-purple-200',
+  'bg-amber-50 text-amber-700 border-amber-200',
+  'bg-rose-50 text-rose-700 border-rose-200',
+  'bg-teal-50 text-teal-700 border-teal-200',
+  'bg-indigo-50 text-indigo-700 border-indigo-200',
+  'bg-orange-50 text-orange-700 border-orange-200',
+];
+
+function getProgramColorClass(programName?: string) {
+  if (!programName) return 'bg-gray-50 text-gray-700 border-gray-200';
+  let hash = 0;
+  for (let i = 0; i < programName.length; i++) {
+    hash = programName.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  const index = Math.abs(hash) % PROGRAM_COLORS.length;
+  return PROGRAM_COLORS[index];
+}
 
 export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdated }: KanbanCardProps) {
   const { data: session } = useSession();
@@ -471,7 +491,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
 
       {/* Flujo de Trabajo y Permisos */}
       <div className="mb-3 flex flex-wrap gap-2">
-        <Badge variant="outline" className="text-xs">
+        <Badge variant="outline" className={cn("text-xs shadow-sm", getProgramColorClass(task.program?.name))}>
           {task.program?.name}
         </Badge>
         {session?.user?.role === 'COLABORADOR' && (
