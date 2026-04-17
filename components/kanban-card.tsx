@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import { Task, TaskStatus } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
+import { Slider } from '@/components/ui/slider';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -113,6 +114,14 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingCommentContent, setEditingCommentContent] = useState('');
 
+  // Progreso
+  const [localProgress, setLocalProgress] = useState(task.progressPercentage || 0);
+
+  // Sync with server state
+  useEffect(() => {
+    setLocalProgress(task.progressPercentage || 0);
+  }, [task.progressPercentage]);
+
   const canEdit = 
     session?.user?.role === 'ADMIN' || 
     task.assignees?.some(assignee => assignee.user?.id === session?.user?.id);
@@ -138,13 +147,9 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
   };
 
   const handleDelete = async () => {
-    if (!canDelete || !onDelete) return;
+    if (session?.user?.role !== 'ADMIN') return;
 
-    const confirmed = confirm(
-      `¿Estás seguro de que quieres eliminar la tarea "${task.name}"?\n\nEsta acción no se puede deshacer.`
-    );
-
-    if (!confirmed) return;
+    if (!confirm(`¿Estás seguro de que quieres eliminar la tarea "${task.name}" permanentemente?`)) return;
 
     try {
       const response = await fetch(`/api/tasks/${task.id}`, {
@@ -152,8 +157,10 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       });
 
       if (response.ok) {
-        toast.success('Tarea eliminada exitosamente');
-        onDelete(task.id);
+        toast.success('Tarea eliminada');
+        if (onDelete) {
+          onDelete(task.id);
+        }
       } else {
         const error = await response.json();
         toast.error(error.error || 'Error al eliminar la tarea');
@@ -161,6 +168,30 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
     } catch (error) {
       console.error('Error:', error);
       toast.error('Error de conexión');
+    }
+  };
+
+  const handleUpdateProgress = async (newProgress: number) => {
+    if (!canEdit || task.archived) return;
+    
+    setLocalProgress(newProgress); // Update optimistically
+
+    try {
+      const response = await fetch(`/api/tasks/${task.id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ progressPercentage: newProgress })
+      });
+      if (response.ok) {
+        onTaskUpdated?.();
+      } else {
+        toast.error('Error al actualizar el progreso');
+        setLocalProgress(task.progressPercentage); // Revert
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('Error de conexión al actualizar progreso');
+      setLocalProgress(task.progressPercentage); // Revert
     }
   };
 
@@ -561,12 +592,24 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       )}
 
       {/* Progreso */}
-      <div className="mb-3">
+      <div className="mb-3 group relative pb-2">
         <div className="flex items-center justify-between text-xs text-gray-500 mb-1">
           <span>Progreso</span>
-          <span>{task.progressPercentage}%</span>
+          <span className="font-medium text-gray-700">{localProgress}%</span>
         </div>
-        <Progress value={task.progressPercentage} className="h-2" />
+        
+        {(!task.archived && canEdit) ? (
+          <Slider
+            value={[localProgress]}
+            max={100}
+            step={5}
+            onValueChange={(val) => setLocalProgress(val[0])}
+            onValueCommit={(val) => handleUpdateProgress(val[0])}
+            className="w-full cursor-grab active:cursor-grabbing"
+          />
+        ) : (
+          <Progress value={localProgress} className="h-2" />
+        )}
       </div>
 
       {/* Información adicional */}
