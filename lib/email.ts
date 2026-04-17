@@ -25,8 +25,7 @@ export async function sendTaskAssignedEmail(userEmail: string, task: MinimalTask
       },
     });
 
-    const appUrl = process.env.NEXTAUTH_URL || 'http://localhost:3000';
-    const taskUrl = `${appUrl}/dashboard`; // Te lleva al Kanban board donde radica la tarea (podríamos poner el ID a futuro)
+    const taskUrl = 'https://rio-santiago-kanban.vercel.app/'; // Te lleva a la página oficial de Vercel
 
     // Formatear la fecha
     let dateLine = '';
@@ -46,7 +45,7 @@ export async function sendTaskAssignedEmail(userEmail: string, task: MinimalTask
           
           <div style="padding: 32px 24px;">
             <p style="color: #374151; font-size: 16px; line-height: 24px; margin-top: 0;">
-              Hola, se te ha asignado una nueva labor en el sistema Kanban de Río Santiago.
+              Hola, se te ha asignado una nueva tarea en el Tablero de Actividades de CETI Río Santiago.
             </p>
             
             <div style="background-color: #f3f4f6; border-left: 4px solid #4f46e5; padding: 16px; margin: 24px 0; border-radius: 0 8px 8px 0;">
