@@ -398,7 +398,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
         </div>
       )}
       <div className="flex items-start justify-between mb-3">
-        <h4 className="font-medium text-gray-900 text-sm line-clamp-2 flex-1 mr-2">
+        <h4 className="font-medium text-gray-900 text-sm flex-1 mr-2 break-words">
           {task.name}
         </h4>
         <div className="flex items-center space-x-1 flex-shrink-0">
