@@ -114,7 +114,7 @@ export function Sidebar({ isOpen = true, onClose, isCollapsed = false, onToggleC
       {/* Sidebar */}
       <aside
         className={cn(
-          'ceti-sidebar fixed left-0 top-16 h-[calc(100vh-4rem)] z-50 transform transition-all duration-300 md:relative md:top-0 md:h-screen md:translate-x-0',
+          'ceti-sidebar fixed left-0 top-16 h-[calc(100vh-4rem)] z-40 transform transition-all duration-300 md:translate-x-0 overflow-y-auto overflow-x-hidden',
           isOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0',
           isCollapsed ? 'w-16' : 'w-64'
         )}
