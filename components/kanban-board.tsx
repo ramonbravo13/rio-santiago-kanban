@@ -10,7 +10,7 @@ import { EditTaskModal } from './edit-task-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Filter, User } from 'lucide-react';
+import { Plus, Search, Filter, User, Calendar } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const COLUMN_CONFIG = {
@@ -31,6 +31,11 @@ const COLUMN_CONFIG = {
   }
 };
 
+const MONTHS = [
+  'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+  'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+];
+
 export function KanbanBoard() {
   const { data: session } = useSession();
   const [tasks, setTasks] = useState<Task[]>([]);
@@ -38,6 +43,7 @@ export function KanbanBoard() {
   const [searchTerm, setSearchTerm] = useState('');
   const [filterProgram, setFilterProgram] = useState('all');
   const [filterAssignee, setFilterAssignee] = useState('all');
+  const [filterMonth, setFilterMonth] = useState('all');
   const [programs, setPrograms] = useState<any[]>([]);
   const [users, setUsers] = useState<any[]>([]);
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -157,7 +163,9 @@ export function KanbanBoard() {
     
     const matchesAssignee = filterAssignee === 'all' || task.assignees?.some(a => a.userId === filterAssignee);
     
-    return matchesSearch && matchesProgram && matchesAssignee;
+    const matchesMonth = filterMonth === 'all' || (task.dueDate && new Date(task.dueDate).getMonth().toString() === filterMonth);
+    
+    return matchesSearch && matchesProgram && matchesAssignee && matchesMonth;
   });
 
   const tasksByStatus: Record<TaskStatus, Task[]> = {
@@ -214,6 +222,23 @@ export function KanbanBoard() {
               {users.map(user => (
                 <SelectItem key={user.id} value={user.id}>
                   {user.name || user.email}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        )}
+
+        {session?.user?.role === 'ADMIN' && (
+          <Select value={filterMonth} onValueChange={setFilterMonth}>
+            <SelectTrigger className="w-full sm:w-48">
+              <Calendar className="h-4 w-4 mr-2" />
+              <SelectValue placeholder="Filtrar por mes" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">Todos los meses</SelectItem>
+              {MONTHS.map((month, index) => (
+                <SelectItem key={index} value={index.toString()}>
+                  {month}
                 </SelectItem>
               ))}
             </SelectContent>
