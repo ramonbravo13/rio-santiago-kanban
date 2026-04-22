@@ -228,22 +228,20 @@ export function KanbanBoard() {
           </Select>
         )}
 
-        {session?.user?.role === 'ADMIN' && (
-          <Select value={filterMonth} onValueChange={setFilterMonth}>
-            <SelectTrigger className="w-full sm:w-48">
-              <Calendar className="h-4 w-4 mr-2" />
-              <SelectValue placeholder="Filtrar por mes" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">Todos los meses</SelectItem>
-              {MONTHS.map((month, index) => (
-                <SelectItem key={index} value={index.toString()}>
-                  {month}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        )}
+        <Select value={filterMonth} onValueChange={setFilterMonth}>
+          <SelectTrigger className="w-full sm:w-48">
+            <Calendar className="h-4 w-4 mr-2" />
+            <SelectValue placeholder="Filtrar por mes" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="all">Todos los meses</SelectItem>
+            {MONTHS.map((month, index) => (
+              <SelectItem key={index} value={index.toString()}>
+                {month}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
 
         {session?.user?.role === 'ADMIN' && (
           <Button 
