@@ -84,6 +84,12 @@ const PROGRAM_COLORS = [
 
 function getProgramColorClass(programName?: string) {
   if (!programName) return 'bg-gray-50 text-gray-700 border-gray-200';
+  
+  // Custom mapping for specific programs to ensure distinct colors
+  const upperName = programName.toUpperCase();
+  if (upperName === 'PTSI') return PROGRAM_COLORS[0]; // Blue
+  if (upperName === 'PTCI') return PROGRAM_COLORS[2]; // Purple
+  
   let hash = 0;
   for (let i = 0; i < programName.length; i++) {
     hash = programName.charCodeAt(i) + ((hash << 5) - hash) + (i * 31);
