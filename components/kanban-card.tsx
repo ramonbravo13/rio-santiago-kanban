@@ -64,38 +64,52 @@ const PREV_STATUS: Record<TaskStatus, TaskStatus | null> = {
 };
 
 const PROGRAM_COLORS = [
-  'bg-blue-50 text-blue-700 border-blue-200',
-  'bg-emerald-50 text-emerald-700 border-emerald-200',
-  'bg-purple-50 text-purple-700 border-purple-200',
-  'bg-amber-50 text-amber-700 border-amber-200',
-  'bg-rose-50 text-rose-700 border-rose-200',
-  'bg-teal-50 text-teal-700 border-teal-200',
-  'bg-indigo-50 text-indigo-700 border-indigo-200',
-  'bg-orange-50 text-orange-700 border-orange-200',
-  'bg-cyan-50 text-cyan-700 border-cyan-200',
-  'bg-pink-50 text-pink-700 border-pink-200',
-  'bg-lime-50 text-lime-700 border-lime-200',
-  'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200',
-  'bg-sky-50 text-sky-700 border-sky-200',
-  'bg-violet-50 text-violet-700 border-violet-200',
-  'bg-yellow-50 text-yellow-700 border-yellow-200',
-  'bg-red-50 text-red-700 border-red-200',
+  'bg-blue-50 text-blue-700 border-blue-200',        // 0: Blue
+  'bg-emerald-50 text-emerald-700 border-emerald-200', // 1: Emerald
+  'bg-purple-50 text-purple-700 border-purple-200',   // 2: Purple
+  'bg-amber-50 text-amber-700 border-amber-200',     // 3: Amber
+  'bg-rose-50 text-rose-700 border-rose-200',       // 4: Rose
+  'bg-teal-50 text-teal-700 border-teal-200',       // 5: Teal
+  'bg-indigo-50 text-indigo-700 border-indigo-200',   // 6: Indigo
+  'bg-orange-50 text-orange-700 border-orange-200',   // 7: Orange
+  'bg-cyan-50 text-cyan-700 border-cyan-200',       // 8: Cyan
+  'bg-pink-50 text-pink-700 border-pink-200',       // 9: Pink
+  'bg-lime-50 text-lime-700 border-lime-200',       // 10: Lime
+  'bg-fuchsia-50 text-fuchsia-700 border-fuchsia-200', // 11: Fuchsia
+  'bg-sky-50 text-sky-700 border-sky-200',         // 12: Sky
+  'bg-violet-50 text-violet-700 border-violet-200',   // 13: Violet
+  'bg-yellow-50 text-yellow-700 border-yellow-200',   // 14: Yellow
+  'bg-red-50 text-red-700 border-red-200',         // 15: Red
+  'bg-slate-50 text-slate-700 border-slate-200',     // 16: Slate
+  'bg-zinc-50 text-zinc-700 border-zinc-200',       // 17: Zinc
+  'bg-stone-50 text-stone-700 border-stone-200',     // 18: Stone
+  'bg-neutral-50 text-neutral-700 border-neutral-200', // 19: Neutral
 ];
 
 function getProgramColorClass(programName?: string) {
   if (!programName) return 'bg-gray-50 text-gray-700 border-gray-200';
   
   // Custom mapping for specific programs to ensure distinct colors
-  const upperName = programName.toUpperCase();
-  if (upperName === 'PTSI') return PROGRAM_COLORS[0]; // Blue
-  if (upperName === 'PTCI') return PROGRAM_COLORS[2]; // Purple
+  const upperName = programName.toUpperCase().trim();
+  
+  // Explicit assignments for key programs
+  if (upperName === 'PTSI') return PROGRAM_COLORS[0];  // Blue
+  if (upperName === 'PTCI') return PROGRAM_COLORS[2];  // Purple
+  if (upperName === 'SOA') return PROGRAM_COLORS[1];   // Emerald (Previously collided with Purple)
+  if (upperName === 'MANTENIMIENTO') return PROGRAM_COLORS[7]; // Orange
+  if (upperName === 'SOPORTE') return PROGRAM_COLORS[5]; // Teal
   
   let hash = 0;
   for (let i = 0; i < programName.length; i++) {
-    hash = programName.charCodeAt(i) + ((hash << 5) - hash) + (i * 31);
+    hash = programName.charCodeAt(i) + ((hash << 5) - hash) + (i * 17);
     hash = hash & hash; // Convert to 32bit int
   }
-  hash = hash ^ 0x6a2c9; // Add static salt to scatter distribution
+  
+  // Mix it up more to avoid collisions
+  hash = (hash ^ (hash >>> 16)) * 0x85ebca6b;
+  hash = (hash ^ (hash >>> 13)) * 0xc2b2ae35;
+  hash = hash ^ (hash >>> 16);
+  
   const index = Math.abs(hash) % PROGRAM_COLORS.length;
   return PROGRAM_COLORS[index];
 }
