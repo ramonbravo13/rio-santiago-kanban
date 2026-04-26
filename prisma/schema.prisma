@@ -114,6 +114,7 @@ model Task {
   creator              User           @relation("TaskCreator", fields: [creatorId], references: [id])
   program              Program        @relation(fields: [programId], references: [id], onDelete: Cascade)
   archived             Boolean        @default(false)
+  sequenceNumber       Int            @default(0)
 
   @@map("tasks")
 }

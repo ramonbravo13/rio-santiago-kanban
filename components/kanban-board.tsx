@@ -10,7 +10,7 @@ import { EditTaskModal } from './edit-task-modal';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Plus, Search, Filter, User, Calendar } from 'lucide-react';
+import { Plus, Search, Filter, User, Calendar, RefreshCcw } from 'lucide-react';
 import toast from 'react-hot-toast';
 
 const COLUMN_CONFIG = {
@@ -135,6 +135,29 @@ export function KanbanBoard() {
     }
   };
 
+  const handleReorderTasks = async () => {
+    if (filterProgram === 'all') return;
+    if (!confirm('¿Estás seguro de que quieres resetear el orden (consecutivos) de las tareas para este flujo? Esto eliminará los saltos en la numeración.')) return;
+    
+    try {
+      setLoading(true);
+      const response = await fetch(`/api/programs/${filterProgram}/reorder-tasks`, {
+        method: 'POST',
+      });
+      if (response.ok) {
+        toast.success('Numeración reseteada exitosamente');
+        fetchTasks();
+      } else {
+        toast.error('Error al resetear la numeración');
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      toast.error('Error de conexión');
+      setLoading(false);
+    }
+  };
+
   const handleTaskCreated = () => {
     fetchTasks(); // Refrescar la lista de tareas
   };
@@ -244,13 +267,26 @@ export function KanbanBoard() {
         </Select>
 
         {session?.user?.role === 'ADMIN' && (
-          <Button 
-            className="ceti-button-primary"
-            onClick={() => setIsCreateModalOpen(true)}
-          >
-            <Plus className="h-4 w-4 mr-2" />
-            Nueva Tarea
-          </Button>
+          <div className="flex gap-2">
+            {filterProgram !== 'all' && (
+              <Button 
+                variant="outline"
+                className="border-amber-300 text-amber-700 hover:bg-amber-50"
+                onClick={handleReorderTasks}
+                title="Resetear consecutivos para evitar saltos"
+              >
+                <RefreshCcw className="h-4 w-4 mr-2" />
+                Resetear Orden
+              </Button>
+            )}
+            <Button 
+              className="ceti-button-primary"
+              onClick={() => setIsCreateModalOpen(true)}
+            >
+              <Plus className="h-4 w-4 mr-2" />
+              Nueva Tarea
+            </Button>
+          </div>
         )}
       </div>
 

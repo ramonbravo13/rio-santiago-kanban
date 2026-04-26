@@ -188,6 +188,15 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Obtener el número consecutivo más alto para este programa
+    const lastTask = await prisma.task.findFirst({
+      where: { programId },
+      orderBy: { sequenceNumber: 'desc' },
+      select: { sequenceNumber: true }
+    });
+    
+    const nextSequenceNumber = (lastTask?.sequenceNumber || 0) + 1;
+
     const task = await prisma.task.create({
       data: {
         name,
@@ -198,6 +207,7 @@ export async function POST(request: NextRequest) {
         expectedDeliverables,
         links: Array.isArray(links) && links.length > 0 ? JSON.stringify(links) : null,
         status: status as any,
+        sequenceNumber: nextSequenceNumber,
       },
       include: {
         assignees: {

@@ -480,6 +480,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
       )}
       <div className="flex items-start justify-between mb-3">
         <h4 className="font-medium text-gray-900 text-sm flex-1 mr-2 break-words">
+          {task.sequenceNumber ? <span className="text-gray-400 mr-1 text-xs font-normal">#{task.sequenceNumber}</span> : null}
           {task.name}
         </h4>
         <div className="flex items-center space-x-1 flex-shrink-0">

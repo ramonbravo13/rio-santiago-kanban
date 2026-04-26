@@ -66,6 +66,7 @@ export interface Task {
   createdAt: Date;
   updatedAt: Date;
   archived?: boolean;
+  sequenceNumber?: number;
   assignees?: TaskAssignee[];
   creator?: User;
   program?: Program;

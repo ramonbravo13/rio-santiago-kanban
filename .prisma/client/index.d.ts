@@ -9127,10 +9127,12 @@ export namespace Prisma {
 
   export type TaskAvgAggregateOutputType = {
     progressPercentage: number | null
+    sequenceNumber: number | null
   }
 
   export type TaskSumAggregateOutputType = {
     progressPercentage: number | null
+    sequenceNumber: number | null
   }
 
   export type TaskMinAggregateOutputType = {
@@ -9147,6 +9149,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     archived: boolean | null
+    sequenceNumber: number | null
   }
 
   export type TaskMaxAggregateOutputType = {
@@ -9163,6 +9166,7 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     archived: boolean | null
+    sequenceNumber: number | null
   }
 
   export type TaskCountAggregateOutputType = {
@@ -9179,16 +9183,19 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     archived: number
+    sequenceNumber: number
     _all: number
   }
 
 
   export type TaskAvgAggregateInputType = {
     progressPercentage?: true
+    sequenceNumber?: true
   }
 
   export type TaskSumAggregateInputType = {
     progressPercentage?: true
+    sequenceNumber?: true
   }
 
   export type TaskMinAggregateInputType = {
@@ -9205,6 +9212,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     archived?: true
+    sequenceNumber?: true
   }
 
   export type TaskMaxAggregateInputType = {
@@ -9221,6 +9229,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     archived?: true
+    sequenceNumber?: true
   }
 
   export type TaskCountAggregateInputType = {
@@ -9237,6 +9246,7 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     archived?: true
+    sequenceNumber?: true
     _all?: true
   }
 
@@ -9340,6 +9350,7 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     archived: boolean
+    sequenceNumber: number
     _count: TaskCountAggregateOutputType | null
     _avg: TaskAvgAggregateOutputType | null
     _sum: TaskSumAggregateOutputType | null
@@ -9375,6 +9386,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     archived?: boolean
+    sequenceNumber?: boolean
     comments?: boolean | Task$commentsArgs<ExtArgs>
     files?: boolean | Task$filesArgs<ExtArgs>
     assignees?: boolean | Task$assigneesArgs<ExtArgs>
@@ -9397,6 +9409,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     archived?: boolean
+    sequenceNumber?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
     program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
@@ -9415,6 +9428,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     archived?: boolean
+    sequenceNumber?: boolean
     creator?: boolean | UserDefaultArgs<ExtArgs>
     program?: boolean | ProgramDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["task"]>
@@ -9433,9 +9447,10 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     archived?: boolean
+    sequenceNumber?: boolean
   }
 
-  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "creatorId" | "programId" | "dueDate" | "status" | "expectedDeliverables" | "links" | "progressPercentage" | "createdAt" | "updatedAt" | "archived", ExtArgs["result"]["task"]>
+  export type TaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "creatorId" | "programId" | "dueDate" | "status" | "expectedDeliverables" | "links" | "progressPercentage" | "createdAt" | "updatedAt" | "archived" | "sequenceNumber", ExtArgs["result"]["task"]>
   export type TaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     comments?: boolean | Task$commentsArgs<ExtArgs>
     files?: boolean | Task$filesArgs<ExtArgs>
@@ -9476,6 +9491,7 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       archived: boolean
+      sequenceNumber: number
     }, ExtArgs["result"]["task"]>
     composites: {}
   }
@@ -9917,6 +9933,7 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Task", 'DateTime'>
     readonly updatedAt: FieldRef<"Task", 'DateTime'>
     readonly archived: FieldRef<"Task", 'Boolean'>
+    readonly sequenceNumber: FieldRef<"Task", 'Int'>
   }
     
 
@@ -18292,7 +18309,8 @@ export namespace Prisma {
     progressPercentage: 'progressPercentage',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    archived: 'archived'
+    archived: 'archived',
+    sequenceNumber: 'sequenceNumber'
   };
 
   export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
@@ -19014,6 +19032,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     archived?: BoolFilter<"Task"> | boolean
+    sequenceNumber?: IntFilter<"Task"> | number
     comments?: CommentListRelationFilter
     files?: FileListRelationFilter
     assignees?: TaskAssigneeListRelationFilter
@@ -19035,6 +19054,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     archived?: SortOrder
+    sequenceNumber?: SortOrder
     comments?: CommentOrderByRelationAggregateInput
     files?: FileOrderByRelationAggregateInput
     assignees?: TaskAssigneeOrderByRelationAggregateInput
@@ -19059,6 +19079,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     archived?: BoolFilter<"Task"> | boolean
+    sequenceNumber?: IntFilter<"Task"> | number
     comments?: CommentListRelationFilter
     files?: FileListRelationFilter
     assignees?: TaskAssigneeListRelationFilter
@@ -19080,6 +19101,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     archived?: SortOrder
+    sequenceNumber?: SortOrder
     _count?: TaskCountOrderByAggregateInput
     _avg?: TaskAvgOrderByAggregateInput
     _max?: TaskMaxOrderByAggregateInput
@@ -19104,6 +19126,7 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Task"> | Date | string
     archived?: BoolWithAggregatesFilter<"Task"> | boolean
+    sequenceNumber?: IntWithAggregatesFilter<"Task"> | number
   }
 
   export type TaskAssigneeWhereInput = {
@@ -20077,6 +20100,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
@@ -20098,6 +20122,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
@@ -20115,6 +20140,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
@@ -20136,6 +20162,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
@@ -20155,6 +20182,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
   }
 
   export type TaskUpdateManyMutationInput = {
@@ -20169,6 +20197,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
   }
 
   export type TaskUncheckedUpdateManyInput = {
@@ -20185,6 +20214,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
   }
 
   export type TaskAssigneeCreateInput = {
@@ -21250,10 +21280,12 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     archived?: SortOrder
+    sequenceNumber?: SortOrder
   }
 
   export type TaskAvgOrderByAggregateInput = {
     progressPercentage?: SortOrder
+    sequenceNumber?: SortOrder
   }
 
   export type TaskMaxOrderByAggregateInput = {
@@ -21270,6 +21302,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     archived?: SortOrder
+    sequenceNumber?: SortOrder
   }
 
   export type TaskMinOrderByAggregateInput = {
@@ -21286,10 +21319,12 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     archived?: SortOrder
+    sequenceNumber?: SortOrder
   }
 
   export type TaskSumOrderByAggregateInput = {
     progressPercentage?: SortOrder
+    sequenceNumber?: SortOrder
   }
 
   export type EnumTaskStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -23278,6 +23313,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
@@ -23297,6 +23333,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
@@ -23612,6 +23649,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Task"> | Date | string
     updatedAt?: DateTimeFilter<"Task"> | Date | string
     archived?: BoolFilter<"Task"> | boolean
+    sequenceNumber?: IntFilter<"Task"> | number
   }
 
   export type UserProgramUpsertWithWhereUniqueWithoutUserInput = {
@@ -23716,6 +23754,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
@@ -23735,6 +23774,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
@@ -24286,6 +24326,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentCreateNestedManyWithoutTaskInput
     files?: FileCreateNestedManyWithoutTaskInput
     creator: UserCreateNestedOneWithoutCreatedTasksInput
@@ -24306,6 +24347,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
   }
@@ -24387,6 +24429,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
@@ -24407,6 +24450,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
   }
@@ -24527,6 +24571,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     files?: FileCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
     creator: UserCreateNestedOneWithoutCreatedTasksInput
@@ -24547,6 +24592,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     files?: FileUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
   }
@@ -24634,6 +24680,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
@@ -24654,6 +24701,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
   }
@@ -24670,6 +24718,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeCreateNestedManyWithoutTaskInput
     creator: UserCreateNestedOneWithoutCreatedTasksInput
@@ -24690,6 +24739,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
     comments?: CommentUncheckedCreateNestedManyWithoutTaskInput
     assignees?: TaskAssigneeUncheckedCreateNestedManyWithoutTaskInput
   }
@@ -24771,6 +24821,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
     creator?: UserUpdateOneRequiredWithoutCreatedTasksNestedInput
@@ -24791,6 +24842,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
   }
@@ -25338,6 +25390,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
   }
 
   export type UserProgramCreateManyUserInput = {
@@ -25553,6 +25606,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
@@ -25572,6 +25626,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
@@ -25590,6 +25645,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserProgramUpdateWithoutUserInput = {
@@ -25695,6 +25751,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     archived?: boolean
+    sequenceNumber?: number
   }
 
   export type UserProgramCreateManyProgramInput = {
@@ -25714,6 +25771,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUpdateManyWithoutTaskNestedInput
     files?: FileUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUpdateManyWithoutTaskNestedInput
@@ -25733,6 +25791,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
     comments?: CommentUncheckedUpdateManyWithoutTaskNestedInput
     files?: FileUncheckedUpdateManyWithoutTaskNestedInput
     assignees?: TaskAssigneeUncheckedUpdateManyWithoutTaskNestedInput
@@ -25751,6 +25810,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     archived?: BoolFieldUpdateOperationsInput | boolean
+    sequenceNumber?: IntFieldUpdateOperationsInput | number
   }
 
   export type UserProgramUpdateWithoutProgramInput = {
