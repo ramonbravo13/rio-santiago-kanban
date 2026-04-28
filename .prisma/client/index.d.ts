@@ -10434,6 +10434,7 @@ export namespace Prisma {
     id: string | null
     taskId: string | null
     userId: string | null
+    isLeader: boolean | null
     createdAt: Date | null
   }
 
@@ -10441,6 +10442,7 @@ export namespace Prisma {
     id: string | null
     taskId: string | null
     userId: string | null
+    isLeader: boolean | null
     createdAt: Date | null
   }
 
@@ -10448,6 +10450,7 @@ export namespace Prisma {
     id: number
     taskId: number
     userId: number
+    isLeader: number
     createdAt: number
     _all: number
   }
@@ -10457,6 +10460,7 @@ export namespace Prisma {
     id?: true
     taskId?: true
     userId?: true
+    isLeader?: true
     createdAt?: true
   }
 
@@ -10464,6 +10468,7 @@ export namespace Prisma {
     id?: true
     taskId?: true
     userId?: true
+    isLeader?: true
     createdAt?: true
   }
 
@@ -10471,6 +10476,7 @@ export namespace Prisma {
     id?: true
     taskId?: true
     userId?: true
+    isLeader?: true
     createdAt?: true
     _all?: true
   }
@@ -10551,6 +10557,7 @@ export namespace Prisma {
     id: string
     taskId: string
     userId: string
+    isLeader: boolean
     createdAt: Date
     _count: TaskAssigneeCountAggregateOutputType | null
     _min: TaskAssigneeMinAggregateOutputType | null
@@ -10575,6 +10582,7 @@ export namespace Prisma {
     id?: boolean
     taskId?: boolean
     userId?: boolean
+    isLeader?: boolean
     createdAt?: boolean
     task?: boolean | TaskDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -10584,6 +10592,7 @@ export namespace Prisma {
     id?: boolean
     taskId?: boolean
     userId?: boolean
+    isLeader?: boolean
     createdAt?: boolean
     task?: boolean | TaskDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -10593,6 +10602,7 @@ export namespace Prisma {
     id?: boolean
     taskId?: boolean
     userId?: boolean
+    isLeader?: boolean
     createdAt?: boolean
     task?: boolean | TaskDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -10602,10 +10612,11 @@ export namespace Prisma {
     id?: boolean
     taskId?: boolean
     userId?: boolean
+    isLeader?: boolean
     createdAt?: boolean
   }
 
-  export type TaskAssigneeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "taskId" | "userId" | "createdAt", ExtArgs["result"]["taskAssignee"]>
+  export type TaskAssigneeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "taskId" | "userId" | "isLeader" | "createdAt", ExtArgs["result"]["taskAssignee"]>
   export type TaskAssigneeInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     task?: boolean | TaskDefaultArgs<ExtArgs>
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -10629,6 +10640,7 @@ export namespace Prisma {
       id: string
       taskId: string
       userId: string
+      isLeader: boolean
       createdAt: Date
     }, ExtArgs["result"]["taskAssignee"]>
     composites: {}
@@ -11058,6 +11070,7 @@ export namespace Prisma {
     readonly id: FieldRef<"TaskAssignee", 'String'>
     readonly taskId: FieldRef<"TaskAssignee", 'String'>
     readonly userId: FieldRef<"TaskAssignee", 'String'>
+    readonly isLeader: FieldRef<"TaskAssignee", 'Boolean'>
     readonly createdAt: FieldRef<"TaskAssignee", 'DateTime'>
   }
     
@@ -18320,6 +18333,7 @@ export namespace Prisma {
     id: 'id',
     taskId: 'taskId',
     userId: 'userId',
+    isLeader: 'isLeader',
     createdAt: 'createdAt'
   };
 
@@ -19136,6 +19150,7 @@ export namespace Prisma {
     id?: StringFilter<"TaskAssignee"> | string
     taskId?: StringFilter<"TaskAssignee"> | string
     userId?: StringFilter<"TaskAssignee"> | string
+    isLeader?: BoolFilter<"TaskAssignee"> | boolean
     createdAt?: DateTimeFilter<"TaskAssignee"> | Date | string
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -19145,6 +19160,7 @@ export namespace Prisma {
     id?: SortOrder
     taskId?: SortOrder
     userId?: SortOrder
+    isLeader?: SortOrder
     createdAt?: SortOrder
     task?: TaskOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
@@ -19158,6 +19174,7 @@ export namespace Prisma {
     NOT?: TaskAssigneeWhereInput | TaskAssigneeWhereInput[]
     taskId?: StringFilter<"TaskAssignee"> | string
     userId?: StringFilter<"TaskAssignee"> | string
+    isLeader?: BoolFilter<"TaskAssignee"> | boolean
     createdAt?: DateTimeFilter<"TaskAssignee"> | Date | string
     task?: XOR<TaskScalarRelationFilter, TaskWhereInput>
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -19167,6 +19184,7 @@ export namespace Prisma {
     id?: SortOrder
     taskId?: SortOrder
     userId?: SortOrder
+    isLeader?: SortOrder
     createdAt?: SortOrder
     _count?: TaskAssigneeCountOrderByAggregateInput
     _max?: TaskAssigneeMaxOrderByAggregateInput
@@ -19180,6 +19198,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"TaskAssignee"> | string
     taskId?: StringWithAggregatesFilter<"TaskAssignee"> | string
     userId?: StringWithAggregatesFilter<"TaskAssignee"> | string
+    isLeader?: BoolWithAggregatesFilter<"TaskAssignee"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"TaskAssignee"> | Date | string
   }
 
@@ -20219,6 +20238,7 @@ export namespace Prisma {
 
   export type TaskAssigneeCreateInput = {
     id?: string
+    isLeader?: boolean
     createdAt?: Date | string
     task: TaskCreateNestedOneWithoutAssigneesInput
     user: UserCreateNestedOneWithoutAssignedTasksInput
@@ -20228,11 +20248,13 @@ export namespace Prisma {
     id?: string
     taskId: string
     userId: string
+    isLeader?: boolean
     createdAt?: Date | string
   }
 
   export type TaskAssigneeUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     task?: TaskUpdateOneRequiredWithoutAssigneesNestedInput
     user?: UserUpdateOneRequiredWithoutAssignedTasksNestedInput
@@ -20242,6 +20264,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     taskId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20249,11 +20272,13 @@ export namespace Prisma {
     id?: string
     taskId: string
     userId: string
+    isLeader?: boolean
     createdAt?: Date | string
   }
 
   export type TaskAssigneeUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20261,6 +20286,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     taskId?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21367,6 +21393,7 @@ export namespace Prisma {
     id?: SortOrder
     taskId?: SortOrder
     userId?: SortOrder
+    isLeader?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -21374,6 +21401,7 @@ export namespace Prisma {
     id?: SortOrder
     taskId?: SortOrder
     userId?: SortOrder
+    isLeader?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -21381,6 +21409,7 @@ export namespace Prisma {
     id?: SortOrder
     taskId?: SortOrder
     userId?: SortOrder
+    isLeader?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -23281,6 +23310,7 @@ export namespace Prisma {
 
   export type TaskAssigneeCreateWithoutUserInput = {
     id?: string
+    isLeader?: boolean
     createdAt?: Date | string
     task: TaskCreateNestedOneWithoutAssigneesInput
   }
@@ -23288,6 +23318,7 @@ export namespace Prisma {
   export type TaskAssigneeUncheckedCreateWithoutUserInput = {
     id?: string
     taskId: string
+    isLeader?: boolean
     createdAt?: Date | string
   }
 
@@ -23613,6 +23644,7 @@ export namespace Prisma {
     id?: StringFilter<"TaskAssignee"> | string
     taskId?: StringFilter<"TaskAssignee"> | string
     userId?: StringFilter<"TaskAssignee"> | string
+    isLeader?: BoolFilter<"TaskAssignee"> | boolean
     createdAt?: DateTimeFilter<"TaskAssignee"> | Date | string
   }
 
@@ -24074,6 +24106,7 @@ export namespace Prisma {
 
   export type TaskAssigneeCreateWithoutTaskInput = {
     id?: string
+    isLeader?: boolean
     createdAt?: Date | string
     user: UserCreateNestedOneWithoutAssignedTasksInput
   }
@@ -24081,6 +24114,7 @@ export namespace Prisma {
   export type TaskAssigneeUncheckedCreateWithoutTaskInput = {
     id?: string
     userId: string
+    isLeader?: boolean
     createdAt?: Date | string
   }
 
@@ -25374,6 +25408,7 @@ export namespace Prisma {
   export type TaskAssigneeCreateManyUserInput = {
     id?: string
     taskId: string
+    isLeader?: boolean
     createdAt?: Date | string
   }
 
@@ -25578,6 +25613,7 @@ export namespace Prisma {
 
   export type TaskAssigneeUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     task?: TaskUpdateOneRequiredWithoutAssigneesNestedInput
   }
@@ -25585,12 +25621,14 @@ export namespace Prisma {
   export type TaskAssigneeUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     taskId?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TaskAssigneeUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     taskId?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -25850,6 +25888,7 @@ export namespace Prisma {
   export type TaskAssigneeCreateManyTaskInput = {
     id?: string
     userId: string
+    isLeader?: boolean
     createdAt?: Date | string
   }
 
@@ -25912,6 +25951,7 @@ export namespace Prisma {
 
   export type TaskAssigneeUpdateWithoutTaskInput = {
     id?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutAssignedTasksNestedInput
   }
@@ -25919,12 +25959,14 @@ export namespace Prisma {
   export type TaskAssigneeUncheckedUpdateWithoutTaskInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type TaskAssigneeUncheckedUpdateManyWithoutTaskInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+    isLeader?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

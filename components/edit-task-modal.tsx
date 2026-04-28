@@ -14,7 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Calendar } from '@/components/ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Badge } from '@/components/ui/badge';
-import { CalendarIcon, Loader2, Plus, X, ExternalLink } from 'lucide-react';
+import { CalendarIcon, Loader2, Plus, X, ExternalLink, Star } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import toast from 'react-hot-toast';
@@ -59,6 +59,7 @@ export function EditTaskModal({ isOpen, onClose, onTaskUpdated, task, programs }
     status: 'TODO' as TaskStatus,
     programId: '',
     assigneeIds: [] as string[],
+    leaderIds: [] as string[],
     expectedDeliverables: '',
     progressPercentage: 0,
   });
@@ -75,6 +76,7 @@ export function EditTaskModal({ isOpen, onClose, onTaskUpdated, task, programs }
         status: task.status || 'TODO',
         programId: task.programId || '',
         assigneeIds: task.assignees?.map(a => a.userId) || [],
+        leaderIds: task.assignees?.filter(a => a.isLeader).map(a => a.userId) || [],
         expectedDeliverables: task.expectedDeliverables || '',
         progressPercentage: task.progressPercentage || 0,
       });
@@ -121,6 +123,7 @@ export function EditTaskModal({ isOpen, onClose, onTaskUpdated, task, programs }
           dueDate: dueDate?.toISOString(),
           links: links.filter(link => link.url?.trim()),
           assigneeIds: isAdmin ? formData.assigneeIds : undefined,
+          leaderIds: isAdmin ? formData.leaderIds : undefined,
         }),
       });
 
@@ -287,7 +290,8 @@ export function EditTaskModal({ isOpen, onClose, onTaskUpdated, task, programs }
                           } else {
                             setFormData(prev => ({
                               ...prev,
-                              assigneeIds: prev.assigneeIds.filter(id => id !== user.id)
+                              assigneeIds: prev.assigneeIds.filter(id => id !== user.id),
+                              leaderIds: prev.leaderIds.filter(id => id !== user.id)
                             }));
                           }
                         }}
@@ -306,9 +310,40 @@ export function EditTaskModal({ isOpen, onClose, onTaskUpdated, task, programs }
                 </div>
               </div>
               {formData.assigneeIds.length > 0 && (
-                <p className="text-sm text-gray-600">
-                  {formData.assigneeIds.length} responsable(s) seleccionado(s)
-                </p>
+                <div className="mt-4 p-3 bg-amber-50 border border-amber-200 rounded-md">
+                  <Label className="text-sm font-medium text-amber-900 flex items-center mb-2">
+                    <Star className="h-4 w-4 mr-1 text-amber-500 fill-amber-500" />
+                    Líderes de la tarea (Máx. 2)
+                  </Label>
+                  <div className="space-y-2 max-h-32 overflow-y-auto">
+                    {formData.assigneeIds.map(assigneeId => {
+                      const user = users.find(u => u.id === assigneeId);
+                      if (!user) return null;
+                      return (
+                        <div key={`leader-${user.id}`} className="flex items-center space-x-2">
+                          <Checkbox
+                            id={`leader-${user.id}`}
+                            checked={formData.leaderIds.includes(user.id)}
+                            onCheckedChange={(checked) => {
+                              if (checked) {
+                                if (formData.leaderIds.length >= 2) {
+                                  toast.error('Solo puedes seleccionar hasta 2 líderes');
+                                  return;
+                                }
+                                setFormData(prev => ({ ...prev, leaderIds: [...prev.leaderIds, user.id] }));
+                              } else {
+                                setFormData(prev => ({ ...prev, leaderIds: prev.leaderIds.filter(id => id !== user.id) }));
+                              }
+                            }}
+                          />
+                          <Label htmlFor={`leader-${user.id}`} className="text-sm font-normal cursor-pointer text-amber-900">
+                            {user.name || user.email}
+                          </Label>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               )}
             </div>
           )}

@@ -200,6 +200,7 @@ exports.Prisma.TaskAssigneeScalarFieldEnum = {
   id: 'id',
   taskId: 'taskId',
   userId: 'userId',
+  isLeader: 'isLeader',
   createdAt: 'createdAt'
 };
 

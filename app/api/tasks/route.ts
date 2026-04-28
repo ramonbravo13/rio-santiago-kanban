@@ -174,6 +174,7 @@ export async function POST(request: NextRequest) {
       name, 
       description, 
       assigneeIds, 
+      leaderIds,
       programId, 
       dueDate, 
       expectedDeliverables,
@@ -240,12 +241,14 @@ export async function POST(request: NextRequest) {
 
     // Crear asignaciones si hay assigneeIds
     if (assigneeIds && Array.isArray(assigneeIds) && assigneeIds.length > 0) {
+      const leaders = Array.isArray(leaderIds) ? leaderIds : [];
       await Promise.all(
         assigneeIds.map((assigneeId: string) =>
           prisma.taskAssignee.create({
             data: {
               taskId: task.id,
               userId: assigneeId,
+              isLeader: leaders.includes(assigneeId),
             },
           })
         )

@@ -78,6 +78,7 @@ export interface TaskAssignee {
   id: string;
   taskId: string;
   userId: string;
+  isLeader?: boolean;
   createdAt: Date;
   task?: Task;
   user?: User;

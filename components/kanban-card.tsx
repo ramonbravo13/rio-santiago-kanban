@@ -33,6 +33,7 @@ import {
   Send,
   Archive,
   RotateCcw,
+  Star,
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -641,8 +642,14 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
             title={task.assignees.map(a => a.user?.name || a.user?.email).join(', ')}
           >
             <User className="h-3 w-3 mr-1 flex-shrink-0" />
-            <span className="truncate">
-              {task.assignees.map(a => a.user?.name || a.user?.email).join(', ')}
+            <span className="truncate flex items-center flex-wrap gap-1">
+              {task.assignees.map((a, i) => (
+                <span key={a.id || i} className="flex items-center">
+                  {a.isLeader && <Star className="h-3 w-3 text-amber-500 fill-amber-500 mr-0.5 inline" title="Líder de la tarea" />}
+                  {a.user?.name || a.user?.email}
+                  {i < (task.assignees?.length || 0) - 1 ? ', ' : ''}
+                </span>
+              ))}
             </span>
           </div>
         )}

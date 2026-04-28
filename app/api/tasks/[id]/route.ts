@@ -69,8 +69,8 @@ export async function PUT(
       );
     }
 
-    // Extraer assigneeIds y links para manejarlos por separado
-    const { assigneeIds, links, ...taskData } = updates;
+    // Extraer assigneeIds, leaderIds y links para manejarlos por separado
+    const { assigneeIds, leaderIds, links, ...taskData } = updates;
 
     if (links !== undefined) {
       taskData.links = Array.isArray(links) && links.length > 0 ? JSON.stringify(links) : null;
@@ -106,10 +106,12 @@ export async function PUT(
 
         // Crear nuevos assignees si hay alguno
         if (assigneeIds && assigneeIds.length > 0) {
+          const leaders = Array.isArray(leaderIds) ? leaderIds : [];
           await tx.taskAssignee.createMany({
             data: assigneeIds.map((userId: string) => ({
               taskId: taskId,
               userId: userId,
+              isLeader: leaders.includes(userId),
             })),
           });
         }
