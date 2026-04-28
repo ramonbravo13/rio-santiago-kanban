@@ -645,7 +645,7 @@ export function KanbanCard({ task, onStatusChange, onDelete, onEdit, onTaskUpdat
             <span className="truncate flex items-center flex-wrap gap-1">
               {task.assignees.map((a, i) => (
                 <span key={a.id || i} className="flex items-center">
-                  {a.isLeader && <Star className="h-3 w-3 text-amber-500 fill-amber-500 mr-0.5 inline" title="Líder de la tarea" />}
+                  {a.isLeader && <span title="Líder de la tarea"><Star className="h-3 w-3 text-amber-500 fill-amber-500 mr-0.5 inline" /></span>}
                   {a.user?.name || a.user?.email}
                   {i < (task.assignees?.length || 0) - 1 ? ', ' : ''}
                 </span>
