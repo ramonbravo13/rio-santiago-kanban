@@ -109,6 +109,14 @@ export function KanbanBoard() {
   };
 
   const handleTaskStatusChange = async (taskId: string, newStatus: TaskStatus) => {
+    // Optimistic UI Update: actualizar el estado localmente antes de la petición
+    const previousTasks = [...tasks];
+    setTasks(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId ? { ...task, status: newStatus } : task
+      )
+    );
+
     try {
       const response = await fetch(`/api/tasks/${taskId}`, {
         method: 'PUT',
@@ -119,19 +127,19 @@ export function KanbanBoard() {
       });
 
       if (response.ok) {
-        const updatedTask = await response.json();
-        setTasks(prevTasks =>
-          prevTasks.map(task =>
-            task.id === taskId ? updatedTask : task
-          )
-        );
-        toast.success('Estado actualizado exitosamente');
+        // La actualización silenciosa es exitosa
+        // No necesitamos mostrar toast de éxito en cada movimiento de tarjeta para no saturar al usuario,
+        // pero podemos mantenerlo si es deseado.
       } else {
+        // Revertir si hay error
+        setTasks(previousTasks);
         toast.error('Error al actualizar el estado');
       }
     } catch (error) {
       console.error('Error:', error);
-      toast.error('Error de conexión');
+      // Revertir si hay error
+      setTasks(previousTasks);
+      toast.error('Error de conexión al actualizar');
     }
   };
 

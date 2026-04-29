@@ -116,6 +116,9 @@ model Task {
   archived             Boolean        @default(false)
   sequenceNumber       Int            @default(0)
 
+  @@index([programId])
+  @@index([status])
+  @@index([archived])
   @@map("tasks")
 }
 
