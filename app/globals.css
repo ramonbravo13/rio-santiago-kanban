@@ -126,17 +126,6 @@
   @apply h-2 rounded-full transition-all duration-300;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .ceti-sidebar {
-    @apply transform -translate-x-full transition-transform;
-  }
-  
-  .ceti-sidebar.open {
-    @apply translate-x-0;
-  }
-}
-
 /* Animation Classes */
 .fade-in-custom {
   @apply animate-in fade-in duration-500;
