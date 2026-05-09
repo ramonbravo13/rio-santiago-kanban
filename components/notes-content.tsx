@@ -193,9 +193,12 @@ export function NotesContent() {
   );
 
   return (
-    <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
+    <div className="flex h-full w-full overflow-hidden relative">
       {/* Paneles de lista de notas (Maestro) */}
-      <div className="w-full md:w-1/3 md:min-w-[250px] md:max-w-[350px] h-[35vh] md:h-full border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50 flex flex-col shrink-0">
+      <div className={cn(
+        "w-full md:w-1/3 md:min-w-[250px] md:max-w-[350px] h-full border-r border-gray-200 bg-gray-50 flex-col shrink-0",
+        activeNote ? "hidden md:flex" : "flex"
+      )}>
         <div className="p-4 border-b border-gray-200">
           <Button 
             onClick={handleCreateNote} 
@@ -251,42 +254,56 @@ export function NotesContent() {
       </div>
 
       {/* Panel del Editor (Detalle) */}
-      <div className="flex-1 flex flex-col bg-white">
+      <div className={cn(
+        "flex-1 flex-col bg-white h-full",
+        !activeNote ? "hidden md:flex" : "flex w-full absolute md:relative inset-0 z-10"
+      )}>
         {activeNote ? (
           <>
             {/* Header Editor */}
-            <div className="px-6 py-4 flex items-center justify-between border-b border-gray-100">
-              <Input
-                value={editTitle}
-                onChange={(e) => setEditTitle(e.target.value)}
-                className="text-2xl font-bold bg-transparent border-transparent hover:border-gray-200 focus:border-gray-300 focus:ring-0 px-2 py-1 flex-1 shadow-none rounded"
-                placeholder="Título de la nota..."
-              />
+            <div className="px-4 md:px-6 py-3 md:py-4 flex flex-col sm:flex-row sm:items-center justify-between border-b border-gray-100 gap-3">
+              <div className="flex items-center flex-1 w-full min-w-0">
+                <Button 
+                  variant="ghost" 
+                  size="sm" 
+                  className="md:hidden mr-2 shrink-0 p-1 h-8"
+                  onClick={() => setActiveNote(null)}
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-chevron-left h-5 w-5"><path d="m15 18-6-6 6-6"/></svg>
+                </Button>
+                <Input
+                  value={editTitle}
+                  onChange={(e) => setEditTitle(e.target.value)}
+                  className="text-xl md:text-2xl font-bold bg-transparent border-transparent hover:border-gray-200 focus:border-gray-300 focus:ring-0 px-2 py-1 flex-1 shadow-none rounded min-w-0"
+                  placeholder="Título de la nota..."
+                />
+              </div>
               
-              <div className="ml-4 flex items-center space-x-2">
-                {isDirty && <span className="text-xs text-amber-600 mr-2 uppercase tracking-wide font-medium">Cambios sin guardar</span>}
+              <div className="flex items-center justify-between sm:justify-end space-x-2 w-full sm:w-auto px-2 sm:px-0">
+                {isDirty && <span className="text-[10px] sm:text-xs text-amber-600 mr-2 uppercase tracking-wide font-medium">Cambios sin guardar</span>}
                 <Button 
                   onClick={handleSaveNote} 
                   disabled={!isDirty || isSaving}
-                  className="bg-[#1E8F24] hover:bg-[#16701B]"
+                  className="bg-[#1E8F24] hover:bg-[#16701B] h-8 sm:h-10 text-xs sm:text-sm"
+                  size="sm"
                 >
-                  <Save className="h-4 w-4 mr-2" />
+                  <Save className="h-4 w-4 mr-1 sm:mr-2" />
                   Guardar
                 </Button>
               </div>
             </div>
 
             {/* Area Principal Editor */}
-            <div className="flex-1 overflow-y-auto px-8 py-6 custom-scrollbar">
+            <div className="flex-1 overflow-y-auto px-4 sm:px-8 py-4 sm:py-6 custom-scrollbar">
               
-              <div className="mb-12 h-[400px]">
+              <div className="mb-8 md:mb-12 h-auto min-h-[300px]">
                 {/* @ts-ignore */}
                 <ReactQuill 
                   theme="snow"
                   value={editContent}
                   onChange={setEditContent}
                   placeholder="Escribe tus notas, actas, apuntes generales aquí..."
-                  className="h-full [&_.ql-container]:text-[15px] [&_.ql-container]:font-sans [&_.ql-container]:border-gray-200 [&_.ql-toolbar]:border-gray-200 [&_.ql-container]:rounded-b-lg [&_.ql-toolbar]:rounded-t-lg [&_.ql-editor]:min-h-[350px]"
+                  className="h-full [&_.ql-container]:text-[15px] [&_.ql-container]:font-sans [&_.ql-container]:border-gray-200 [&_.ql-toolbar]:border-gray-200 [&_.ql-container]:rounded-b-lg [&_.ql-toolbar]:rounded-t-lg [&_.ql-editor]:min-h-[250px] md:[&_.ql-editor]:min-h-[350px]"
                   modules={{
                     toolbar: [
                       [{ 'header': [1, 2, 3, false] }],
@@ -300,23 +317,23 @@ export function NotesContent() {
               </div>
 
               {/* Tareas Interactive */}
-              <div className="bg-gray-50 rounded-lg p-6 border border-gray-100">
-                <h3 className="text-md font-bold text-gray-800 mb-4 flex items-center">
+              <div className="bg-gray-50 rounded-lg p-4 md:p-6 border border-gray-100">
+                <h3 className="text-sm md:text-md font-bold text-gray-800 mb-4 flex items-center">
                   <CheckCircle2 className="h-5 w-5 mr-2 text-[#1E8F24]" />
                   Lista de Tareas / Checklists
                 </h3>
                 
                 <div className="space-y-2 mb-4">
                   {editTodos.length === 0 ? (
-                    <p className="text-sm text-gray-400 italic">Agrega tu primer elemento a la lista abajo.</p>
+                    <p className="text-xs md:text-sm text-gray-400 italic">Agrega tu primer elemento a la lista abajo.</p>
                   ) : (
                     editTodos.map(todo => (
-                      <div key={todo.id} className="flex items-center space-x-3 group">
-                        <button onClick={() => toggleTodo(todo.id)} className="text-gray-400 hover:text-[#1E8F24] transition-colors focus:outline-none">
+                      <div key={todo.id} className="flex items-center space-x-2 md:space-x-3 group">
+                        <button onClick={() => toggleTodo(todo.id)} className="text-gray-400 hover:text-[#1E8F24] transition-colors focus:outline-none shrink-0">
                           {todo.completed ? (
-                            <CheckCircle2 className="h-5 w-5 text-[#1E8F24]" />
+                            <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-[#1E8F24]" />
                           ) : (
-                            <Circle className="h-5 w-5" />
+                            <Circle className="h-4 w-4 md:h-5 md:w-5" />
                           )}
                         </button>
                         <input
@@ -324,13 +341,13 @@ export function NotesContent() {
                           value={todo.text}
                           onChange={(e) => updateTodoText(todo.id, e.target.value)}
                           className={cn(
-                            "flex-1 text-sm transition-all bg-transparent border-transparent hover:border-gray-200 focus:border-gray-300 focus:ring-0 px-2 py-1 rounded outline-none",
+                            "flex-1 text-xs md:text-sm transition-all bg-transparent border-transparent hover:border-gray-200 focus:border-gray-300 focus:ring-0 px-1 md:px-2 py-1 rounded outline-none w-full",
                             todo.completed ? "text-gray-400 line-through" : "text-gray-700"
                           )}
                         />
                         <button 
                           onClick={() => deleteTodo(todo.id)} 
-                          className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all p-1"
+                          className="md:opacity-0 md:group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all p-1 shrink-0"
                         >
                           <X className="h-4 w-4" />
                         </button>
@@ -345,9 +362,9 @@ export function NotesContent() {
                     onChange={(e) => setNewTodoText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && handleAddTodo()}
                     placeholder="Escribe una tarea y presiona Enter..."
-                    className="flex-1 h-9 text-sm focus-visible:ring-[#1E8F24]"
+                    className="flex-1 h-9 text-xs md:text-sm focus-visible:ring-[#1E8F24]"
                   />
-                  <Button size="sm" onClick={handleAddTodo} className="bg-[#1E8F24] hover:bg-[#16701B]">
+                  <Button size="sm" onClick={handleAddTodo} className="bg-[#1E8F24] hover:bg-[#16701B] shrink-0">
                     <Plus className="h-4 w-4" />
                   </Button>
                 </div>
@@ -358,7 +375,7 @@ export function NotesContent() {
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center text-gray-400 space-y-4">
             <BookText className="h-16 w-16 opacity-20" />
-            <p className="text-lg font-medium">Selecciona una nota para leer o comienza una nueva</p>
+            <p className="text-lg font-medium text-center px-4">Selecciona una nota para leer o comienza una nueva</p>
           </div>
         )}
       </div>
