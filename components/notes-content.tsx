@@ -175,6 +175,12 @@ export function NotesContent() {
     ));
   };
 
+  const updateTodoText = (id: string, newText: string) => {
+    setEditTodos(editTodos.map(t => 
+      t.id === id ? { ...t, text: newText } : t
+    ));
+  };
+
   const deleteTodo = (id: string) => {
     setEditTodos(editTodos.filter(t => t.id !== id));
   };
@@ -313,12 +319,15 @@ export function NotesContent() {
                             <Circle className="h-5 w-5" />
                           )}
                         </button>
-                        <span className={cn(
-                          "flex-1 text-sm transition-all",
-                          todo.completed ? "text-gray-400 line-through" : "text-gray-700"
-                        )}>
-                          {todo.text}
-                        </span>
+                        <input
+                          type="text"
+                          value={todo.text}
+                          onChange={(e) => updateTodoText(todo.id, e.target.value)}
+                          className={cn(
+                            "flex-1 text-sm transition-all bg-transparent border-transparent hover:border-gray-200 focus:border-gray-300 focus:ring-0 px-2 py-1 rounded outline-none",
+                            todo.completed ? "text-gray-400 line-through" : "text-gray-700"
+                          )}
+                        />
                         <button 
                           onClick={() => deleteTodo(todo.id)} 
                           className="opacity-0 group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all p-1"
