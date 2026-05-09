@@ -193,9 +193,9 @@ export function NotesContent() {
   );
 
   return (
-    <div className="flex h-full w-full">
+    <div className="flex flex-col md:flex-row h-full w-full overflow-hidden">
       {/* Paneles de lista de notas (Maestro) */}
-      <div className="w-1/3 min-w-[250px] max-w-[350px] border-r border-gray-200 bg-gray-50 flex flex-col">
+      <div className="w-full md:w-1/3 md:min-w-[250px] md:max-w-[350px] h-[35vh] md:h-full border-b md:border-b-0 md:border-r border-gray-200 bg-gray-50 flex flex-col shrink-0">
         <div className="p-4 border-b border-gray-200">
           <Button 
             onClick={handleCreateNote} 
