@@ -1,0 +1,18 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    # Se ejecuta a las 12:00 AM todos los miércoles y domingos
+    - cron: '0 0 * * 0,3'
+  workflow_dispatch: # Permite ejecutarlo manualmente desde GitHub
+
+jobs:
+  ping-website:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Hacer petición a la app
+        run: |
+          # REEMPLAZA ESTA URL POR LA URL PÚBLICA DE TU PROYECTO (ej. tu proyecto en Vercel)
+          # Al visitar la página, se realiza una consulta a la base de datos y Supabase registra actividad.
+          curl -s https://TU-APP.vercel.app > /dev/null
+          echo "Ping completado para mantener viva la base de datos."
