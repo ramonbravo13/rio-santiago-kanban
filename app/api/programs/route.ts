@@ -39,11 +39,26 @@ export async function GET(request: NextRequest) {
       // Colaboradores solo ven programas asignados
       programs = await prisma.program.findMany({
         where: {
-          userAssignments: {
-            some: {
-              userId: session.user.id
+          OR: [
+            {
+              userAssignments: {
+                some: {
+                  userId: session.user.id
+                }
+              }
+            },
+            {
+              tasks: {
+                some: {
+                  assignees: {
+                    some: {
+                      userId: session.user.id
+                    }
+                  }
+                }
+              }
             }
-          }
+          ]
         },
         include: {
           _count: {
