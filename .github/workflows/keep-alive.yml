@@ -13,6 +13,6 @@ jobs:
       - name: Hacer petición a la app
         run: |
           # REEMPLAZA ESTA URL POR LA URL PÚBLICA DE TU PROYECTO (ej. tu proyecto en Vercel)
-          # Al visitar la página, se realiza una consulta a la base de datos y Supabase registra actividad.
-          curl -s https://TU-APP.vercel.app > /dev/null
+          # Al llamar a este endpoint de la API, se realiza un prisma.count() que fuerza la actividad de Supabase.
+          curl -s https://rio-santiago-kanban.vercel.app/api/setup/check > /dev/null
           echo "Ping completado para mantener viva la base de datos."
