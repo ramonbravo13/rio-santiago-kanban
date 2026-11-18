@@ -38,6 +38,7 @@ export function NotesContent() {
   const [editTitle, setEditTitle] = useState('');
   const [editContent, setEditContent] = useState('');
   const [editTodos, setEditTodos] = useState<Todo[]>([]);
+  const [hoveredDeleteId, setHoveredDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     fetchNotes();
@@ -327,32 +328,56 @@ export function NotesContent() {
                   {editTodos.length === 0 ? (
                     <p className="text-xs md:text-sm text-gray-400 italic">Agrega tu primer elemento a la lista abajo.</p>
                   ) : (
-                    editTodos.map(todo => (
-                      <div key={todo.id} className="flex items-center space-x-2 md:space-x-3 group">
-                        <button onClick={() => toggleTodo(todo.id)} className="text-gray-400 hover:text-[#1E8F24] transition-colors focus:outline-none shrink-0">
-                          {todo.completed ? (
-                            <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-[#1E8F24]" />
-                          ) : (
-                            <Circle className="h-4 w-4 md:h-5 md:w-5" />
-                          )}
-                        </button>
-                        <input
-                          type="text"
-                          value={todo.text}
-                          onChange={(e) => updateTodoText(todo.id, e.target.value)}
+                    editTodos.map(todo => {
+                      const isDeletingHover = hoveredDeleteId === todo.id;
+                      return (
+                        <div
+                          key={todo.id}
                           className={cn(
-                            "flex-1 text-xs md:text-sm transition-all bg-transparent border-transparent hover:border-gray-200 focus:border-gray-300 focus:ring-0 px-1 md:px-2 py-1 rounded outline-none w-full",
-                            todo.completed ? "text-gray-400 line-through" : "text-gray-700"
+                            "flex items-center space-x-2 md:space-x-3 group px-2.5 py-1.5 rounded-md border transition-all",
+                            isDeletingHover
+                              ? "bg-red-50 border-red-200 shadow-sm"
+                              : "border-transparent hover:bg-white hover:border-gray-200 hover:shadow-sm focus-within:bg-white focus-within:border-gray-300"
                           )}
-                        />
-                        <button 
-                          onClick={() => deleteTodo(todo.id)} 
-                          className="md:opacity-0 md:group-hover:opacity-100 text-gray-400 hover:text-red-500 transition-all p-1 shrink-0"
                         >
-                          <X className="h-4 w-4" />
-                        </button>
-                      </div>
-                    ))
+                          <button
+                            onClick={() => toggleTodo(todo.id)}
+                            className="text-gray-400 hover:text-[#1E8F24] transition-colors focus:outline-none shrink-0"
+                          >
+                            {todo.completed ? (
+                              <CheckCircle2 className="h-4 w-4 md:h-5 md:w-5 text-[#1E8F24]" />
+                            ) : (
+                              <Circle className="h-4 w-4 md:h-5 md:w-5" />
+                            )}
+                          </button>
+                          <input
+                            type="text"
+                            value={todo.text}
+                            onChange={(e) => updateTodoText(todo.id, e.target.value)}
+                            className={cn(
+                              "flex-1 text-xs md:text-sm transition-all bg-transparent border-transparent focus:ring-0 px-1 md:px-2 py-0.5 rounded outline-none w-full",
+                              isDeletingHover
+                                ? "text-red-700 font-medium"
+                                : todo.completed
+                                  ? "text-gray-400 line-through"
+                                  : "text-gray-700"
+                            )}
+                          />
+                          <button
+                            onClick={() => {
+                              setHoveredDeleteId(null);
+                              deleteTodo(todo.id);
+                            }}
+                            onMouseEnter={() => setHoveredDeleteId(todo.id)}
+                            onMouseLeave={() => setHoveredDeleteId(null)}
+                            title="Eliminar tarea"
+                            className="md:opacity-0 md:group-hover:opacity-100 text-gray-400 hover:text-red-600 hover:bg-red-100 rounded transition-all p-1 shrink-0"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        </div>
+                      );
+                    })
                   )}
                 </div>
 
